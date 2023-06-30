@@ -1,0 +1,1 @@
+<?php echo '<img src="proof.png" alt="Proof of task done"/>';
