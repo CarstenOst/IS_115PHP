@@ -1,4 +1,8 @@
+<p> Note that this only displays your own information, and not mine. </p>
+<p> Read the comments of this file to find my answers for task 2 </p>
 <?php phpinfo();
+?>
+
 
 # phpinfo() is good to know to for the following:
 # PHP configuration - It displays information about PHP modules, extensions, directives and various settings.
