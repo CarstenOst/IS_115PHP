@@ -8,6 +8,3 @@ function loadContent(file) {
             console.error('Error:', error);
         });
 }
-
-
-
