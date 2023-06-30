@@ -83,12 +83,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Checks if the average variable is not empty, and if so, prints it out in an <p> element -->
     <?php if (!empty($average)) { ?>
-        <p>Average: <?php echo $average; ?></p>
+        <p>The average number is: <?php echo $average; ?></p>
     <?php } ?>
 
     <!-- Checks if the sum variable is not empty, and if so, prints it out in an <p> element -->
     <?php if (!empty($sum)) { ?>
-        <p>Sum: <?php echo $sum; ?></p>
+        <p>The sum of the numbers are: <?php echo $sum; ?></p>
     <?php } ?>
 
 </body>
