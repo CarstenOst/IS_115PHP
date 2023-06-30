@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Performs addition of two integers.
  * Takes two parameters of int and returns the sum of them
@@ -54,11 +53,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Here I run the functions created earlier
         $average = average(...$numbers);
         $sum = addition(...$numbers);
+
+        setcookie("average", $average, time()+3600, "/");
+        setcookie("sum", $sum, time()+3600, "/");
+        // To prevent resubmission (remove if you like bugs)
+        header('Location: 4_Kalkulator.php');
+        exit();
+
     } else {
         echo "No numbers entered.";
     }
 }
-
 ?>
 
 
@@ -69,42 +74,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="script.js"></script>
     <title>Number Input</title>
 </head>
-<nav id="navbar">
-    <button id="alder" onclick="loadContent('3_Alder.php')">3. Alder</button>
-    <button id="kalkulator" onclick="location='4_Kalkulator.php'">4. Kalkulator</button>
-    <button id="hilsen" onclick="loadContent('5_Hilsen.php')">5. Hilsen</button>
-</nav>
-<div id="content" class="center">
-    <!-- Content will be loaded here -->
+<body>
+    <div class="center">
+        <nav id="navbar" style="align-items: center" >
+            <button id="ressurs" onclick="loadContent('1_Ressurs.php')">1. Ressurser</button>
+            <!-- Note that there is an ugly bug where if settings is pressed the navbar jumps a little, I'll buy you pizza if you manage to fix it.
+                 It must be something with the phpinfo() altering css of some sorts, but css is not my strong suit -->
+            <button id="settings" onclick="loadContent('2_Settings.php')">2. Settings</button>
+            <button id="alder" onclick="loadContent('3_Alder.php')">3. Alder</button>
+            <button id="kalkulator" onclick="location='4_Kalkulator.php'">4. Kalkulator</button>
+            <button id="hilsen" onclick="loadContent('5_Hilsen.php')">5. Hilsen</button>
+        </nav>
+        <div id="content" class="center">
+        <!-- Content will be loaded here -->
 
-    <body class="center">
-    <!-- Normal form with a post method (to send data to the server) -->
-    <form action="" method="POST">
-        <label for="numbers">Enter numbers (separated by commas):</label><br>
+            <!-- Normal form with a post method (to send data to the server) -->
+            <form id="form" action="" method="POST">
+                <label for="numbers">Enter numbers (separated by commas):</label><br>
 
-        <!-- Values typed into the super global variable $_POST is available to the php script
-            The "??" accepts the left value ($_COOKIE) if there is anything in it, else it goes right to $_POST and checks again for a value.
-            Lastly it will (if null) insert an empty string in the input field -->
-        <input type="text" name="numbers" id="numbers" oninput="restrictInput(this)" value="<?php echo $_COOKIE['numbers'] ?? ($_POST['numbers'] ?? ""); ?>" pattern="[0-9,]*" required>
-        <!-- A warning that is displayed if the user enters anything other than numbers and commas
-             Use of <br> to get some space. It's kinda ugly but it works
-         -->
-        <small id="warning" style="color: red; display: none;">Please enter numbers and commas only.</small><br><br>
-        <input type="submit" value="Calculate Sum and Average">
-    </form>
+                <!-- Values typed into the super global variable $_POST is available to the php script
+                    The "??" accepts the left value ($_COOKIE) if there is anything in it, else it goes right to $_POST and checks again for a value.
+                    Lastly it will (if null) insert an empty string in the input field -->
+                <input type="text" name="numbers" id="numbers" oninput="restrictInput(this)" value="<?php echo $_COOKIE['numbers'] ?? ($_POST['numbers'] ?? ""); ?>" pattern="[0-9,]*" required>
+                <!-- A warning that is displayed if the user enters anything other than numbers and commas
+                     Use of <br> to get some space. It's kinda ugly but it works
+                 -->
+                <small id="warning" style="color: red; display: none;">Please enter numbers and commas only.</small><br><br>
+                <input type="submit" value="Calculate Sum and Average">
+            </form>
 
-    <!-- Checks if the average variable is not empty, and if so, prints it out in an <p> element -->
-    <?php if (!empty($average)) { ?>
-        <p>The average number is: <?php echo $average; ?></p>
-    <?php } ?>
+            <!-- Checks if the average variable is not empty, and if so, prints it out in an <p> element -->
+            <?php if (!empty($_COOKIE["average"])) echo "<p>The average number is: " . htmlspecialchars($_COOKIE['average']) . " </p>"?>
 
-    <!-- Checks if the sum variable is not empty, and if so, prints it out in an <p> element -->
-    <?php if (!empty($sum)) { ?>
-        <p>The sum of the numbers is: <?php echo $sum; ?></p>
-    <?php } ?>
+            <!-- Checks if the sum variable is not empty, and if so, prints it out in an <p> element -->
+            <?php if (!empty($_COOKIE["sum"])) echo "<p>The sum of the numbers is: " . htmlspecialchars($_COOKIE['sum']) . " </p>" ?>
 
-    </body>
-</div>
+
+        </div>
+    </div>
+</body>
 
 <script>
     // JavaScript that restricts input if it is anything else than a number or a comma (,)
