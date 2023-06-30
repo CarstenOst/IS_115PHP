@@ -46,6 +46,7 @@ function average(int ...$numbers): float
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['numbers'])) {
         $input = $_POST['numbers'];
+        setcookie("numbers", $input, time()+3600, "/"); // Cookie will expire in 1 hour
         // I need to separate the numbers based on the commas provided by user.
         $numbers = array_map('intval', explode(',', $input));
         // Should serialize the input, so it's less chance of script kiddies (bad actors)
@@ -64,16 +65,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="script.js"></script>
     <title>Number Input</title>
 </head>
-<body>
+<nav id="navbar">
+    <button id="alder" onclick="loadContent('3_Alder.php')">3. Alder</button>
+    <button id="kalkulator" onclick="location='4_Kalkulator.php'">4. Kalkulator</button>
+    <button id="hilsen" onclick="loadContent('5_Hilsen.php')">5. Hilsen</button>
+</nav>
+<div id="content" class="center">
+    <!-- Content will be loaded here -->
+
+    <body class="center">
     <!-- Normal form with a post method (to send data to the server) -->
     <form action="" method="POST">
         <label for="numbers">Enter numbers (separated by commas):</label><br>
 
-        <!--Values typed into the super global variable $_POST is available to the php script
-            The "??" accepts the left value ($_POST) if there is anything in it, else it inserts an empty string in the input field -->
-        <input type="text" name="numbers" id="numbers" oninput="restrictInput(this)" value="<?php echo $_POST['numbers'] ?? ""; ?>" pattern="[0-9,]*" required>
+        <!-- Values typed into the super global variable $_POST is available to the php script
+            The "??" accepts the left value ($_COOKIE) if there is anything in it, else it goes right to $_POST and checks again for a value.
+            Lastly it will (if null) insert an empty string in the input field -->
+        <input type="text" name="numbers" id="numbers" oninput="restrictInput(this)" value="<?php echo $_COOKIE['numbers'] ?? ($_POST['numbers'] ?? ""); ?>" pattern="[0-9,]*" required>
         <!-- A warning that is displayed if the user enters anything other than numbers and commas
              Use of <br> to get some space. It's kinda ugly but it works
          -->
@@ -88,10 +100,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Checks if the sum variable is not empty, and if so, prints it out in an <p> element -->
     <?php if (!empty($sum)) { ?>
-        <p>The sum of the numbers are: <?php echo $sum; ?></p>
+        <p>The sum of the numbers is: <?php echo $sum; ?></p>
     <?php } ?>
 
-</body>
+    </body>
+</div>
+
 <script>
     // JavaScript that restricts input if it is anything else than a number or a comma (,)
     // I have used Regex to do this filtration, as it is very efficient and powerful
