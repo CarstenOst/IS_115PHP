@@ -13,8 +13,8 @@ body {
 }
 
 #navbar {
-    background-color: #f8f8f8;
-    border-bottom: 1px solid #e7e7e7;
+    background-color: var(--php-dark-grey);
+    border-bottom: 1px solid var(--php-dark-blue);
     height: 50px;
     top: 0;
     display: flex;
