@@ -95,6 +95,28 @@ class LastNameFormatting
     }
 
 
+    public static function lastNameFormPrint(): void
+    {
+        // EOT is the open and close identifier, read more on about heredoc on php.net
+        // Can be called anything, does not have to be "EOT" (End Of Text)
+        echo <<<EOT
+            <script>
+                let myDiv = document.getElementById("content");
+                myDiv.innerHTML += `
+                    <form id="form" action="" method="POST">
+                        <label for="string">Enter your last name</label><br>
+                        <input type="text" name="string" id="string" required>
+                        <input type="submit" value="Submit">
+                    </form>`;
+            </script>
+        EOT;
+    }
+
+    /**
+     * POV; you write way too long functions
+     * Function just prints out the information about the inputted last name
+     * @return void
+     */
     public static function lastNameInfoPrint(): void
     {
         // More readability at the cost of some memory
@@ -126,24 +148,9 @@ class LastNameFormatting
         }
     }
 
-    public static function lastNameFormPrint(): void
-    {
-        // EOT is the open and close identifier, read more on about heredoc on php.net
-        // Can be called anything, does not have to be "EOT" (End Of Text)
-        echo <<<EOT
-            <script>
-                let myDiv = document.getElementById("content");
-                myDiv.innerHTML += `
-                    <form id="form" action="" method="POST">
-                        <label for="string">Enter your last name</label><br>
-                        <input type="text" name="string" id="string" required>
-                        <input type="submit" value="Submit">
-                    </form>`;
-            </script>
-        EOT;
-    }
 }
 
+// If the submit button is pressed, this code will run
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['string'])) {
         $input = $_POST['string'];
