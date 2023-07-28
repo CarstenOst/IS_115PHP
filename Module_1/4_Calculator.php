@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         setcookie("average", $average, time()+3600, "/");
         setcookie("sum", $sum, time()+3600, "/");
         // To prevent resubmission (remove if you like bugs)
-        header('Location: 4_Kalkulator.php');
+        header('Location: 4_Calculator.php');
         exit();
 
     } else {
@@ -77,13 +77,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="center">
         <nav id="navbar" style="align-items: center" >
-            <button id="ressurs" onclick="loadContent('1_Ressurs.php')">1. Ressurser</button>
+            <button onclick="loadContent('1_Resource.php')">1. Ressurser</button>
             <!-- Note that there is an ugly bug where if settings is pressed the navbar jumps a little, I'll buy you pizza if you manage to fix it.
                  It must be something with the phpinfo() altering css of some sorts, but css is not my strong suit -->
-            <button id="settings" onclick="loadContent('2_Settings.php')">2. Settings</button>
-            <button id="alder" onclick="loadContent('3_Alder.php')">3. Alder</button>
-            <button id="kalkulator" onclick="location='4_Kalkulator.php'">4. Kalkulator</button>
-            <button id="hilsen" onclick="loadContent('5_Hilsen.php')">5. Hilsen</button>
+            <button onclick="loadContent('2_Settings.php')">2. Settings</button>
+            <button onclick="loadContent('3_Age.php')">3. Alder</button>
+            <button onclick="location='4_Calculator.php'">4. Kalkulator</button>
+            <button onclick="loadContent('5_Regards.php')">5. Hilsen</button>
         </nav>
         <div id="content" class="center">
         <!-- Content will be loaded here -->
