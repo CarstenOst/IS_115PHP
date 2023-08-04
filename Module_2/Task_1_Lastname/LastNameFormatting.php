@@ -14,8 +14,8 @@ ASCII art stolen here from here: https://patorjk.com/software/taag/#p=display&f=
 Warning, excessive comments below.
 */
 
-if (!defined('IN_APPLICATION')) {
-    header('Location: ../index.html');
+if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
+    header('Location: ../index.php');
     exit;
 }
 

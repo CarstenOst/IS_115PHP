@@ -1,9 +1,11 @@
 <?php
 
-if (!defined('IN_APPLICATION')) {
-    header('Location: ../index.html');
+// If you manage to open this file instead of index
+if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
+    header('Location: ../index.php');
     exit;
 }
+
 
 class HtmlRenderer
 {
