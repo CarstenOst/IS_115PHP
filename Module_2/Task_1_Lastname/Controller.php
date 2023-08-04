@@ -33,3 +33,4 @@ require_once '../sharedView.php';
 
 HtmlRenderer::lastNameFormPrint();
 HtmlRenderer::lastNameInfoPrint();
+HtmlRenderer::cookieButton();

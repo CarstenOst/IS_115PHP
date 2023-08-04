@@ -11,7 +11,6 @@
         <?php buttons() ?>
     </nav>
     <div id="content" class="center" style="padding-top: 55px;">
-        <?php CookieHelper::cookieButton(); ?>
     </div>
 </div>
 </body>
@@ -19,7 +18,6 @@
 
 
 <?php
-require_once 'CookieHelper.php';
 function buttons(): void
 {
     // Here you can see my best solution for finding the right dir for the button path
