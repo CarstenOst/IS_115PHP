@@ -93,10 +93,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="numbers">Enter numbers (separated by commas):</label><br>
 
             <!-- Values typed into the super global variable $_POST is available to the php script
-                The "??" accepts the left value ($_COOKIE) if there is anything in it, else it goes right to $_POST and checks again for a value.
-                Lastly it will (if null) insert an empty string in the input field -->
+                The "??" accepts the left value ($_COOKIE) if there is anything in it, else it goes right
+                and inserts an empty string in the input field -->
             <input type="text" name="numbers" id="numbers" oninput="restrictInput(this)"
-                   value="<?php echo $_COOKIE['numbers'] ?? ($_POST['numbers'] ?? ""); ?>" pattern="[0-9,]*" required>
+                   value="<?php echo $_COOKIE['numbers'] ?? ""; ?>" pattern="[0-9,]*" required>
             <!-- A warning that is displayed if the user enters anything other than numbers and commas
                  Use of <br> to get some space. It's kinda ugly but it works
              -->
