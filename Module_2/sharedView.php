@@ -11,7 +11,7 @@
         <?php buttons() ?>
     </nav>
     <div id="content" class="center" style="padding-top: 55px;">
-        <?php cookieButton() ?>
+        <?php CookieHelper::cookieButton(); ?>
     </div>
 </div>
 </body>
@@ -41,11 +41,4 @@ function buttons(): void
     }
 }
 
-function cookieButton(): void
-{
-    if (CookieHelper::hasTargetCookies()) {
-        echo '<form method="POST">';
-        echo '    <button type="submit" name="remove_cookies">Remove All Cookies</button>';
-        echo '</form>';
-    }
-}
+

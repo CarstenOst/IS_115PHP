@@ -21,5 +21,14 @@ class CookieHelper
         }
         return false;
     }
+
+    public static function cookieButton(): void
+    {
+        if (self::hasTargetCookies()) {
+            echo '<form method="POST">';
+            echo '    <button type="submit" name="remove_cookies">Remove All Cookies</button>';
+            echo '</form>';
+        }
+    }
 }
 
