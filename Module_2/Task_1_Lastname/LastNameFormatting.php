@@ -13,6 +13,12 @@ ASCII art stolen here from here: https://patorjk.com/software/taag/#p=display&f=
 
 Warning, excessive comments below.
 */
+
+if (!defined('IN_APPLICATION')) {
+    header('Location: ../index.html');
+    exit;
+}
+
 class LastNameFormatting
 {
     const FORMATTED_NAME = 'formattedLastName';
@@ -47,10 +53,11 @@ class LastNameFormatting
         // Get the matched non-letter prefix
         // To explain why I use $matches[0] as an array, we can read the docs;
         // "$matches[0] will contain the text that matched the full pattern,
-        // $matches[1] will have the text that matched the first captured parenthesized subpattern, and so on" (source preg_match() docs)
+        // $matches[1] will have the text that matched the first captured parenthesized subpattern, and so on"
+        // (source preg_match() docs)
         $nonLetterPrefix = $matches[0];
 
-        // Remove the non-letter prefix from the input string
+        // Remove the non-letter prefix from the beginning of the input string
         return ltrim($inputString, $nonLetterPrefix);
     }
 
@@ -62,16 +69,18 @@ class LastNameFormatting
      * but im making an exception here, as its only counting and making the first char upper case
      * and the fact that I split out some functions for potential reuse and better readability
      * @param string $lastName
-     * @return array An associative array containing the formatted last name, length, whitespaces and amount of characters without whitespaces
+     * @return array An associative array containing the formatted last name, length, whitespaces and amount of
+     * characters without whitespaces
      */
     public static function capitalizeLastNameAndCount(string $lastName): array
     {
-        // If the user did not submit anything, we can predict the output
-        // Thus saving resource
-        // It is though tempting to create a variable before, as to use it later if the length is not
+        // If the user disabled front-end restrictions and managed to
+        // not submit anything, we can predict the output.
+        // Thus saving resource.
+        // It is though tempting to create a variable of length here, as to use it later if the length is not
         // zero. However, the code might later remove all characters if there is no letters provided
         // Read the removeNonLetterPrefix
-        if (strlen($lastName) === 0){
+        if (strlen($lastName) === 0) {
             return [
                 'lastname' => "",
                 'length' => 0
@@ -81,41 +90,45 @@ class LastNameFormatting
         // Example; $lastName = self::removeNonLetterPrefix($lastName). But it will be an extra memory change
         // Meaning it will be less effective
         $formattedLastName = self::capitalizeFirstLetterInWords(self::removeNonLetterPrefix($lastName));
-        $length = strlen($formattedLastName);
         $whitespaces = self::countWhitespaces($formattedLastName);
+        $length = self::charLength($formattedLastName);
 
         // Here I return the associative array
-        // You must probably by now be like "Why TF are you using an associative array while constantly talking about memory and energy usage?"
+        // You must probably by now be like "Why TF are you using an associative array while
+        // constantly talking about memory and energy usage?"
         // And you're right, it is of course slightly worse (yet not noticeable in small scale),
         // and it is also way more readable than an index array. However, this is not as bad as
         // creating a variable that is used once like the removal of unwanted letters in the beginning
         return [
-            'lastName' => $formattedLastName,
             'length' => $length,
             'whitespaces' => $whitespaces,
-            'amountOfChars' => $length - $whitespaces
+            'lastName' => $formattedLastName,
+            'amountOfChars' => $length - $whitespaces,
         ];
     }
 
-    private static function capitalizeFirstLetterInWords($string): string {
-        // If you do not have mbstring extention then the program will run ucwords() instead (without UTF-8 :sad-face:)
+    private static function capitalizeFirstLetterInWords($string): string
+    {
+        // If you do not have mbstring extension then the program will run ucwords() instead (without UTF-8 :sad-face:)
         // You can fix this by adding mbstring in php.ini
         // Also check your php version
-        if (function_exists('mb_convert_case')){
+        if (function_exists('mb_convert_case')) {
             return mb_convert_case(strtolower($string), MB_CASE_TITLE, 'UTF-8');
         }
 
         return ucwords(strtolower($string));
     }
 
-
-
-
-    /**
-     * POV; you write way too long functions
-     * Function just prints out the information about the inputted last name
-     * @return void
-     */
-
-
+    private static function charLength(string $string): int
+    {
+        // I have found out that not everyone has the mbstring extension by default
+        // That's why I check for it here, and allow errors if it does not exist
+        if (function_exists('mb_strlen'))
+            return mb_strlen($string, 'UTF-8');
+        // If "æøå" is used, the length will be wrong (if the first if-statement is false,
+        // as 'strlen()' counts the amount of bytes used, and not chars
+        // So even if I only write 'ø' the length will be 2, which in terms of bytes
+        // is correct, but in terms of actual characters, is wrong
+        return strlen($string);
+    }
 }

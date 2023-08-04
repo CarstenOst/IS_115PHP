@@ -1,4 +1,6 @@
 <?php
+const IN_APPLICATION = true;
+
 include 'LastNameFormatting.php';
 include 'HtmlRenderer.php';
 // If the submit button is pressed, this code will run

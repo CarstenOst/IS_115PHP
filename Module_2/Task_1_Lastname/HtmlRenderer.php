@@ -1,5 +1,10 @@
 <?php
 
+if (!defined('IN_APPLICATION')) {
+    header('Location: ../index.html');
+    exit;
+}
+
 class HtmlRenderer
 {
     public static function lastNameFormPrint(): void
@@ -19,7 +24,11 @@ class HtmlRenderer
         EOT;
     }
 
-
+    /**
+     * POV; you write way too long functions
+     * Function just prints out the information about the inputted last name
+     * @return void
+     */
     public static function lastNameInfoPrint(): void
     {
         // More readability at the cost of some memory
@@ -35,6 +44,7 @@ class HtmlRenderer
             $amountOfChars = $data['amountOfChars'] ?? '';
 
             // phpStorm has some whiny inspections, so im going to ignore it for the following statement
+            // as I do not want to disable inspections completely
             /** @noinspection BadExpressionStatementJS */
             echo <<<EOT
                 <script>
