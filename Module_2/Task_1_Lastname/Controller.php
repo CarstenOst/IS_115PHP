@@ -33,4 +33,8 @@ require_once '../sharedView.php';
 
 HtmlRenderer::lastNameFormPrint();
 HtmlRenderer::lastNameInfoPrint();
-HtmlRenderer::cookieButton();
+
+// If there are cookies, I want to be able to remove them
+if (CookieHelper::hasTargetCookies()){
+    HtmlRenderer::cookieButton();
+}

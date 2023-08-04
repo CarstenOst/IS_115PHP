@@ -6,22 +6,19 @@ if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
     exit;
 }
 
-require_once '../CookieHelper.php';
 class HtmlRenderer
 {
     public static function cookieButton(): void
     {
-        if (CookieHelper::hasTargetCookies()) {
-            echo <<<EOT
-                <script>
-                    let cookieDiv = document.getElementById("content");
-                    cookieDiv.innerHTML += `
-                        <form method="POST">
-                        <button type="submit" name="remove_cookies">Remove All Cookies</button>
-                        </form>`;
-                </script>
-            EOT;
-        }
+        echo <<<EOT
+            <script>
+                let cookieDiv = document.getElementById("content");
+                cookieDiv.innerHTML += `
+                    <form method="POST">
+                    <button type="submit" name="remove_cookies">Remove All Cookies</button>
+                    </form>`;
+            </script>
+        EOT;
     }
 
     public static function lastNameFormPrint(): void
