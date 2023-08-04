@@ -8,12 +8,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['remove_cookies'])) {
         if (CookieHelper::hasTargetCookies()) {
-            // Loop through each cookie and remove it
-            foreach ($_COOKIE as $cookie_name => $cookie_value) {
-                setcookie($cookie_name, '', time() - 3600, '/');
-            }
+
+            unset($_COOKIE[LastNameFormatting::FORMATTED_NAME]);
+            setcookie(LastNameFormatting::FORMATTED_NAME, "", -1, '/');
             header('Location: ' . $_SERVER['PHP_SELF']);
             exit();
+
         }
     }
 
