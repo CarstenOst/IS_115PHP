@@ -21,7 +21,7 @@ if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
 
 class LastNameFormatting
 {
-    const FORMATTED_NAME = 'formattedLastName';
+    const FORMATTED_NAME_COOKIE = 'formattedLastName';
 
     private static function countWhitespaces($inputString): int
     {
