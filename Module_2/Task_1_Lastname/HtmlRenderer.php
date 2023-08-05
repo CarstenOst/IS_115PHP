@@ -46,6 +46,9 @@ class HtmlRenderer
     public static function lastNameInfoPrint(): void
     {
         $data = CookieHelper::jsonifyCookieString(LastNameFormatting::FORMATTED_NAME_COOKIE);
+        if (!$data){
+            echo 'Error when displaying cookie, seek help from the dev';
+        }
 
         // This is to see if there is anything in the array
         $lastName = $data['lastName'] ?? '';

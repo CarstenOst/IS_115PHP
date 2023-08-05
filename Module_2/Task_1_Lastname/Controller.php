@@ -21,13 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-
 require_once '../sharedView.php';
 
 HtmlRenderer::lastNameFormPrint();
-HtmlRenderer::lastNameInfoPrint();
 
-// If there are cookies, I want to be able to remove them
+// If there are cookies, I want to be able to see and remove them
 if (CookieHelper::hasTargetCookies(LastNameFormatting::FORMATTED_NAME_COOKIE)){
+    HtmlRenderer::lastNameInfoPrint();
     HtmlRenderer::cookieButton();
 }

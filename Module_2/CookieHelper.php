@@ -29,12 +29,16 @@ class CookieHelper
         }
     }
 
-    public static function jsonifyCookieString($cookieToJson) {
+    /**
+     * @param $cookieToJson
+     * @return array|bool
+     */
+    public static function jsonifyCookieString($cookieToJson): array|bool {
         // More readability at the cost of some memory
         $cookieExists = !empty($_COOKIE[$cookieToJson]);
         if ($cookieExists) {
             // json_decode() can be a little expensive, so we save it in a variable instead
-            return $data = json_decode($_COOKIE[$cookieToJson], true);
+            return json_decode($_COOKIE[$cookieToJson], true);
         }
         return false;
     }
