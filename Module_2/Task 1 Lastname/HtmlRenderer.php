@@ -83,22 +83,25 @@ class HtmlRenderer
         $color = $status ? 'green' : 'red';
 
         return <<<HTML
-        <div id="messageBox" style="background-color: $color">
-            $message
-        </div>
-        <script>
+    <div id="messageBox" style="background-color: $color">
+        $message
+    </div>
+    <script id="messageScript">
+        setTimeout(function() {
+            let element = document.getElementById('messageBox');
+            element.style.transition = "opacity 1s ease-in-out";
+            element.style.opacity = 0;
+        
             setTimeout(function() {
-                let element = document.getElementById('messageBox');
-                element.style.transition = "opacity 1s ease-in-out";
-                element.style.opacity = 0;
-            
-                setTimeout(function() {
-                    element.remove();
-                }, 1000);  
-            }, 1500);
-        </script>
-        HTML;
+                element.parentNode.removeChild(element);
+                let scriptElement = document.getElementById('messageScript');
+                scriptElement.parentNode.removeChild(scriptElement);
+            }, 1000);  
+        }, 3000);
+    </script>
+    HTML;
     }
+
 }
 
 
