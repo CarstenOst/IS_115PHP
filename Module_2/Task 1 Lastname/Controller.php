@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Siddharth was not able to remove cookies, so here you go
     // Also there is some EU rules, but they obviously do not apply to me
     CookieHelper::removeCookie(LastNameFormatting::FORMATTED_NAME_COOKIE);
-
+    // TODO move this to CookieHelper.php
     if (isset($_POST['string'])) {
         $input = $_POST['string'];
         $formattedLastName = LastNameFormatting::capitalizeLastNameAndCount($input);
@@ -26,7 +26,7 @@ require_once '../sharedView.php';
 HtmlRenderer::lastNameFormPrint();
 
 // If there are cookies, I want to be able to see and remove them
-if (CookieHelper::hasTargetCookies(LastNameFormatting::FORMATTED_NAME_COOKIE)){
+if (CookieHelper::isCookie(LastNameFormatting::FORMATTED_NAME_COOKIE)){
     HtmlRenderer::lastNameInfoPrint();
     HtmlRenderer::cookieButton();
 }
