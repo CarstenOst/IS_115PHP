@@ -15,7 +15,7 @@ class HtmlRenderer
                 let cookieDiv = document.getElementById("content");
                 cookieDiv.innerHTML += `
                     <form method="POST">
-                    <button type="submit" name="remove_cookies">Remove All Cookies</button>
+                    <button id="pointer" type="submit" name="remove_cookies">Remove Cookies</button>
                     </form>`;
             </script>
         EOT;
@@ -32,7 +32,7 @@ class HtmlRenderer
                     <form id="form" action="" method="POST">
                         <label for="string">Enter your last name</label><br>
                         <input type="text" name="string" id="string" required>
-                        <input type="submit" value="Submit">
+                        <input id="pointer" type="submit" value="Submit">
                     </form>`;
             </script>
         EOT;
