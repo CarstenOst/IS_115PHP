@@ -21,7 +21,7 @@ class HtmlRenderer
         EOT;
     }
 
-    public static function lastNameFormPrint(): void
+    public static function lastNameFormPrint(string $cookieName): void
     {
         // EOT is the open and close identifier, read more on about heredoc on php.net
         // Can be called anything, does not have to be "EOT" (End Of Text)
@@ -30,8 +30,8 @@ class HtmlRenderer
                 let myDiv = document.getElementById("content");
                 myDiv.innerHTML += `
                     <form id="form" action="" method="POST">
-                        <label for="string">Enter your last name</label><br>
-                        <input type="text" name="string" id="string" required>
+                        <label for="$cookieName">Enter your last name</label><br>
+                        <input type="text" name="$cookieName" id="$cookieName" required>
                         <input id="pointer" type="submit" value="Submit">
                     </form>`;
             </script>
@@ -43,9 +43,13 @@ class HtmlRenderer
      * Function just prints out the information about the inputted last name
      * @return void
      */
-    public static function lastNameInfoPrint(): void
+    public static function lastNameInfoPrint(?array $data): void
     {
-        $data = CookieHelper::jsonifyCookieString(LastNameFormatting::FORMATTED_NAME_COOKIE);
+        if (!$data){
+            // I start to feel the spaghetti now
+            $data = CookieHelper::jsonifyCookieString(LastNameFormatting::COOKIE_NAME) ?? null;
+        }
+
         if (!$data){
             echo 'Error when displaying cookie, seek help from the dev';
         }
@@ -56,21 +60,45 @@ class HtmlRenderer
         $whitespaces = $data['whitespaces'] ?? '';
         $amountOfChars = $data['amountOfChars'] ?? '';
 
-        // phpStorm has some whiny inspections, so im going to ignore it for the following statement
-        // as I do not want to disable inspections completely
-        /** @noinspection BadExpressionStatementJS */
-        echo <<<EOT
-            <script>
-                let myOtherDiv = document.getElementById('content');
-                myOtherDiv.innerHTML += '<p>Last name is: $lastName</p><p>Total length is: $length</p>';
-                if ($whitespaces > 0) {
-                    myOtherDiv.innerHTML += '<p>There are $whitespaces whitespaces</p>';
-                    }
-                if ($amountOfChars !== $length) {
-                    myOtherDiv.innerHTML += '<p>Amount of characters: $amountOfChars</p>';
-                    }
-            </script>
-        EOT;
+        $output = "
+        <script>
+            let myOtherDiv = document.getElementById('content');
+            myOtherDiv.innerHTML += '<p>Last name is: $lastName</p><p>Total length is: $length</p>';";
+
+        if ($whitespaces > 0) {
+            $output .= "myOtherDiv.innerHTML += '<p>There are $whitespaces whitespaces</p>';";
+        }
+
+        if ($amountOfChars !== $length) {
+            $output .= "myOtherDiv.innerHTML += '<p>Amount of characters: $amountOfChars</p>';";
+        }
+
+        $output .= "</script>";
+
+        echo $output;
 
     }
+
+    public static function generateResponse($message, $status): string {
+        $color = $status ? 'green' : 'red';
+
+        return <<<HTML
+        <div id="messageBox" style="background-color: $color">
+            $message
+        </div>
+        <script>
+            setTimeout(function() {
+                let element = document.getElementById('messageBox');
+                element.style.transition = "opacity 1s ease-in-out";
+                element.style.opacity = 0;
+            
+                setTimeout(function() {
+                    element.remove();
+                }, 1000);  
+            }, 1500);
+        </script>
+        HTML;
+    }
 }
+
+
