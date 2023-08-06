@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress CssUnusedSymbol -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -45,7 +46,7 @@
 
     // I already know that there will be 10 tasks, so this can be hardcoded to 10
     // Number of tags to create
-    const numTags = 10;
+    const numTags = 1;
 
     for (let i = 1; i <= numTags; i++) {
         // Create a new "a" element
@@ -56,12 +57,12 @@
         // Add the download attribute
         a.download = "";
         a.className = "download-button";
-        a.textContent = "Last ned oppgave " + i;
+        a.textContent = "Download task " + i;
         // Try to fetch the file
         fetch(a.href)
             .then(function(response) {
                 // If the response status is 200, the file exists
-                if (response.status === 200) {
+                if (true/*response.status === 200*/) {
 
                     document.getElementById('navbar').appendChild(a);
 
