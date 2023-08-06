@@ -1,18 +1,31 @@
 <?php
-ob_start();
 require_once '../CookieHelper.php';
 require_once '../Task 1 Lastname/LastNameFormatting.php';
 require_once '../Task 1 Lastname/HtmlRenderer.php';
+require_once '../PostHandler.php';
 // If the submit button is pressed, this code will run
 
+function processInput($unprocessedUserInput): array{
+    $status = [];
+    if ($unprocessedUserInput) {
+        // Always validate the input, however I will not do this, because of task 2 going to clean it up
+        // if (preg_match("/^[a-zA-Z-' ]*$/", $input)) <- (this is how it can be stopped)
+        $formattedLastName = LastNameFormatting::capitalizeLastNameAndCount($unprocessedUserInput);
+        CookieHelper::setCookie($unprocessedUserInput, $formattedLastName);
+
+        $status = [$formattedLastName, 'green'];
+    }
+
+    return $status;
+}
 
 
 function task2Controller(): void
 {
 
-    require_once '../Task 1 Lastname/Controller.php';
+    $unprocessedUserInput = PostHandler::requestPost(LastNameFormatting::COOKIE_NAME);
 
-    $processedUserInput = Task1Controller::requestPost();
+    $processedUserInput = processInput($unprocessedUserInput);
 
     require_once '../sharedView.php';
 
@@ -33,7 +46,3 @@ function task2Controller(): void
 }
 
 task2Controller();
-
-// Because im a shit programmer and have no idea why the header is already updated
-// I'll buy pizza to whoever finds the bug
-ob_end_flush();

@@ -2,38 +2,27 @@
 require_once 'LastNameFormatting.php';
 require_once 'HtmlRenderer.php';
 require_once '../CookieHelper.php';
-class Task1Controller{
-    // If the submit button is pressed, this code will run
-    private static function handleLastNamePostRequest(): array {
-        $status = [];
-            // Remove existing cookie
-            CookieHelper::removeCookie(LastNameFormatting::COOKIE_NAME);
+require_once '../PostHandler.php';
 
-            $input = $_POST[LastNameFormatting::COOKIE_NAME] ?? null;
 
-            if ($input) {
-                // Always validate the input, however I will not do this, because of task 2 going to clean it up
-                // if (preg_match("/^[a-zA-Z-' ]*$/", $input)) <- (this is how it can be stopped)
-                $formattedLastName = LastNameFormatting::capitalizeLastNameAndCount($input);
-                CookieHelper::setCookie(LastNameFormatting::COOKIE_NAME, $formattedLastName);
+function task1ProcessInput($unprocessedUserInput): array{
+    $status = [];
+    if ($unprocessedUserInput) {
+        // Always validate the input, however I will not do this, because of task 2 going to clean it up
+        // if (preg_match("/^[a-zA-Z-' ]*$/", $input)) <- (this is how it can be stopped)
+        $formattedLastName = LastNameFormatting::capitalizeLastNameAndCount($unprocessedUserInput);
+        CookieHelper::setCookie($unprocessedUserInput, $formattedLastName);
 
-                $status = [$formattedLastName, 'green'];
-            }
-
-        return $status;
+        $status = [$formattedLastName, 'green'];
     }
 
-    public static function requestPost(){
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            return self::handleLastNamePostRequest();
-        }
-    }
+    return $status;
 }
 
-require_once 'Controller.php';
 
-$processedUserInput = Task1Controller::requestPost();
-
+$unprocessedUserInput = PostHandler::requestPost(LastNameFormatting::COOKIE_NAME)
+;
+$processedUserInput = task1ProcessInput($unprocessedUserInput);
 
 require_once '../sharedView.php';
 
