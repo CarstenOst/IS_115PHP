@@ -39,6 +39,20 @@ body {
     cursor: pointer;
 }
 
+#messageBox {
+    top: 25px;
+    left: 50%;
+    opacity: 1;
+    color: white;
+    text-align: center;
+    position: absolute;
+    border-radius: 5px;
+    white-space: nowrap;
+    padding: 9px 20% 9px 20%;
+    transform: translate(-50%, -50%);
+    transition: opacity 1s ease-in-out;
+}
+
 .center {
     display: flex;
     flex-direction: column;

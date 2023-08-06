@@ -9,7 +9,6 @@ class CookieHelper
 {
 
     // You do not even want to know how long time I used on this cookie stuff
-
     /**
      * Checks if there is a cookie set with the name given
      * @param string $cookieToCheck The cookie to check
@@ -33,9 +32,15 @@ class CookieHelper
         if (isset($_POST['remove_cookies']) and CookieHelper::isCookie($cookieToRemove)) {
             unset($_COOKIE[$cookieToRemove]);
             setcookie($cookieToRemove, "", -1, '/');
-            header('Location: ' . $_SERVER['PHP_SELF']);
-            exit();
+            //header('Location: ' . $_SERVER['PHP_SELF']);
+            //exit();
         }
+    }
+
+    public static function setCookie(string $cookieName, $cookieData): void {
+        setcookie($cookieName, json_encode($cookieData), time() + 3600, "/");
+        //header('Location: ' . $_SERVER['PHP_SELF']);
+        //exit();
     }
 
     /**

@@ -1,5 +1,3 @@
-<?php require_once 'sharedFunctions.php'?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,14 +8,10 @@
 <body>
 <div class="center">
     <nav id="navbar" style="align-items: center" >
-        <?php sharedFunctions::generateNavigationButtons('Module_2'); ?>
+        <?php require_once 'sharedFunctions.php';sharedFunctions::generateNavigationButtons('Module_2');?>
     </nav>
     <div id="content" class="center" style="padding-top: 55px;">
     </div>
 </div>
 </body>
 </html>
-
-
-
-

@@ -21,7 +21,7 @@ if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
 
 class LastNameFormatting
 {
-    const FORMATTED_NAME_COOKIE = 'formattedLastName';
+    const COOKIE_NAME = 'formattedLastName';
 
     private static function countWhitespaces($inputString): int
     {
@@ -93,12 +93,7 @@ class LastNameFormatting
         $whitespaces = self::countWhitespaces($formattedLastName);
         $length = self::charLength($formattedLastName);
 
-        // Here I return the associative array
-        // You must probably by now be like "Why TF are you using an associative array while
-        // constantly talking about memory and energy usage?"
-        // And you're right, it is of course slightly worse (yet not noticeable in small scale),
-        // and it is also way more readable than an index array. However, this is not as bad as
-        // creating a variable that is used once like the removal of unwanted letters in the beginning
+        // Here I return the associative array.
         return [
             'length' => $length,
             'whitespaces' => $whitespaces,
