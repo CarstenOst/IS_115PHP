@@ -9,19 +9,28 @@ class CookieHelper
 {
 
     // You do not even want to know how long time I used on this cookie stuff
-    public static function hasTargetCookies($cookieToCheck): bool
+
+    /**
+     * Checks if there is a cookie set with the name given
+     * @param string $cookieToCheck The cookie to check
+     * @return bool true if cookie exists, false if cookie does not exist
+     */
+    public static function isCookie(string $cookieToCheck): bool
     {
-        $targetCookies = [$cookieToCheck]; // Add names of the cookies, as I go along
-        foreach ($targetCookies as $cookieName) {
-            if (isset($_COOKIE[$cookieName])) {
-                return true;
-            }
+        if (isset($_COOKIE[$cookieToCheck])) {
+            return true;
         }
         return false;
     }
 
-    public static function removeCookie($cookieToRemove): void {
-        if (isset($_POST['remove_cookies']) and CookieHelper::hasTargetCookies($cookieToRemove)) {
+    /**
+     * Removes a cookie
+     * @param string $cookieToRemove
+     * @return void
+     */
+    public static function removeCookie(string $cookieToRemove): void {
+        // TODO restructure so that the 'remove_cookies' is not hidden here, but rather gotten from input. Improves reuse too.
+        if (isset($_POST['remove_cookies']) and CookieHelper::isCookie($cookieToRemove)) {
             unset($_COOKIE[$cookieToRemove]);
             setcookie($cookieToRemove, "", -1, '/');
             header('Location: ' . $_SERVER['PHP_SELF']);
@@ -30,14 +39,12 @@ class CookieHelper
     }
 
     /**
+     * A function to make a cookie into an array
      * @param $cookieToJson
      * @return array|bool
      */
     public static function jsonifyCookieString($cookieToJson): array|bool {
-        // More readability at the cost of some memory
-        $cookieExists = !empty($_COOKIE[$cookieToJson]);
-        if ($cookieExists) {
-            // json_decode() can be a little expensive, so we save it in a variable instead
+        if (self::isCookie($cookieToJson)) {
             return json_decode($_COOKIE[$cookieToJson], true);
         }
         return false;
