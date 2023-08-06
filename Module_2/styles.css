@@ -35,6 +35,10 @@ body {
     background-color: #45a049;
 }
 
+#pointer {
+    cursor: pointer;
+}
+
 .center {
     display: flex;
     flex-direction: column;
