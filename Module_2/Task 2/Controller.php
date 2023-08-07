@@ -11,7 +11,7 @@ function processInput($unprocessedUserInput): array{
         // Always validate the input, however I will not do this, because of task 2 going to clean it up
         // if (preg_match("/^[a-zA-Z-' ]*$/", $input)) <- (this is how it can be stopped)
         $formattedLastName = LastNameFormatting::capitalizeLastNameAndCount($unprocessedUserInput);
-        CookieHelper::setCookie($unprocessedUserInput, $formattedLastName);
+        CookieHelper::setCookie(LastNameFormatting::COOKIE_NAME, $formattedLastName);
 
         $status = [$formattedLastName, 'green'];
     }
