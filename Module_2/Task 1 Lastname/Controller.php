@@ -11,6 +11,7 @@ function task1ProcessInput($unprocessedUserInput): array{
         // Always validate the input, however I will not do this, because of task 2 going to clean it up
         // if (preg_match("/^[a-zA-Z-' ]*$/", $input)) <- (this is how it can be stopped)
         $formattedLastName = LastNameFormatting::capitalizeLastNameAndCount($unprocessedUserInput);
+
         CookieHelper::setCookie(LastNameFormatting::COOKIE_NAME, $formattedLastName);
 
         $status = [$formattedLastName, 'green'];
@@ -20,8 +21,7 @@ function task1ProcessInput($unprocessedUserInput): array{
 }
 
 
-$unprocessedUserInput = PostHandler::requestPost(LastNameFormatting::COOKIE_NAME)
-;
+$unprocessedUserInput = PostHandler::requestPost(LastNameFormatting::COOKIE_NAME);
 $processedUserInput = task1ProcessInput($unprocessedUserInput);
 
 require_once '../sharedView.php';
@@ -29,13 +29,13 @@ require_once '../sharedView.php';
 HtmlRenderer::lastNameFormPrint(LastNameFormatting::COOKIE_NAME);
 
 if ($processedUserInput){
-    HtmlRenderer::lastNameInfoPrint($processedUserInput[0]);
+    HtmlRenderer::lastNameInfoPrint($processedUserInput[0], LastNameFormatting::COOKIE_NAME);
     HtmlRenderer::cookieButton();
 }
 
-// If there are cookies, I want to be able to see and remove them
+// If there are cookies, I want to be able to see and to remove them
 elseif (CookieHelper::isCookie(LastNameFormatting::COOKIE_NAME)){
-    HtmlRenderer::lastNameInfoPrint(null);
+    HtmlRenderer::lastNameInfoPrint(null, LastNameFormatting::COOKIE_NAME);
     HtmlRenderer::cookieButton();
 }
 

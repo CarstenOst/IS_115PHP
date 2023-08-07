@@ -43,15 +43,15 @@ class HtmlRenderer
      * Function just prints out the information about the inputted last name
      * @return void
      */
-    public static function lastNameInfoPrint(?array $data): void
+    public static function lastNameInfoPrint(?array $data, ?string $cookieName): void
     {
-        if (!$data){
+        if (!$data and $cookieName) {
             // I start to feel the spaghetti now
-            $data = CookieHelper::jsonifyCookieString(LastNameFormatting::COOKIE_NAME) ?? null;
+            $data = CookieHelper::jsonifyCookieString($cookieName) ?? null;
         }
 
         if (!$data){
-            echo 'Error when displaying cookie, seek help from the dev';
+            $data['lastName'] = 'Error, logic is wrong';
         }
 
         // This is to see if there is anything in the array
@@ -96,8 +96,8 @@ class HtmlRenderer
                 element.parentNode.removeChild(element);
                 let scriptElement = document.getElementById('messageScript');
                 scriptElement.parentNode.removeChild(scriptElement);
-            }, 1000);  
-        }, 3000);
+            }, 800);  
+        }, 800);
     </script>
     HTML;
     }

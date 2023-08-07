@@ -110,7 +110,7 @@ class LastNameFormatting
         if (function_exists('mb_convert_case')) {
             return mb_convert_case(strtolower($string), MB_CASE_TITLE, 'UTF-8');
         }
-
+        // I use ucwords() insteadof ucfirst(), as it will capitalize the first letter of each word
         return ucwords(strtolower($string));
     }
 
