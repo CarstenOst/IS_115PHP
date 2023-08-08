@@ -32,6 +32,11 @@ class CookieHelper
         setcookie($cookieToRemove, "", -1, '/');
     }
 
+    /** Sets a cookie
+     * @param string $cookieName
+     * @param $cookieData
+     * @return void
+     */
     public static function setCookie(string $cookieName, $cookieData): void {
         setcookie($cookieName, json_encode($cookieData), time() + 3600, "/");
     }
@@ -41,7 +46,7 @@ class CookieHelper
      * @param $cookieToJson
      * @return array|bool
      */
-    public static function jsonifyCookieString($cookieToJson): array|bool {
+    public static function jsonDecodeCookieString($cookieToJson): array|bool {
         if (self::isCookie($cookieToJson)) {
             return json_decode($_COOKIE[$cookieToJson], true);
         }
