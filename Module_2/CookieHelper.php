@@ -28,19 +28,12 @@ class CookieHelper
      * @return void
      */
     public static function removeCookie(string $cookieToRemove): void {
-        // TODO restructure so that the 'remove_cookies' is not hidden here, but rather gotten from input. Improves reuse too.
-        if (isset($_POST['remove_cookies']) and CookieHelper::isCookie($cookieToRemove)) {
-            unset($_COOKIE[$cookieToRemove]);
-            setcookie($cookieToRemove, "", -1, '/');
-            //header('Location: ' . $_SERVER['PHP_SELF']);
-            //exit();
-        }
+        unset($_COOKIE[$cookieToRemove]);
+        setcookie($cookieToRemove, "", -1, '/');
     }
 
     public static function setCookie(string $cookieName, $cookieData): void {
         setcookie($cookieName, json_encode($cookieData), time() + 3600, "/");
-        //header('Location: ' . $_SERVER['PHP_SELF']);
-        //exit();
     }
 
     /**
