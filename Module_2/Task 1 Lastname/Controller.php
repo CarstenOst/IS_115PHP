@@ -4,7 +4,6 @@ require_once 'HtmlRenderer.php';
 require_once '../CookieHelper.php';
 require_once '../PostHandler.php';
 
-
 function task1ProcessInput($unprocessedUserInput): array{
     $status = [];
     if ($unprocessedUserInput) {
@@ -24,7 +23,8 @@ function task1ProcessInput($unprocessedUserInput): array{
 $unprocessedUserInput = PostHandler::requestPost(LastNameFormatting::COOKIE_NAME);
 $processedUserInput = task1ProcessInput($unprocessedUserInput);
 
-require_once '../sharedView.php';
+require_once '../sharedViewTop.php';
+
 
 HtmlRenderer::lastNameFormPrint(LastNameFormatting::COOKIE_NAME);
 
@@ -42,3 +42,5 @@ elseif (CookieHelper::isCookie(LastNameFormatting::COOKIE_NAME)){
 if (!empty($processedUserInput)) {
     echo $response = HtmlRenderer::generateResponse($processedUserInput[0]['lastName']. ' was successfully added', $processedUserInput[1]);
 }
+
+require_once '../sharedViewBottom.php';

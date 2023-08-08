@@ -11,7 +11,3 @@
         <?php require_once 'sharedFunctions.php';sharedFunctions::generateNavigationButtons('Module_2');?>
     </nav>
     <div id="content" class="center" style="padding-top: 55px;">
-    </div>
-</div>
-</body>
-</html>
