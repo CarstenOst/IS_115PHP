@@ -11,13 +11,9 @@ class HtmlRenderer
     public static function cookieButton(): void
     {
         echo <<<EOT
-            <script>
-                let cookieDiv = document.getElementById("content");
-                cookieDiv.innerHTML += `
-                    <form method="POST">
-                    <button id="pointer" type="submit" name="remove_cookies">Remove Cookies</button>
-                    </form>`;
-            </script>
+            <form method="POST">
+                <button id="pointer" type="submit" name="remove_cookies">Remove Cookies</button>
+            </form>
         EOT;
     }
 
@@ -26,28 +22,26 @@ class HtmlRenderer
         // EOT is the open and close identifier, read more on about heredoc on php.net
         // Can be called anything, does not have to be "EOT" (End Of Text)
         echo <<<EOT
-            <script>
-                let myDiv = document.getElementById("content");
-                myDiv.innerHTML += `
-                    <form id="form" action="" method="POST">
-                        <label for="$cookieName">Enter your last name</label><br>
-                        <input type="text" name="$cookieName" id="$cookieName" required>
-                        <input id="pointer" type="submit" value="Submit">
-                    </form>`;
-            </script>
+            <form id="form" action="" method="POST">
+                <label for="$cookieName">Enter your last name</label><br>
+                <input type="text" name="$cookieName" id="$cookieName" value"yuh" required>
+                <input id="pointer" type="submit" value="Submit">
+            </form>
         EOT;
     }
 
     /**
      * POV; you write way too long functions
      * Function just prints out the information about the inputted last name
+     * @param array|null $data, array must have 'lastName', 'length', 'whitespaces' and 'amountOfChars' keys (yes, I know, I should have used a class)
+     * @param string|null $cookieName
      * @return void
      */
     public static function lastNameInfoPrint(?array $data, ?string $cookieName): void
     {
         if (!$data and $cookieName) {
             // I start to feel the spaghetti now
-            $data = CookieHelper::jsonifyCookieString($cookieName) ?? null;
+            $data = CookieHelper::jsonDecodeCookieString($cookieName) ?? null;
         }
 
         if (!$data){
@@ -60,20 +54,15 @@ class HtmlRenderer
         $whitespaces = $data['whitespaces'] ?? '';
         $amountOfChars = $data['amountOfChars'] ?? '';
 
-        $output = "
-        <script>
-            let myOtherDiv = document.getElementById('content');
-            myOtherDiv.innerHTML += '<p>Last name is: $lastName</p><p>Total length is: $length</p>';";
+        $output = "<p>Last name is: $lastName</p><p>Total length is: $length</p>";
 
         if ($whitespaces > 0) {
-            $output .= "myOtherDiv.innerHTML += '<p>There are $whitespaces whitespaces</p>';";
+            $output .= "<p>There are $whitespaces whitespaces</p>";
         }
 
         if ($amountOfChars !== $length) {
-            $output .= "myOtherDiv.innerHTML += '<p>Amount of characters: $amountOfChars</p>';";
+            $output .= "<p>Amount of characters: $amountOfChars</p>";
         }
-
-        $output .= "</script>";
 
         echo $output;
 
@@ -101,7 +90,6 @@ class HtmlRenderer
     </script>
     HTML;
     }
-
 }
 
 
