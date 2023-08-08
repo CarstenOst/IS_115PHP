@@ -3,7 +3,7 @@
 class PostHandler
 {
     // If the submit button is pressed, this code will run
-    private static function handleLastNamePostRequest(string $cookieName): string {
+    private static function handlePostRequest(string $cookieName): string {
         return $_POST[$cookieName] ?? '';
     }
 
@@ -15,7 +15,7 @@ class PostHandler
                 CookieHelper::removeCookie($cookieName);
                 return '';
             }
-            return self::handleLastNamePostRequest($cookieName);
+            return self::handlePostRequest($cookieName);
         }
         return '';
     }
