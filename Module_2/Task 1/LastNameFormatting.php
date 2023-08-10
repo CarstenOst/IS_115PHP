@@ -14,6 +14,7 @@ ASCII art stolen here from here: https://patorjk.com/software/taag/#p=display&f=
 Warning, excessive comments below.
 */
 
+// This is to prevent direct access to this file from browser
 if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
     header('Location: ../index.php');
     exit;
@@ -23,7 +24,12 @@ class LastNameFormatting
 {
     const COOKIE_NAME = 'formattedLastName';
 
-    private static function countWhitespaces($inputString): int
+    /**
+     * Counts whitespaces in a string
+     * @param string $inputString The string to count whitespaces in
+     * @return int The number of whitespaces
+     */
+    private static function countWhitespaces(string $inputString): int
     {
         // Just to be sure we're not talking to a king
         return preg_match_all('/\s/', $inputString);
@@ -102,7 +108,12 @@ class LastNameFormatting
         ];
     }
 
-    private static function capitalizeFirstLetterInWords($string): string
+    /**
+     * Capitalizes the first letter in each word in a string
+     * @param string $string The string to capitalize
+     * @return string The string with capitalized first letter in each word
+     */
+    private static function capitalizeFirstLetterInWords(string $string): string
     {
         // If you do not have mbstring extension then the program will run ucwords() instead (without UTF-8 :sad-face:)
         // You can fix this by adding mbstring in php.ini
@@ -110,10 +121,15 @@ class LastNameFormatting
         if (function_exists('mb_convert_case')) {
             return mb_convert_case(strtolower($string), MB_CASE_TITLE, 'UTF-8');
         }
-        // I use ucwords() insteadof ucfirst(), as it will capitalize the first letter of each word
+        // I use ucwords() instead of ucfirst(), as it will capitalize the first letter of each word
         return ucwords(strtolower($string));
     }
 
+    /**
+     * Counts the amount of characters in a string
+     * @param string $string The string to count characters in
+     * @return int The number of characters in said string
+     */
     private static function charLength(string $string): int
     {
         // I have found out that not everyone has the mbstring extension by default
