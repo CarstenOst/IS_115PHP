@@ -20,9 +20,9 @@ class sharedFunctions
         // Here I build the base url.
         // Perhaps the most exciting part is the strstr() which finds the needle in the haystack,
         // where the first parameter is the haystack, second is the needle to find, and the last bool
-        // decides weather or not to return the part of the haystack before the needle, which I want in this instance.
+        // decides whether to return the part of the haystack before the needle, which I want in this instance.
         // I do this because of my file structure and that I use phpStorm for quick and easy local hosting of the website.
-        // See the code on GitHub for info about the structure.
+        // See the code on GitHub for info about the structure; https://github.com/CarstenOst/IS_115PHP
         return 'http://' . $httpHost . strstr($requestURI, $folder, true) . $folder . '/';
     }
 
@@ -43,16 +43,12 @@ class sharedFunctions
     /**
      * Generates navigation buttons for directories that have a 'Controller.php' file.
      *
-     * This method retrieves all directories in the current directory that contain a 'Controller.php' file.
+     * This function retrieves all directories in the current directory that contain a 'Controller.php' file.
      * It then generates HTML buttons for each of these directories, using the directory name as the button label.
      * These buttons, when clicked, will navigate to the 'Controller.php' file in the corresponding directory.
      *
      * @param string $folder The name of the folder that will be appended to the base URL for generating the button links.
-     *
-     * @return void This method does not return anything. It directly echoes the HTML buttons to the output.
-     *
-     * @throws Exception If any errors occur during directory scanning or URL generation, an Exception may be thrown.
-     *
+     * @return void Echos the HTML buttons to the output.
      * Usage:
      *
      * <?php
@@ -68,7 +64,10 @@ class sharedFunctions
         foreach ($directories as $dir) {
             $url = htmlspecialchars($baseURL . "$dir/Controller.php", ENT_QUOTES, 'UTF-8');
             $dir = htmlspecialchars($dir, ENT_QUOTES, 'UTF-8');
-            echo "<a href=\"$url\"><button id=\"$dir\">$dir</button></a>";
+            echo <<<HTML
+                <a href="$url"><button id="$dir">$dir</button></a>
+                HTML;
+
         }
     }
 }
