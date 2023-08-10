@@ -67,7 +67,6 @@ class sharedFunctions
             echo <<<HTML
                 <a href="$url"><button id="$dir">$dir</button></a>
                 HTML;
-
         }
     }
 }
