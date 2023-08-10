@@ -8,15 +8,24 @@ if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
 
 class HtmlRenderer
 {
-    public static function cookieButton(): void
+    /**
+     * Generates a button where you can remove the cookie
+     * @return void
+     */
+    public static function removeCookieButton(): void
     {
         echo <<<EOT
             <form method="POST">
-                <button id="pointer" type="submit" name="remove_cookies">Remove Cookies</button>
+                <button id="removeCookieButton" type="submit" name="remove_cookies">Remove Cookies</button>
             </form>
         EOT;
     }
 
+    /**
+     * Generates a form where you can input your last name
+     * @param string $cookieName The name of the cookie to set
+     * @return void echo the form
+     */
     public static function lastNameFormPrint(string $cookieName): void
     {
         // EOT is the open and close identifier, read more on about heredoc on php.net
@@ -47,8 +56,7 @@ class HtmlRenderer
             // This would never happen though, if my controller logic is on point.
             $data = json_decode(CookieHandler::getCookie($cookieName), true) ?? null;
         }
-        // Now if there still is no data, we really should throw an error, but I am lazy
-        //
+        // Now if there still is no data, we really should throw an error, as this should not be called without data or cookie
         if (!$data){
             $data['lastName'] = 'Error, logic is wrong';
         }
@@ -59,12 +67,16 @@ class HtmlRenderer
         $whitespaces = $data['whitespaces'] ?? '';
         $amountOfChars = $data['amountOfChars'] ?? '';
 
+        // I use $output and concatenate whatever HTML code I want to echo, and then echo it at the end
         $output = "<p>Last name is: $lastName</p><p>Total length is: $length</p>";
 
+        // If there are whitespaces, I want to echo that too
         if ($whitespaces > 0) {
             $output .= "<p>There are $whitespaces whitespaces</p>";
         }
 
+        // If the length of the last name is not the same as the length of the string, I want to echo that.
+        // This means that there are spaces in the string.
         if ($amountOfChars !== $length) {
             $output .= "<p>Amount of characters: $amountOfChars</p>";
         }
