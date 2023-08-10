@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="../styles.css">
-    <script src="../script.js"></script>
-    <title>Module_2</title>
+    <title>Module 2</title>
 </head>
 <body>
 <div class="center">
