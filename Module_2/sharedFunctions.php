@@ -49,6 +49,7 @@ class sharedFunctions
      *
      * @param string $folder The name of the folder that will be appended to the base URL for generating the button links.
      * @return void Echos the HTML buttons to the output.
+     *
      * Usage:
      *
      * <?php
