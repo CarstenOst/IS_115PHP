@@ -1,50 +1,49 @@
 <?php
-require_once '../CookieHelper.php';
-require_once '../Task 1 Lastname/LastNameFormatting.php';
-require_once '../Task 1 Lastname/HtmlRenderer.php';
+require_once 'RemovePhpCode.php';
 require_once '../PostHandler.php';
+require_once '../CookieHandler.php';
+require_once '../Task 1/HtmlRenderer.php';
+require_once '../Task 1/LastNameFormatting.php';
 
-include 'RemovePhpCode.php';
-// If the submit button is pressed, this code will run
 
-function processInput($unprocessedUserInput): array{
-    $status = [];
-    if ($unprocessedUserInput) {
-        // Always validate the input, however I will not do this, because of task 2 going to clean it up
-        // if (preg_match("/^[a-zA-Z-' ]*$/", $input)) <- (this is one way to stop it)
-        $formattedLastName = LastNameFormatting::capitalizeLastNameAndCount($unprocessedUserInput);
-        CookieHelper::setCookie(RemoveCode::COOKIE_NAME, $formattedLastName);
+// The main difference from task 1, where I call secureRequestPost instead of requestPost
+// The secureRequestPost function will remove php and html code from the input
+// It also has some hidden features, like removing the cookie, if the remove cookie button is pressed
+// This is not the best way to do it, as it hides the functionality, but I will hopefully learn more about this in a later module
+$noCodeUserInput = PostHandler::secureRequestPost(RemoveCode::COOKIE_NAME);
 
-        $status = [$formattedLastName, 'green'];
-    }
 
-    return $status;
+// If there is an input, we then format the input here same as in task 1, and set a cookie of the formatted text
+if ($noCodeUserInput) {
+    $processedUserInput = LastNameFormatting::capitalizeLastNameAndCount($noCodeUserInput);
+    // Since the cookie can only store strings, we need to convert the array to a string
+    // We do this by using json_encode()
+    CookieHandler::set(RemoveCode::COOKIE_NAME, json_encode($processedUserInput));
+} else {
+    $processedUserInput = null;
 }
 
+// Here we start building the top of the html page
+// You can notice that the code above will run without getting any input first time
+// Which I think can be handled earlier, but I will not do that now
+// The line underneath cannot be above the code above, because we need to set the cookie first, and the header must be set before any output
+require_once '../sharedViewTop.php';
 
-function task2Controller(): void
-{
-    $unprocessedUserInput = PostHandler::secureRequestPost(RemoveCode::COOKIE_NAME);
+// Display the form, which gets the cookie name as a parameter
+HtmlRenderer::lastNameFormPrint(RemoveCode::COOKIE_NAME);
 
-    $processedUserInput = processInput($unprocessedUserInput);
 
-    require_once '../sharedView.php';
-
-    HtmlRenderer::lastNameFormPrint(RemoveCode::COOKIE_NAME);
-
-    if ($processedUserInput) {
-
-        HtmlRenderer::lastNameInfoPrint($processedUserInput[0], RemoveCode::COOKIE_NAME);
-        HtmlRenderer::cookieButton();
-    } // If there are cookies, I want to be able to see and remove them
-    elseif (CookieHelper::isCookie(RemoveCode::COOKIE_NAME)) {
-        HtmlRenderer::lastNameInfoPrint(null, RemoveCode::COOKIE_NAME);
-        HtmlRenderer::cookieButton();
-    }
-
-    if (!empty($processedUserInput)) {
-        echo HtmlRenderer::generateResponse($processedUserInput[0]['lastName'] . ' was successfully added', $processedUserInput[1]);
-    }
+// If there is user input, I want to see it. I also want to see the remove cookie button
+if ($processedUserInput) {
+    HtmlRenderer::generateResponse($processedUserInput['lastName'] . ' was successfully added', true);
+    HtmlRenderer::lastNameInfoPrint($processedUserInput, RemoveCode::COOKIE_NAME);
+    HtmlRenderer::removeCookieButton();
+}
+// If there is no input but there are cookies, I want to be able to see and remove them
+elseif (CookieHandler::isCookie(RemoveCode::COOKIE_NAME)) {
+    HtmlRenderer::lastNameInfoPrint(null, RemoveCode::COOKIE_NAME);
+    HtmlRenderer::removeCookieButton();
 }
 
-task2Controller();
+// Here we end the html page
+require_once '../sharedViewBottom.php';
