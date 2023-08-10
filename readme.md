@@ -15,7 +15,11 @@
 - [x] Task 1.4
 - [x] Task 1.5
 ### Submission 2
-- [ ] Task 2.1
+- [x] Task 2.1
+- [x] Task 2.2
+- [x] Task 2.3
+- [x] Task 2.4
+- [x] Task 2.5
 ### Submission 3
 - [ ] Task 3.1
 ### Submission 4
