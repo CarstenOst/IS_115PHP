@@ -21,8 +21,6 @@ class PasswordGenerator
             // add the character at the index to the password string
             $password .= $characters[$index];
         }
-
-
         return $password;
     }
 
@@ -37,6 +35,7 @@ class PasswordGenerator
             return false;
         }
 
+        // Time for some regex
         // check if the password !contains at least one number
         if (!preg_match('/[0-9]/', $password)) {
             return false;
@@ -61,15 +60,20 @@ class PasswordGenerator
      * @return string The generated password
      */
     public static function getValidPassword(int $length = 8): string {
+        // Max attempts to get a valid password
+        // This is important to not accidentally make an infinite loop
         $maxAttempts = 100;
         do {
             $password = self::passwordGenerator($length);
         } while (!self::isValid($password) and $maxAttempts-- > 0);
 
+        // If we could not get a valid password, the function is most likely called with $length being
+        // shorter than 8
         if ($maxAttempts <= 0) {
             return 'Could not generate a valid password, try increasing the password length';
             //throw new Exception('Could not generate a valid password');
         }
+        // Return a valid password
         return $password;
     }
 }
