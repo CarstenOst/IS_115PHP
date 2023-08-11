@@ -9,6 +9,7 @@ class PasswordGenerator
      * @return string The generated password
      */
     private static function passwordGenerator(int $length = 8): string {
+        // The characters to use when generating the password
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_=+[]{}|;:,.<>?';
         $password = '';
         // We need to know the max length of the characters string as to not try to look up an index that does not exist
@@ -18,7 +19,7 @@ class PasswordGenerator
         for ($i = 0; $i < $length; $i++) {
             // get a random number between 0 and the max length of the characters string
             $index = rand(0, $max);
-            // add the character at the index to the password string
+            // add a random character at the index to the password string
             $password .= $characters[$index];
         }
         return $password;
@@ -71,7 +72,7 @@ class PasswordGenerator
         // shorter than 8
         if ($maxAttempts <= 0) {
             return 'Could not generate a valid password, try increasing the password length';
-            //throw new Exception('Could not generate a valid password');
+            //throw new Exception('Could not generate a valid password'); // I'll return instead of handling an exception
         }
         // Return a valid password
         return $password;
