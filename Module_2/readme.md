@@ -3,3 +3,6 @@ Write any letter before the html or php code. Otherwise, removeNonLetterPrefix()
 ```
 SometextBeforeHtmlOrPhpCode <h1>hello</h1>
 ```
+
+The same goes for task 2, but here the code will be removed anyway
+The other tasks do not need clarifications.
