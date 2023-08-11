@@ -14,7 +14,7 @@ class ValidateEmailView
         self::displayForm($cookieName, $input);
         self::displayEmail($input);
 
-        // This is not elegant, and could be made better. But cookies is not part of the task, so I will leave it as it is.
+        // This could be made better. But cookies is not part of the task, so I will leave this logic as it is.
         if (CookieHandler::isCookie($cookieName) or $input) {
             HtmlRenderer::removeCookieButton();
         }
