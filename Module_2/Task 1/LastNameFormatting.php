@@ -20,8 +20,12 @@ if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
     exit;
 }
 
+/**
+ * Class LastNameFormatting, which is a class that contains functions for formatting last names
+ */
 class LastNameFormatting
 {
+    // You can see how I use the cookie name in the controller
     const COOKIE_NAME = 'formattedLastName';
 
     /**
@@ -68,8 +72,8 @@ class LastNameFormatting
     }
 
     /**
-     * While this method is meant for a last name, it will still work with any names or words.
-     * Therefore, the method and variable names could be more generic as the code can be reused.
+     * While this function is meant for a last name, it will still work with any names or words.
+     * Therefore, the function and variable names could be more generic as the code can be reused.
      * But I will not do this here as it is specific to the task
      * It is also bad practice to do both multiple things in a function,
      * but im making an exception here, as its only counting and making the first char upper case
@@ -85,7 +89,7 @@ class LastNameFormatting
         // Thus saving resource.
         // It is though tempting to create a variable of length here, as to use it later if the length is not
         // zero. However, the code might later remove all characters if there is no letters provided
-        // Read the removeNonLetterPrefix
+        // (read the removeNonLetterPrefix for more context).
         if (strlen($lastName) === 0) {
             return [
                 'lastname' => "",
@@ -133,7 +137,7 @@ class LastNameFormatting
     private static function charLength(string $string): int
     {
         // I have found out that not everyone has the mbstring extension by default
-        // That's why I check for it here, and allow errors if it does not exist
+        // That's why I check for it here, and run strlen() instead if it does not exist
         if (function_exists('mb_strlen'))
             return mb_strlen($string, 'UTF-8');
         // If "æøå" is used, the length will be wrong (if the first if-statement is false,
