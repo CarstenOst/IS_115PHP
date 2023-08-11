@@ -2,7 +2,9 @@
 require_once 'Calculator.php';
 require '../sharedViewTop.php';
 
+// The complexity drops once I stop fixating about cookies
 
+// This is the form that will be displayed
 echo <<<FORM
     <form action="" method="post">
         <label for="num1">Number 1:</label>
