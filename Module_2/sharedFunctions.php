@@ -21,7 +21,7 @@ class sharedFunctions
         // Perhaps the most exciting part is the strstr() which finds the needle in the haystack,
         // where the first parameter is the haystack, second is the needle to find, and the last bool
         // decides whether to return the part of the haystack before the needle, which I want in this instance.
-        // I do this because of my file structure and that I use phpStorm for quick and easy local hosting of the website.
+        // I do this because the file structure will change when delivering, and that I use phpStorm for quick and easy local hosting of the website.
         // See the code on GitHub for info about the structure; https://github.com/CarstenOst/IS_115PHP
         return 'http://' . $httpHost . strstr($requestURI, $folder, true) . $folder . '/';
     }
