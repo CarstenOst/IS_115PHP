@@ -62,6 +62,9 @@ class sharedFunctions
         $baseURL = self::getBaseURL($folder);
         $directories = self::getDirectoriesWithController($currentDir);
 
+        // Sort the array alphabetically
+        sort($directories);
+
         foreach ($directories as $dir) {
             $url = htmlspecialchars($baseURL . "$dir/Controller.php", ENT_QUOTES, 'UTF-8');
             $dir = htmlspecialchars($dir, ENT_QUOTES, 'UTF-8');
