@@ -12,19 +12,22 @@ $email = PostHandler::requestPost(Validate::COOKIE_NAME);
 if (!$email and CookieHandler::isCookie(Validate::COOKIE_NAME)) {
     $email = CookieHandler::getCookie(Validate::COOKIE_NAME);
     ValidateEmailView::generateView(Validate::COOKIE_NAME, $email);
+    // Return to stop the script. I'm not sure if I mentioned it before,
+    // but if one calls return in a global scope, such as here, it will stop the script.
+    // So the code below will not run, if this return is triggered
     return;
 }
 
 // If there is an input
 if ($email) {
-    // If the email is valid, set the cookie
+    // If the email is valid, set the cookie and generate view and a popup response
     if (Validate::email($email)) {
         CookieHandler::set(Validate::COOKIE_NAME, $email);
         ValidateEmailView::generateView(Validate::COOKIE_NAME, $email);
         HtmlRenderer::generateResponse('Valid e-mail added: ' . $email, true);
         return;
     }
-    // If the email is not valid, remove the previous cookie
+    // If the email is not valid, and there is a cookie, remove the cookie
     if (CookieHandler::isCookie(Validate::COOKIE_NAME)){
         CookieHandler::removeCookie(Validate::COOKIE_NAME);
     }
