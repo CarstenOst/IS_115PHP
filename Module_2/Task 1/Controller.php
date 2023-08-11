@@ -12,7 +12,7 @@ require 'LastNameFormatting.php';
 
 
 
-// Most of this task is found in LastNameFormatting.php. And I made some handlers such as PostHandler.php and HtmlRenderer.php.
+// Most of this task is found in LastNameFormatting.php. And I made some handlers such as PostHandler.php, CookieHandle.php and HtmlRenderer.php.
 
 // Here we get input from the user
 $unprocessedUserInput = PostHandler::requestPost(LastNameFormatting::COOKIE_NAME);
