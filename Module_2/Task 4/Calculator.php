@@ -12,6 +12,7 @@ class Calculator
     public static function calculate(int $firstNumber, string $operator, int $secondNumber): string
     {
         // The "match" expression is new in PHP 8. It looks cleaner than a switch statement
+        // In this case, im only utilizing the subtraction operator, but it could be used for all operators
         return match ($operator) {
             '+' => $firstNumber + $secondNumber,
             '-' => $firstNumber - $secondNumber,
