@@ -59,18 +59,18 @@
         a.className = "download-button";
         a.textContent = "Download task " + i;
         // Try to fetch the file
-        fetch(a.href)
-            .then(function(response) {
-                // If the response status is 200, the file exists
-                if (true/*response.status === 200*/) {
+        //fetch(a.href)
+        //    .then(function(response) {
+        //        // If the response status is 200, the file exists
+        //        if (true/*response.status === 200*/) {
 
                     document.getElementById('navbar').appendChild(a);
 
-                }
-            })
-            .catch(function(error) {
-                console.log('Error:', error);
-            });
+        //        }
+        //    })
+        //    .catch(function(error) {
+        //        console.log('Error:', error);
+        //    });
     }
 </script>
 </html>
