@@ -26,7 +26,12 @@ if (isset($_POST['submit'])) {
     echo "<br>";
     // Calling abs() on the result of Calculator::calculate() to make sure the result is positive
     // Printing the result as a sentence
-    echo "The differance of $num1 and $num2 is " . abs(Calculator::calculate($num1, '-', $num2));
+    if (preg_match('/^[0-9]+$/', $num1) and preg_match('/^[0-9]+$/', $num2)){
+        echo "The differance of $num1 and $num2 is " . abs(Calculator::calculate($num1, '-', $num2));
+        return;
+    }
+
+    echo 'You naughty, naughty';
 }
 
 // It works without this line, but it's good practice to close the HTML document
