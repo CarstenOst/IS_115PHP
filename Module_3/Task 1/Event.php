@@ -6,6 +6,7 @@ class Event
     private string $eventDescription;
     private string $eventContact;
     private string $eventLocation;
+    private DateTimeZone $eventTimeZone;
     private DateTimeImmutable $eventDate;
     private DateInterval $eventDuration;
     private DateTimeImmutable $eventEndDate;
@@ -20,6 +21,7 @@ class Event
         string $eventDescription,
         string $eventContact,
         string $eventLocation,
+        string $eventTimeZone,
         string $eventDate,
         string $eventDuration
     ) {
@@ -27,7 +29,8 @@ class Event
         $this->eventDescription = $eventDescription;
         $this->eventContact = $eventContact;
         $this->eventLocation = $eventLocation;
-        $this->eventDate = new DateTimeImmutable($eventDate);
+        $this->eventTimeZone = new DateTimeZone($eventTimeZone);
+        $this->eventDate = new DateTimeImmutable($eventDate, $this->eventTimeZone);
         $this->eventDuration = new DateInterval($eventDuration);
         $this->eventEndDate = $this->eventDate->add($this->eventDuration);
 
@@ -56,6 +59,10 @@ class Event
     // setEventLocation
     public function setEventLocation(string $eventLocation): void {
         $this->eventLocation = $eventLocation;
+    }
+    // setEventTimeZone
+    public function setEventTimeZone(DateTimeZone $eventTimeZone): void {
+        $this->eventTimeZone = $eventTimeZone;
     }
     // setEventDate
     public function setEventDate(DateTimeImmutable $eventDate): void {
@@ -93,6 +100,10 @@ class Event
     // getEventLocation
     public function getEventLocation(): string {
         return $this->eventLocation;
+    }
+    // getEventTimeZone
+    public function getEventTimeZone(): DateTimeZone {
+        return $this->eventTimeZone;
     }
     // getEventDate
     public function getEventDate(): DateTimeImmutable {
