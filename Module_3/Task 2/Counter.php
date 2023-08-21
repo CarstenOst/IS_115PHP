@@ -13,15 +13,15 @@ class Counter
      */
     public static function count(int $num): void {
         $sum = 0;
-        $echoString = '';
+        $unCleansedNumberLine = '';
         for ($i = 1; $i <= $num; $i++) {
-            if ($i != 1 xor $i < $num) {
-                $echoString = $echoString . $i . ' + ';
-            } else {
-                $echoString = $echoString . $i;
-            }
+
+            $unCleansedNumberLine .= $i . ' + ';
+
+            $numberLine = substr($unCleansedNumberLine, 0, -2);
+
             echo '<br>';
-            echo "The sum of $echoString is: " . $sum += $i;
+            echo "The sum of $numberLine = " . $sum += $i;
             echo '<br>';
         }
     }
