@@ -5,10 +5,6 @@ require '../PostHandler.php';
 require '../sharedViewTop.php';
 
 
-
-
-
-
 require '../sharedViewTop.php';
 
 
@@ -16,23 +12,23 @@ $event1 = new Event("NeonParty", "eventdescription1", "eventcontact1", "eventloc
 $event2 = new Event("Black and White", "eventdescription1", "eventcontact1", "eventlocation1", "Europe/Paris", "2023-08-20 6:22:00", "PT4H");
 
 
-function printEvent($event){
+function printEvent($event): void
+{
 
 
-foreach ($event as $item):
-    $eventName = $item->getEventName();
-    $eventDescription = $item->getEventDescription();
-    $eventContact = $item->getEventContact();
-    $eventLocation = $item->getEventLocation();
-    $eventTimeZone = $item->getEventTimeZone()->getName();
-    $eventDate = $item->getEventDate()->format('d/m/Y H:i:s');
-    $eventDuration = $item->getEventDuration()->format('%h hours, %i minutes');
-    $eventEndDate = $item->getEventEndDate()->format('d/m/Y H:i:s');
+    foreach ($event as $item):
+        $eventName = $item->getEventName();
+        $eventDescription = $item->getEventDescription();
+        $eventContact = $item->getEventContact();
+        $eventLocation = $item->getEventLocation();
+        $eventTimeZone = $item->getEventTimeZone()->getName();
+        $eventDate = $item->getEventDate()->format('d/m/Y H:i:s');
+        $eventDuration = $item->getEventDuration()->format('%h hours, %i minutes');
+        $eventEndDate = $item->getEventEndDate()->format('d/m/Y H:i:s');
 
 
-
-    ?>
-    <div class="suggestion-div mt-4 shadow-sm m-sm-2" style="padding-left: 5px;">
+        ?>
+        <div class="suggestion-div mt-4 shadow-sm m-sm-2" style="padding-left: 5px;">
             <table class="suggestion-table">
                 <tr>
                     <td class="text-center pt-2" style="width: 60px;">
@@ -60,7 +56,7 @@ foreach ($event as $item):
                                 break;
                             // ...
                             default:
-                                echo '<span class="">'. $eventDescription .'</span>';
+                                echo '<span class="">' . $eventDescription . '</span>';
                                 break;
                         }
                         ?>
@@ -86,9 +82,9 @@ foreach ($event as $item):
                     </td>
                 </tr>
             </table>
-        </a>
-    </div>
-<?php endforeach;
+            </a>
+        </div>
+    <?php endforeach;
 }
 
 
@@ -97,31 +93,13 @@ printEvent([$event1, $event2]);
 $eventTitle = $event1->getEventName();
 
 
-if (DateChecker::isOldDate($event1->getEventEndDate())){
+if (DateChecker::isOldDate($event1->getEventEndDate())) {
     echo "$eventTitle is an old event. It ended on " . $event1->getEventEndDate()->format('d/m/Y H:i:s') . ".";
-} else if (DateChecker::isOldDate($event1->getEventDate())){
+} else if (DateChecker::isOldDate($event1->getEventDate())) {
     echo "$eventTitle is a current event";
 } else {
     echo "$eventTitle is a future event";
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 require '../sharedViewBottom.php';

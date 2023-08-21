@@ -24,7 +24,8 @@ class Event
         string $eventTimeZone,
         string $eventDate,
         string $eventDuration
-    ) {
+    )
+    {
         $this->eventName = $eventName;
         $this->eventDescription = $eventDescription;
         $this->eventContact = $eventContact;
@@ -45,35 +46,50 @@ class Event
     //
 
     // setEventName
-    public function setEventName(string $eventName): void {
+    public function setEventName(string $eventName): void
+    {
         $this->eventName = $eventName;
     }
+
     // setEventDescription
-    public function setEventDescription(string $eventDescription): void {
+    public function setEventDescription(string $eventDescription): void
+    {
         $this->eventDescription = $eventDescription;
     }
+
     // setEventContact
-    public function setEventContact(string $eventContact): void {
+    public function setEventContact(string $eventContact): void
+    {
         $this->eventContact = $eventContact;
     }
+
     // setEventLocation
-    public function setEventLocation(string $eventLocation): void {
+    public function setEventLocation(string $eventLocation): void
+    {
         $this->eventLocation = $eventLocation;
     }
+
     // setEventTimeZone
-    public function setEventTimeZone(DateTimeZone $eventTimeZone): void {
+    public function setEventTimeZone(DateTimeZone $eventTimeZone): void
+    {
         $this->eventTimeZone = $eventTimeZone;
     }
+
     // setEventDate
-    public function setEventDate(DateTimeImmutable $eventDate): void {
+    public function setEventDate(DateTimeImmutable $eventDate): void
+    {
         $this->eventDate = $eventDate;
     }
+
     // setEventDuration
-    public function setEventDuration(DateInterval $eventDuration): void {
+    public function setEventDuration(DateInterval $eventDuration): void
+    {
         $this->eventDuration = $eventDuration;
     }
+
     // setEventEndDate
-    public function setEventEndDate(DateTimeImmutable $eventEndDate): void {
+    public function setEventEndDate(DateTimeImmutable $eventEndDate): void
+    {
         $this->eventEndDate = $eventEndDate;
     }
 
@@ -86,35 +102,50 @@ class Event
     //
 
     // getEventName
-    public function getEventName(): string {
+    public function getEventName(): string
+    {
         return $this->eventName;
     }
+
     // getEventDescription
-    public function getEventDescription(): string {
+    public function getEventDescription(): string
+    {
         return $this->eventDescription;
     }
+
     // getEventContact
-    public function getEventContact(): string {
+    public function getEventContact(): string
+    {
         return $this->eventContact;
     }
+
     // getEventLocation
-    public function getEventLocation(): string {
+    public function getEventLocation(): string
+    {
         return $this->eventLocation;
     }
+
     // getEventTimeZone
-    public function getEventTimeZone(): DateTimeZone {
+    public function getEventTimeZone(): DateTimeZone
+    {
         return $this->eventTimeZone;
     }
+
     // getEventDate
-    public function getEventDate(): DateTimeImmutable {
+    public function getEventDate(): DateTimeImmutable
+    {
         return $this->eventDate;
     }
+
     // getEventDuration
-    public function getEventDuration(): DateInterval {
+    public function getEventDuration(): DateInterval
+    {
         return $this->eventDuration;
     }
+
     // getEventEndDate
-    public function getEventEndDate(): DateTimeImmutable {
+    public function getEventEndDate(): DateTimeImmutable
+    {
         return $this->eventEndDate;
     }
 }

@@ -19,7 +19,8 @@ class JobAd
         string $jobLocation,
         string $jobSalary,
         string $jobDate
-    ) {
+    )
+    {
         $this->jobTitle = $jobTitle;
         $this->jobDescription = $jobDescription;
         $this->jobContact = $jobContact;
@@ -30,60 +31,74 @@ class JobAd
     }
 
     // Getters
-    public function getJobTitle(): string {
+    public function getJobTitle(): string
+    {
         return $this->jobTitle;
     }
 
-    public function getJobDescription(): string {
+    public function getJobDescription(): string
+    {
         return $this->jobDescription;
     }
 
-    public function getJobContact(): string {
+    public function getJobContact(): string
+    {
         return $this->jobContact;
     }
 
-    public function getJobCompany(): string {
+    public function getJobCompany(): string
+    {
         return $this->jobCompany;
     }
 
-    public function getJobLocation(): string {
+    public function getJobLocation(): string
+    {
         return $this->jobLocation;
     }
 
-    public function getJobSalary(): string {
+    public function getJobSalary(): string
+    {
         return $this->jobSalary;
     }
 
-    public function getJobDate(): string {
+    public function getJobDate(): string
+    {
         return $this->jobDate;
     }
 
     // Setters
-    public function setJobTitle(string $jobTitle): void {
+    public function setJobTitle(string $jobTitle): void
+    {
         $this->jobTitle = $jobTitle;
     }
 
-    public function setJobDescription(string $jobDescription): void {
+    public function setJobDescription(string $jobDescription): void
+    {
         $this->jobDescription = $jobDescription;
     }
 
-    public function setJobContact(string $jobContact): void {
+    public function setJobContact(string $jobContact): void
+    {
         $this->jobContact = $jobContact;
     }
 
-    public function setJobCompany(string $jobCompany): void {
+    public function setJobCompany(string $jobCompany): void
+    {
         $this->jobCompany = $jobCompany;
     }
 
-    public function setJobLocation(string $jobLocation): void {
+    public function setJobLocation(string $jobLocation): void
+    {
         $this->jobLocation = $jobLocation;
     }
 
-    public function setJobSalary(string $jobSalary): void {
+    public function setJobSalary(string $jobSalary): void
+    {
         $this->jobSalary = $jobSalary;
     }
 
-    public function setJobDate(string $jobDate): void {
+    public function setJobDate(string $jobDate): void
+    {
         $this->jobDate = $jobDate;
     }
 
