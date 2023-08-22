@@ -6,11 +6,13 @@
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../styles.css">
-    <title>Module 2</title>
+    <title>Module 3</title>
 </head>
 <body>
-<div class="center">
-    <nav id="navbar" style="align-items: center" >
-        <?php require_once 'sharedFunctions.php';sharedFunctions::generateNavigationButtons('Module_3');?>
-    </nav>
-    <div id="content" class="center" style="padding-top: 55px;">
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="flex-column justify-content-center">
+        <div class="flex-column justify-content-center ">
+            <nav id="navbar" class="d-flex">
+                <?php require_once 'sharedFunctions.php';sharedFunctions::generateNavigationButtons('Module_3');?>
+            </nav>
+            <div id="" class="flex-column justify-content-center text-center">
