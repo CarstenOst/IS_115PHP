@@ -1,6 +1,5 @@
 <?php
 require '../PostHandler.php';
-require '../sharedViewTop.php';
 
 
 

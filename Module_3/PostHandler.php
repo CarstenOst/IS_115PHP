@@ -18,12 +18,6 @@ class PostHandler
      */
     public static function requestPost(string $cookieName): string {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Remove existing cookie
-            // Ignore the spaghetti, this is not the task anyway :)
-            if (isset($_POST['remove_cookies']) and CookieHandler::isCookie($cookieName)) {
-                CookieHandler::removeCookie($cookieName);
-                return '';
-            }
             return self::handlePostRequest($cookieName);
         }
         return '';
@@ -48,10 +42,6 @@ class PostHandler
      */
     public static function secureRequestPost(string $cookieName): string {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['remove_cookies']) and CookieHandler::isCookie($cookieName)) {
-                CookieHandler::removeCookie($cookieName);
-                return '';
-            }
             return self::SecureHandleLastNamePostRequest($cookieName);
         }
         return '';
