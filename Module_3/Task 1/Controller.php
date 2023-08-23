@@ -6,13 +6,13 @@ require '../PostHandler.php';
 require '../sharedViewTop.php';
 
 
-$event1 = new Event("NeonParty", "eventdesc1", "eventco1", "Eidehallen", "Europe/Paris", "2023-08-27 6:22:00", "PT4H");
+$event1 = new Event("NeonParty", "eventdesc1", "eventco1", "Eidehallen", "Europe/Paris", "2023-08-20 6:22:00", "PT4H");
 $event2 = new Event("Black and White", "eventdesc2", "eventco2", "Gimlehallen", "Europe/Paris", "2023-08-20 6:22:00", "PT4H");
 
 
 function printEvent($event): void
 {
-    foreach ($event as $item):
+    foreach ($event as $item) {
         $eventName = $item->getEventName();
         $eventDescription = $item->getEventDescription();
         $eventContact = $item->getEventContact();
@@ -21,52 +21,28 @@ function printEvent($event): void
         $eventDate = $item->getEventDate()->format('d/m/Y H:i:s');
         $eventDuration = $item->getEventDuration()->format('%h hours, %i minutes');
         $eventEndDate = $item->getEventEndDate()->format('d/m/Y H:i:s');
-        ?>
-        <div class="suggestion-div mt-4 shadow-sm m-sm-2" style="padding-left: 5px;">
-            <table class="suggestion-table">
-                <tr>
-                    <td class="text-center pt-2" style="width: 60px;">
-                    </td>
-                    <td colspan="3" class="suggestion-title" style="padding-right: 6px;">
-                        <?php
-                        $titleLength = strlen($eventName);
-                        if ($titleLength > 50) {
-                            echo substr($eventName, 0, 50) . "...";
-                        } else {
-                            echo $eventName;
-                        }
-                        ?>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: center" class="pb-2 col-3"><?php echo $eventLocation; ?></td>
-                    <td style="text-align: right; padding-right: 10px;" class="pb-2 col-3">
-                        <span class="text-nowrap d-none d-sm-inline">
-                            <i class="fa fa-calendar-plus-o" style="margin-right: 3px;" aria-hidden="true"></i>
-                            <?php echo $eventDate; ?><br/>
-                        </span>
-                        <?php
-                        $dateToday = new DateTime();
-                        $eventEndDate = $item->getEventEndDate();
-                        $daysLeft = $eventEndDate->diff($dateToday)->days;
-                        $daysLeftRounded = round($daysLeft);
-                        if ($dateToday > $eventEndDate) {
-                            $daysLeftRounded = -$daysLeftRounded;
-                        }
+        echo '<br>';
+        echo $eventName . '<br>';
 
-                        if ($daysLeftRounded >= 0) {
-                            echo $daysLeftRounded . ' days until event';
-                        } else {
-                            echo -$daysLeftRounded . ' days old';
-                        }
-                        ?>
-                    </td>
-                </tr>
-            </table>
-            </a>
-        </div>
-    <?php endforeach;
+        echo $eventLocation. '<br>';
+        echo $eventDate. '<br>';
+
+        $dateToday = new DateTime();
+        $eventEndDate = $item->getEventEndDate();
+        $daysLeft = $eventEndDate->diff($dateToday)->days;
+        $daysLeftRounded = round($daysLeft);
+        if ($dateToday > $eventEndDate) {
+            $daysLeftRounded = -$daysLeftRounded;
+        }
+
+        if ($daysLeftRounded >= 0) {
+            echo $daysLeftRounded . ' days until event <br>';
+        } else {
+            echo -$daysLeftRounded . ' days old <br>';
+        }
+        echo '<br>';
+    }
 }
 
 
