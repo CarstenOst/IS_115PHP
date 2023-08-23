@@ -58,6 +58,12 @@ class sharedFunctions
      */
     public static function generateNavigationButtons(string $folder): void
     {
+        $parentFolder = dirname(__DIR__); // Get the parent directory of the current script's directory
+        $absolutePath = realpath($parentFolder . '/' . $folder);
+
+        if (!$absolutePath || !is_dir($absolutePath)) {
+            $folder = '';
+        }
         $currentDir = __DIR__;
         $baseURL = self::getBaseURL($folder);
         $directories = self::getDirectoriesWithController($currentDir);
