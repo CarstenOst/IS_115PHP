@@ -1,13 +1,8 @@
 <?php
 require '../PostHandler.php';
 require '../SharedFormRenderer.php';
-
-CONST COMMUNE_NAME = 'Commune_Name';
-
-// Check region
-
-
 require '../sharedViewTop.php';
+CONST COMMUNE_NAME = 'Commune_Name';
 
 // Associative array with commune keys, and region as value
 $communes = [
@@ -22,15 +17,24 @@ $communes = [
     'Bodø' => 'Nordland',
     'Alta' => 'Troms og Finnmark'
 ];
-
+// Print form
 SharedFormRenderer::printForm(COMMUNE_NAME, 'Enter your Norwegian commune name');
 
+// Get user input
 $selectedCommune = PostHandler::secureRequestPost(COMMUNE_NAME); // Replace this with the desired commune
 
-
+// If the selected commune is set
 if ($selectedCommune) {
-    $message = $communes[$selectedCommune] ?? "Ukjent kommune: $selectedCommune";
-    echo "$selectedCommune ligger i $message fylke.";
+    // Check if the selected commune exists in the array
+    $isAssocArray = $communes[$selectedCommune] ?? false;
+
+    if ($isAssocArray){
+        $message = $communes[$selectedCommune];
+        echo "$selectedCommune exists in $message region.";
+        return;
+    }
+
+    echo "Unknown commune: $selectedCommune";
 }
 
 

@@ -6,7 +6,6 @@ class DateChecker
      * Checks if the given date is out of date
      * @param DateTimeImmutable $givenDate Date string to check
      * @return bool Returns true if the given date is out of date, false otherwise
-     * @throws Exception Emits Exception in case of an error
      */
     public static function isOldDate(DateTimeImmutable $givenDate): bool
     {

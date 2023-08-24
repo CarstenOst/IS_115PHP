@@ -6,10 +6,14 @@ require '../PostHandler.php';
 require '../sharedViewTop.php';
 
 
-$event1 = new Event("NeonParty", "eventdesc1", "eventco1", "Eidehallen", "Europe/Paris", "2023-08-28 6:22:00", "PT4H");
-$event2 = new Event("Black and White", "eventdesc2", "eventco2", "Gimlehallen", "Europe/Paris", "2023-08-20 6:22:00", "PT4H");
+$event1 = new Event("NeonParty", "eventdesc1", "eventco1", "Eidehallen", "Europe/Paris", "2023-08-28 6:00:00", "PT4H");
+$event2 = new Event("Black and White", "eventdesc2", "eventco2", "Gimlehallen", "Europe/Paris", "2023-08-20 12:30:00", "PT4H");
 
-
+/**
+ * Prints the event
+ * @param Event $event need type event, should have used an interface, but whatever
+ * @return void
+ */
 function printEvent(Event $event): void
 {
 
@@ -23,10 +27,10 @@ function printEvent(Event $event): void
     $eventEndDate = $event->getEventEndDate()->format('d/m/Y H:i:s');
 
     echo '<br>';
-    echo $eventName . '<br>';
+    echo "Name: $eventName <br>";
 
-    echo $eventLocation. '<br>';
-    echo $eventDate. '<br>';
+    echo "Location: $eventLocation <br>";
+    echo "Date: $eventDate <br>";
 
     $dateToday = new DateTime();
     $eventEndDate = $event->getEventEndDate();
@@ -45,6 +49,11 @@ function printEvent(Event $event): void
 
 }
 
+/**
+ * Logic to print if the date is old, new, or currently happening
+ * @param Event $event
+ * @return void
+ */
 function printIfOldDate(Event $event): void
 {
     $eventTitle = $event->getEventName();
@@ -61,12 +70,13 @@ function printIfOldDate(Event $event): void
 
 
 
-
+// Print event 1
 printEvent($event1);
 printIfOldDate($event1);
 
 echo '<br>__________________________________<br>';
 
+// Print event 2
 printEvent($event2);
 printIfOldDate($event2);
 
@@ -76,5 +86,5 @@ printIfOldDate($event2);
 
 
 
-
+// Finish page
 require '../sharedViewBottom.php';

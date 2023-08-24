@@ -8,7 +8,8 @@ if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
 class Counter
 {
     /**
-     * @param int $num
+     * Counts from 1 to the given number
+     * @param int $num The number to count to
      * @return void
      */
     public static function count(int $num): void {

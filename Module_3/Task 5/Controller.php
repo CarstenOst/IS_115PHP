@@ -42,8 +42,13 @@ for ($i = 0; $i < count($grainsOnEachSquare); $i++) {
 echo "Total number of grains: " . getFormattedNumber($totalGrains) . "<br>";
 echo "Total weight in metric tonnes: " . getWeightInTons($totalGrains, $grainWeightGrams) . "<br> <br>";
 
-
-function getWeightInTons($grains, $grainWeightGrams): string
+/**
+ * Calculates the weight in tons
+ * @param int|float $grains The number of grains
+ * @param int|float $grainWeightGrams The weight of a grain in grams
+ * @return string
+ */
+function getWeightInTons(int|float $grains, int|float $grainWeightGrams): string
 {
     $weightInGrams = $grains * $grainWeightGrams;
     $weightInKilograms = $weightInGrams / 1000; // Convert grams to kilograms
@@ -52,8 +57,12 @@ function getWeightInTons($grains, $grainWeightGrams): string
     return getFormattedNumber($weightInTons);
 }
 
-
-function getFormattedNumber($number): string
+/**
+ * Formats a number to a string
+ * @param int|float $number The number to format
+ * @return string
+ */
+function getFormattedNumber(int|float $number): string
 {
     if ($number < 1) {
         return number_format($number, 9);
