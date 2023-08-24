@@ -27,6 +27,7 @@ class Counter
             flush();
             sleep(1);
         }
+        sleep(2);
         echo "The total sum is $sum";
     }
 }
