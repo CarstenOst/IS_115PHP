@@ -10,9 +10,8 @@ body {
     font-family: Arial, sans-serif;
     background: var(--php-dark-grey);
     color: var(--php-light-blue);
+    padding-top: 70px;
 }
-
-
 
 #navbar button {
     padding: 10px 20px;

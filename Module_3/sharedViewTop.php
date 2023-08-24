@@ -11,8 +11,10 @@
 <body>
 <div class="container d-flex justify-content-center align-items-center">
     <div class="flex-column justify-content-center">
-        <div class="flex-column justify-content-center ">
-            <nav id="navbar" class="d-flex">
-                <?php require_once 'sharedFunctions.php';sharedFunctions::generateNavigationButtons('Module_3');?>
-            </nav>
-            <div id="" class="flex-column justify-content-center text-center">
+        <div class="flex-column justify-content-center">
+            <div class="d-flex justify-content-center fixed-top">
+                <nav id="navbar" class="d-flex navbar navbar-expand-lg">
+                    <?php require_once 'sharedFunctions.php';sharedFunctions::generateNavigationButtons('Module_3');?>
+                </nav>
+            </div>
+            <div id="" class="flex-column justify-content-center text-center container">
