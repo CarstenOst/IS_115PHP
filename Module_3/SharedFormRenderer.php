@@ -30,7 +30,7 @@ class SharedFormRenderer
                 <label for="$cookieName">$labelText</label><br>
                 <input type="text" name="$cookieName" id="$cookieName" required><br>
                 <label for="$secondCookieName">$secondLabelText</label><br>
-                <input type="text" name="$secondCookieName" id="$secondCookieName" required><br>
+                <input type="text" name="$secondCookieName" id="$secondCookieName" required><br><br>
                 <input id="pointer" type="submit" value="Submit">
             </form>
         EOT;
