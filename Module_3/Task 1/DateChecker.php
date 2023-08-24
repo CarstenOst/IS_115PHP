@@ -16,6 +16,4 @@ class DateChecker
 
         return $givenDate < $currentDate;
     }
-
-
 }
