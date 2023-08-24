@@ -32,7 +32,7 @@ class PostHandler
      * @return string
      */
     private static function secureHandleLastNamePostRequest(string $cookieName): string {
-        return RemoveCode::removePhpCode($_POST[$cookieName]) ?? '';
+        return strip_tags($_POST[$cookieName]) ?? '';
     }
 
     /**
