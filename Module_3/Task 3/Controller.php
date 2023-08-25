@@ -26,7 +26,8 @@ if ($balance and $interest) {
 
     for ($i = 1; $i < 10; $i++) {
         $balance *= $interest;
-        echo "Balance after $i year is; $balance <br>";
+        $formattedBalance = number_format($balance, 2 );
+        echo "Balance after $i year is; $formattedBalance <br>";
     }
 } else {
     echo 'Enter int or float values only';

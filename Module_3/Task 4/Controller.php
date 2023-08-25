@@ -4,38 +4,27 @@ require '../SharedFormRenderer.php';
 require '../sharedViewTop.php';
 CONST COMMUNE_NAME = 'Commune_Name';
 
-// Associative array with commune keys, and region as value
-$communes = [
-    'Kristiansand' => 'Vest-Agder',
-    'Lillesand' => 'Vest-Agder',
-    'Birkenes' => 'Aust-Agder',
-    'Harstad' => 'Troms og Finnmark',
-    'Kvæfjord' => 'Troms og Finnmark',
-    'Tromsø' => 'Troms og Finnmark',
-    'Bergen' => 'Vestland',
-    'Trondheim' => 'Trøndelag',
-    'Bodø' => 'Nordland',
-    'Alta' => 'Troms og Finnmark'
-];
 // Print form
 SharedFormRenderer::printForm(COMMUNE_NAME, 'Enter your Norwegian commune name');
 
 // Get user input
 $selectedCommune = PostHandler::secureRequestPost(COMMUNE_NAME); // Replace this with the desired commune
 
-// If the selected commune is set
-if ($selectedCommune) {
-    // Check if the selected commune exists in the array
-    $isAssocArray = $communes[$selectedCommune] ?? false;
+match ($selectedCommune){
+    'Kristiansand', 'Lillesand', 'Birkenes' => $region = 'Vest-Agder',
+    'Harstad', 'Kvæfjord', 'Tromsø', 'Alta' => $region = 'Troms og Finnmark',
+    'Bergen' => $region = 'Vestland',
+    'Trondheim' => $region = 'Trøndelag',
+    'Bodø' => $region = 'Nordland',
+    default => $region = false,
+};
 
-    if ($isAssocArray){
-        $message = $communes[$selectedCommune];
-        echo "$selectedCommune exists in $message region.";
-        return;
-    }
-
+if ($region){
+    echo "$selectedCommune exists in $region region.";
+} else if ($selectedCommune) {
     echo "Unknown commune: $selectedCommune";
 }
+
 
 
 
