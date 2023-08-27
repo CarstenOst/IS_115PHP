@@ -14,7 +14,7 @@
         <div class="flex-column justify-content-center">
             <div class="d-flex justify-content-center fixed-top">
                 <nav id="navbar" class="d-flex navbar navbar-expand-lg">
-                    <?php require_once 'sharedFunctions.php';sharedFunctionsM4::generateNavigationButtons('Module_4');?>
+                    <?php require_once 'sharedFunctions.php';sharedFunctionsM4::generateNavigationButtons();?>
                 </nav>
             </div>
             <div id="" class="flex-column justify-content-center text-center container">

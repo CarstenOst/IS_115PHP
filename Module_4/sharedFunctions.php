@@ -12,7 +12,7 @@ class sharedFunctionsM4
      * @param string $folder
      * @return string
      */
-    public static function getBaseURL(string $folder): string
+    private static function getBaseURL(string $folder): string
     {
         // You can call this the current server script filepath, if URI is greek for you
         $requestURI = $_SERVER['REQUEST_URI'] ?? '/';
@@ -35,7 +35,7 @@ class sharedFunctionsM4
     private static function getDirectoriesWithController(string $currentDir): array
     {
         $directories = scandir($currentDir, SCANDIR_SORT_NONE);
-        return array_filter($directories, function($dir) use ($currentDir) {
+        return array_filter($directories, function ($dir) use ($currentDir) {
             return is_dir($currentDir . '/' . $dir) && file_exists($currentDir . '/' . $dir . '/Controller.php');
         });
     }
@@ -47,7 +47,6 @@ class sharedFunctionsM4
      * It then generates HTML buttons for each of these directories, using the directory name as the button label.
      * These buttons, when clicked, will navigate to the 'Controller.php' file in the corresponding directory.
      *
-     * @param string $folder The name of the folder that will be appended to the base URL for generating the button links.
      * @return void Echos the HTML buttons to the output.
      *
      * Usage:
@@ -56,16 +55,18 @@ class sharedFunctionsM4
      * sharedFunctions::generateNavigationButtons('MyFolder');
      * ?>
      */
-    public static function generateNavigationButtons(string $folder): void
+    public static function generateNavigationButtons(): void
     {
+        $moduleFolder = self::getCurrentModuleFolderName();
         $parentFolder = dirname(__DIR__); // Get the parent directory of the current script's directory
-        $absolutePath = realpath($parentFolder . '/' . $folder);
+        $absolutePath = realpath($parentFolder . '/' . $moduleFolder);
 
+        // If the Module folder does not exist, we don't need to use it
         if (!$absolutePath || !is_dir($absolutePath)) {
-            $folder = '';
+            $moduleFolder = '';
         }
         $currentDir = __DIR__;
-        $baseURL = self::getBaseURL($folder);
+        $baseURL = self::getBaseURL($moduleFolder);
         $directories = self::getDirectoriesWithController($currentDir);
 
         // Sort the array alphabetically
@@ -75,7 +76,9 @@ class sharedFunctionsM4
             $url = htmlspecialchars($baseURL . "$dir/Controller.php", ENT_QUOTES, 'UTF-8');
             $dir = htmlspecialchars($dir, ENT_QUOTES, 'UTF-8');
             echo <<<HTML
-                <a href="$url"><button id="$dir">$dir</button></a>
+                <a href="$url">
+                    <button id="$dir">$dir</button>
+                </a>
                 HTML;
         }
 
@@ -84,10 +87,19 @@ class sharedFunctionsM4
     /**
      * @return void Echos the name of the parent folder of the current script's directory.
      */
-    public static function generateParentFolderName(): void {
+    public static function generateParentFolderName(): void
+    {
         $currentScriptPath = $_SERVER['SCRIPT_FILENAME'];
         $parentFolder = dirname($currentScriptPath);
         echo basename($parentFolder);
+    }
+
+    private static function getCurrentModuleFolderName(): string
+    {
+        $currentScriptPath = $_SERVER['SCRIPT_FILENAME'];
+        $parentFolder = dirname($currentScriptPath);
+        $grandParentFolder = dirname($parentFolder);
+        return basename($grandParentFolder);
     }
 
 }
