@@ -85,6 +85,7 @@ class sharedFunctionsM4
     }
 
     /**
+     *
      * @return void Echos the name of the parent folder of the current script's directory.
      */
     public static function generateParentFolderName(): void
