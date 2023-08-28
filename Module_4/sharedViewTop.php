@@ -17,6 +17,8 @@
                     <?php require_once 'sharedFunctions.php';sharedFunctionsM4::generateNavigationButtons();?>
                 </nav>
             </div>
+            <div id="messageContainer" class="d-flex flex-column align-items-center">
+            </div>
             <div id="" class="flex-column justify-content-center text-center container">
                 <h1>
                     <?php sharedFunctionsm4::generateParentFolderName();?>

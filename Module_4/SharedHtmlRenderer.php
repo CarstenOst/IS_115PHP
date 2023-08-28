@@ -1,6 +1,6 @@
 <?php
 
-class SharedFormRendererM4
+class SharedHtmlRendererM4
 {
     /**
      * Generates a form where you can input stuff
@@ -42,5 +42,33 @@ class SharedFormRendererM4
                 <input id="pointer" type="submit" value="Submit">
             </form>
         EOT;
+    }
+
+    public static function generateResponse($message, bool $status): void
+    {
+        $color = $status ? 'green' : 'red';
+        $messageBox = <<<EOT
+            <div id="messageBox" style="background-color: $color; z-index: 9999;">
+                $message
+            </div>"
+            EOT;
+
+        echo <<<HTML
+            <script id="messageScript">
+            let responseBox = document.getElementById('messageContainer');
+            responseBox.innerHTML = $messageBox;
+                setTimeout(function() {
+                    let element = document.getElementById('messageBox');
+                    element.style.transition = "opacity 1s ease-in-out";
+                    element.style.opacity = 0;
+                
+                    setTimeout(function() {
+                        element.parentNode.removeChild(element);
+                        let scriptElement = document.getElementById('messageScript');
+                        scriptElement.parentNode.removeChild(scriptElement);
+                    }, 800);  
+                }, 800);
+            </script>
+        HTML;
     }
 }
