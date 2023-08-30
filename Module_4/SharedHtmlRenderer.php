@@ -48,12 +48,16 @@ class SharedHtmlRendererM4
     {
         $color = $status ? 'green' : 'red';
         $messageBox = <<<EOT
-            <div id="messageBox" style="background-color: $color; z-index: 9999;">
+            <div id="messageBox" style="background-color: $color; z-index: 9999">
                 $message
-            </div>"
+                
+            </div>
             EOT;
 
         echo <<<HTML
+            <div id="messageBox" style="background-color: $color; z-index: 9999">
+                $message
+            </div>
             <script id="messageScript">
             let responseBox = document.getElementById('messageContainer');
             responseBox.innerHTML = $messageBox;
@@ -67,7 +71,7 @@ class SharedHtmlRendererM4
                         let scriptElement = document.getElementById('messageScript');
                         scriptElement.parentNode.removeChild(scriptElement);
                     }, 800);  
-                }, 800);
+                }, 400);
             </script>
         HTML;
     }
