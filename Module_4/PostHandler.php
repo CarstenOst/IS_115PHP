@@ -1,5 +1,8 @@
 <?php
-
+if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
+    header('Location: index.php');
+    exit;
+}
 class PostHandlerM4
 {
     /**
