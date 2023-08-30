@@ -52,19 +52,13 @@ class sharedFunctionsM4
      * Usage:
      *
      * <?php
-     * sharedFunctions::generateNavigationButtons('MyFolder');
+     * sharedFunctions::generateNavigationButtons();
      * ?>
      */
     public static function generateNavigationButtons(): void
     {
         $moduleFolder = self::getCurrentModuleFolderName();
-        $parentFolder = dirname(__DIR__); // Get the parent directory of the current script's directory
-        $absolutePath = realpath($parentFolder . '/' . $moduleFolder);
 
-        // If the Module folder does not exist, we don't need to use it
-        if (!$absolutePath || !is_dir($absolutePath)) {
-            $moduleFolder = '';
-        }
         $currentDir = __DIR__;
         $baseURL = self::getBaseURL($moduleFolder);
         $directories = self::getDirectoriesWithController($currentDir);
@@ -95,12 +89,14 @@ class sharedFunctionsM4
         echo basename($parentFolder);
     }
 
+    /**
+     * WARNING: IF GRAND PARENT FOLDER IS NAMED 'html', this will return an empty string
+     * @return string The module folder name (if any), else an empty string
+     */
     private static function getCurrentModuleFolderName(): string
     {
-        $currentScriptPath = $_SERVER['SCRIPT_FILENAME'];
-        $parentFolder = dirname($currentScriptPath);
-        $grandParentFolder = dirname($parentFolder);
-        return basename($grandParentFolder);
+        $folderName = basename(dirname($_SERVER['SCRIPT_FILENAME'], 2));
+        return ($folderName == 'html') ? '' : $folderName;
     }
 
 }
