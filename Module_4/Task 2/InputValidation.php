@@ -4,7 +4,7 @@ class InputValidate
 {
     public static function isEmail(string $email)
     {
-        return filter_var($email, FILTER_VALIDATE_EMAIL);
+        return filter_var($email, FILTER_VALIDATE_EMAIL) ?? false;
     }
 
     public static function hasNumbers(string $str): bool
@@ -20,15 +20,16 @@ class InputValidate
         return true;
     }
 
-    public static function hasOnlyCharactersInAlphabet(string $str): bool
+    public static function hasNoSpecialCharacters(string $str): bool
     {
-        if (!$str or $str == '\\') {
+        if (!$str) {
             return false;
         }
-        if (preg_match('#[^A-Z!]#', strtoupper($str))) {
+        if (preg_match('/[^A-ZÆØÅ ]/iu', $str)) {
             echo $str;
             return true;
         }
+
         return false;
     }
 }
