@@ -6,7 +6,7 @@ class FormRenderM4
     public static function renderForm(
         string $cookieName, string $labelText,
         string $cookieName2, string $labelText2,
-        string $cookieName3, string $labelText3)
+        string $cookieName3, string $labelText3): void
     {
 
         echo <<<EOT
