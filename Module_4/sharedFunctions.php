@@ -32,7 +32,7 @@ class sharedFunctionsM4
      * @param string $currentDir The current directory or the root folder you want to search
      * @return array Returns all directories that has a controller based on root folder
      */
-    private static function getDirectoriesWithController(string $currentDir): array
+    private static function getDirectoriesWithController(string $currentDir = __DIR__): array
     {
         $directories = scandir($currentDir, SCANDIR_SORT_NONE);
         return array_filter($directories, function ($dir) use ($currentDir) {
@@ -59,9 +59,9 @@ class sharedFunctionsM4
     {
         $moduleFolder = self::getCurrentModuleFolderName();
 
-        $currentDir = __DIR__;
+
         $baseURL = self::getBaseURL($moduleFolder);
-        $directories = self::getDirectoriesWithController($currentDir);
+        $directories = self::getDirectoriesWithController();
 
         // Sort the array alphabetically
         sort($directories);
@@ -80,20 +80,20 @@ class sharedFunctionsM4
 
     /**
      *
-     * @return void Echos the name of the parent folder of the current script's directory.
+     * @return String the name of the parent folder of the current script's directory.
      */
-    public static function generateParentFolderName(): void
+    public static function generateParentFolderName(): string
     {
         $currentScriptPath = $_SERVER['SCRIPT_FILENAME'];
         $parentFolder = dirname($currentScriptPath);
-        echo basename($parentFolder);
+        return basename($parentFolder);
     }
 
     /**
      * WARNING: IF GRAND PARENT FOLDER IS NAMED 'html', this will return an empty string
      * @return string The module folder name (if any), else an empty string
      */
-    private static function getCurrentModuleFolderName(): string
+    public static function getCurrentModuleFolderName(): string
     {
         $folderName = basename(dirname($_SERVER['SCRIPT_FILENAME'], 2));
         return ($folderName == 'html') ? '' : $folderName;
