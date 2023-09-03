@@ -9,7 +9,7 @@ class AssocArray
      * @param int ...$arrayKey - keys for the array
      * Value will always be 1
      */
-    public static function create(&$arr ,int ...$arrayKey)
+    public static function create(&$arr ,int ...$arrayKey): void
     {
         $arr = [];
         if (!$arrayKey) {
@@ -43,9 +43,9 @@ class AssocArray
     }
 
     /**
-     * Prints out an assoc array with the given html code below
+     * Prints out an assoc array (both key and value) with the given html code below
      * @param array $assocArray
-     * @return void
+     * @return void echos the html code
      */
     public static function print(array $assocArray): void
     {
