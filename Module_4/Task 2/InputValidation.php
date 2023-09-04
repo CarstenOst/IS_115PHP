@@ -7,26 +7,14 @@ class InputValidate
         return filter_var($email, FILTER_VALIDATE_EMAIL) ?? false;
     }
 
-    public static function hasNumbers(string $str): bool
-    {
-        return preg_match('/[0-9]/', $str);
-    }
-
     public static function hasOnlyNumbers(string $str): bool
     {
-        if (!preg_match('/^[0-9\s]+$/', $str)) {
+        if (!preg_match('/^[0-9\s+]+$/', $str)) {
             return false;
         }
         return true;
     }
 
-    public static function hasLetters(string $str): bool
-    {
-        if (!preg_match('/[A-Z]/', strtoupper($str))) {
-            return false;
-        }
-        return true;
-    }
 
     /**
      * Checks if string has no special characters and only letters (numbers are discarded too)
@@ -38,7 +26,7 @@ class InputValidate
         if (!$str) {
             return false;
         }
-        if (preg_match('/[^A-ZÆØÅ ]/iu', $str)) {
+        if (!preg_match('/[^A-ZÆØÅ ]/iu', $str)) {
             echo $str;
             return true;
         }
