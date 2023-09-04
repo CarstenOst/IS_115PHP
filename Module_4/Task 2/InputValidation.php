@@ -12,6 +12,14 @@ class InputValidate
         return preg_match('/[0-9]/', $str);
     }
 
+    public static function hasOnlyNumbers(string $str): bool
+    {
+        if (!preg_match('/^[0-9\s]+$/', $str)) {
+            return false;
+        }
+        return true;
+    }
+
     public static function hasLetters(string $str): bool
     {
         if (!preg_match('/[A-Z]/', strtoupper($str))) {
@@ -20,6 +28,11 @@ class InputValidate
         return true;
     }
 
+    /**
+     * Checks if string has no special characters and only letters (numbers are discarded too)
+     * @param string $str
+     * @return bool true if string is only letters, false if not
+     */
     public static function hasNoSpecialCharacters(string $str): bool
     {
         if (!$str) {
