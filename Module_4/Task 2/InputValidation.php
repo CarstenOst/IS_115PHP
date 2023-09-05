@@ -27,10 +27,14 @@ class InputValidate
             return false;
         }
         if (!preg_match('/[^A-ZÆØÅ ]/iu', $str)) {
-            echo $str;
             return true;
         }
 
         return false;
+    }
+
+    public static function removeWhiteSpace(string $str): string
+    {
+        return preg_replace('/\s+/', '', $str);
     }
 }
