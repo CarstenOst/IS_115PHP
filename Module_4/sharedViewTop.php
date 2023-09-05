@@ -11,15 +11,14 @@
 <body>
 <div class="container d-flex justify-content-center align-items-center">
     <div class="flex-column justify-content-center">
-        <div class="flex-column justify-content-center">
-            <div class="d-flex justify-content-center fixed-top">
-                <nav id="navbar" class="d-flex navbar navbar-expand-lg">
-                    <?php sharedFunctionsM4::generateNavigationButtons();?>
-                </nav>
-            </div>
-            <div id="messageContainer" class="d-flex flex-column align-items-center">
-            </div>
-            <div id="" class="flex-column justify-content-center text-center container">
-                <h2>
-                    <?php echo sharedFunctionsm4::generateParentFolderName();?>
-                </h2>
+        <div class="d-flex justify-content-center fixed-top">
+            <nav id="navbar" class="d-flex navbar navbar-expand-lg">
+                <?php sharedFunctionsM4::generateNavigationButtons(); ?>
+            </nav>
+        </div>
+        <div id="messageContainer" class="d-flex flex-column align-items-center">
+        </div>
+        <div id="" class="flex-column justify-content-center text-center container">
+            <h2>
+                <?php echo sharedFunctionsm4::generateParentFolderName(); ?>
+            </h2>

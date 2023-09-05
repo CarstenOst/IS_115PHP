@@ -30,14 +30,14 @@ class AssocArray
      * @param int ...$arrayKey - keys for the array
      * @return bool - true if array was modified, false if not
      */
-    public static function modify(array &$arr ,int ...$arrayKey): bool
+    public static function modify(array &$arr, int ...$arrayKey): bool
     {
         if (!$arrayKey) {
             return false;
         }
 
         foreach ($arrayKey as $key) {
-            $arr[$key] = 1;
+            $arr[$key] = 2;
         }
         return true;
     }
