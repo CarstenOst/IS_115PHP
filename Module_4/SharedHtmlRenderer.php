@@ -49,25 +49,30 @@ class SharedHtmlRendererM4
         EOT;
     }
 
-    public static function generateResponse($message, bool $status): void {
+    public static function generateResponse($message, bool $status): void
+    {
         $color = $status ? 'green' : 'red';
+        if (is_array($message)) {
+            $message = implode('<br>', $message);
+        }
+
         echo <<<HTML
-    <div id="messageBox" style="background-color: $color; z-index: 9999">
-        $message
-    </div>
-    <script id="messageScript">
-        setTimeout(function() {
-            let element = document.getElementById('messageBox');
-            element.style.transition = "opacity 1s ease-in-out";
-            element.style.opacity = 0;
-        
-            setTimeout(function() {
-                element.parentNode.removeChild(element);
-                let scriptElement = document.getElementById('messageScript');
-                scriptElement.parentNode.removeChild(scriptElement);
-            }, 1200);  
-        }, 1200);
-    </script>
-    HTML;
+            <div id="messageBox" style="background-color: $color; z-index: 9999">
+                $message
+            </div>
+            <script id="messageScript">
+                setTimeout(function() {
+                    let element = document.getElementById('messageBox');
+                    element.style.transition = "opacity 1s ease-in-out";
+                    element.style.opacity = 0;
+                
+                    setTimeout(function() {
+                        element.parentNode.removeChild(element);
+                        let scriptElement = document.getElementById('messageScript');
+                        scriptElement.parentNode.removeChild(scriptElement);
+                    }, 1200);  
+                }, 1200);
+            </script>
+        HTML;
     }
 }
