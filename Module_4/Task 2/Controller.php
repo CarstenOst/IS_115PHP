@@ -10,56 +10,67 @@ const NAME_COOKIE = 'Name_Cookie';
 const EMAIL_COOKIE = 'Email_Cookie';
 const NUMBER_COOKIE = 'PhoneNumber_Cookie';
 
-
+$errors = [];
+$notValidResponseMessage = [];
 
 FormRenderM4::renderFormArrayBased(
     [NAME_COOKIE, EMAIL_COOKIE, NUMBER_COOKIE],
     ['Enter your name*', 'Enter your email*', 'Enter your number*']);
 
-$name = PostHandlerM4::secureRequestPost(NAME_COOKIE);
-$email = InputValidate::removeWhiteSpace(PostHandlerM4::secureRequestPost(EMAIL_COOKIE));
-$phoneNumber = InputValidate::removeWhiteSpace(PostHandlerM4::secureRequestPost(NUMBER_COOKIE));
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = strip_tags($_POST[NAME_COOKIE]);
+    $email = InputValidate::removeWhiteSpace(strip_tags($_POST[EMAIL_COOKIE]));
+    $phoneNumber = InputValidate::removeWhiteSpace(strip_tags($_POST[NUMBER_COOKIE]));
 
-if (!$name and !$email and !$phoneNumber) {
-    return;
+    if (empty($name)) {
+        $errors['E1'] = "Name is required.";
+    }
+    if (empty($email)) {
+        $errors['E2'] = "Email is required.";
+    }
+    if (empty($phoneNumber)) {
+        $errors['E3'] = "Phone number is required.";
+    }
+
+    if ($errors) {
+        SharedHtmlRendererM4::generateResponse($errors, false);
+        return;
+    }
+
+    // If name exists and is not valid
+    if (!InputValidate::hasNoSpecialCharacters($name)) {
+        $notValidResponseMessage[] = "Name can only contain letters. You typed in '$name'";
+    }
+    // If email exists and is not valid
+    if (!InputValidate::isEmail($email)) {
+        $notValidResponseMessage[] = "Email '$email' is not a valid valid email";
+    }
+    // If phone number exists and is not valid
+    if (!InputValidate::hasOnlyNumbers($phoneNumber)) {
+        $notValidResponseMessage[] = "Phone number '$phoneNumber' does not have only numbers";
+    }
+
+
+    // Print the notValid response message if it exists
+    if ($notValidResponseMessage) {
+        SharedHtmlRendererM4::generateResponse($notValidResponseMessage, false);
+        return; // Stop execution if any of the information is not valid
+    }
+
+    $validMessage[] = "User was successfully registered";
+    $validMessage[] = "Name is: $name";
+    $validMessage[] = "Email is: $email";
+    $validMessage[] = "Phone number is: $phoneNumber";
+
+    SharedHtmlRendererM4::generateResponse($validMessage, true);
+
+
+    echo "<br><br>";
+    foreach ($validMessage as $msg) {
+        echo $msg . "<br>";
+    }
 }
 
-if (!$name or !$email or !$phoneNumber) {
-    echo 'You need to input data on every input field';
-    return;
-}
-
-$notValidResponseMessage = '';
-
-// If name exists and is not valid
-if (!InputValidate::hasNoSpecialCharacters($name)) {
-    $notValidResponseMessage .= "Name '$name' must have letters, and no numbers or special characters <br>";
-}
-// If email exists and is not valid
-if (!InputValidate::isEmail($email)) {
-    $notValidResponseMessage .= "Email '$email' is not a valid valid email <br>";
-}
-// If phone number exists and is not valid
-if (!InputValidate::hasOnlyNumbers($phoneNumber)) {
-    $notValidResponseMessage .= "Phone number '$phoneNumber' does not have only numbers <br>";
-}
-
-
-// Print the notValid response message if it exists
-if ($notValidResponseMessage) {
-    SharedHtmlRendererM4::generateResponse($notValidResponseMessage, false);
-    return; // Stop execution if any of the information is not valid
-}
-
-SharedHtmlRendererM4::generateResponse("User was successfully registered <br> Name is: $name <br> Email is: $email <br> Phone number is: $phoneNumber", true);
-
-
-echo "<br><br>";
-// Display added information
-echo "The following information was registered: <br>";
-echo $name . '<br>';
-echo $email . '<br>';
-echo $phoneNumber . '<br>';
 
 // Saved in array
 
