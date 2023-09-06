@@ -84,7 +84,7 @@ class SharedHtmlRendererM4
      * @param array $labelText Fill inn as many labels as the amount of cookie names
      * @return void echos the form
      */
-    public static function renderFormArrayBased(array $cookieNames, array $labelText): void
+    public static function renderFormArrayBased(array $cookieNames, array $labelText, array $values = [] ): void
     {
         // Return if programmer did not read the docs.
         if (!$cookieNames or count($cookieNames) !== count($labelText)) {
@@ -94,9 +94,10 @@ class SharedHtmlRendererM4
         $form = '<form class="form-group" id="form" action="" method="POST">';
         $i = 0;
         foreach ($cookieNames as $cookie) {
+            $value = $values[$cookie] ?? '';
             $form .= <<<EOT
                 <label for="$cookie">{$labelText[$i++]}</label><br>
-                <input type="text" name="$cookie" id="$cookie"><br>
+                <input type="text" name="$cookie" id="$cookie" value="$value"><br>
             EOT;
         }
         // Concat the rest of the form and input, so we actually can submit our info.

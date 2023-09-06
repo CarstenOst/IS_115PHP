@@ -3,66 +3,53 @@ include 'InputValidation.php';
 // Shared
 include '../SharedHtmlRenderer.php';
 include '../PostHandler.php';
-require '../sharedViewTop.php';
 
-const NAME_COOKIE = 'Name_Cookie';
-const EMAIL_COOKIE = 'Email_Cookie';
-const NUMBER_COOKIE = 'PhoneNumber_Cookie';
+session_start();
+const NAME_COOKIE = 'Name';
+const EMAIL_COOKIE = 'Email';
+const NUMBER_COOKIE = 'Number';
 
-$errors = [];
-$notValidResponseMessage = [];
+function processForm(): void
+{
+    $fields = [
+        NAME_COOKIE => strip_tags($_POST[NAME_COOKIE] ?? ''),
+        EMAIL_COOKIE => strip_tags(InputValidate::removeWhiteSpace($_POST[EMAIL_COOKIE] ?? '')),
+        NUMBER_COOKIE => strip_tags(InputValidate::removeWhiteSpace($_POST[NUMBER_COOKIE] ?? ''))
+    ];
 
-SharedHtmlRendererM4::renderFormArrayBased(
-    [NAME_COOKIE, EMAIL_COOKIE, NUMBER_COOKIE],
-    ['Enter your name*', 'Enter your email*', 'Enter your number*']);
+    $errors = [];
+    $notValidResponseMessage = [];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = strip_tags($_POST[NAME_COOKIE]);
-    $email = InputValidate::removeWhiteSpace(strip_tags($_POST[EMAIL_COOKIE]));
-    $phoneNumber = InputValidate::removeWhiteSpace(strip_tags($_POST[NUMBER_COOKIE]));
-
-    if (empty($name)) {
-        $errors['E1'] = "Name is required.";
+    foreach ($fields as $fieldName => $input) {
+        if (empty($input)) {
+            $errors[$fieldName] = "$fieldName is required.";
+        } elseif ($fieldName === NAME_COOKIE && !InputValidate::hasNoSpecialCharacters($input)) {
+            $notValidResponseMessage[] = "Name can only contain letters. You typed in '$input'";
+        } elseif ($fieldName === EMAIL_COOKIE && !InputValidate::isEmail($input)) {
+            $notValidResponseMessage[] = "Email '$input' is not a valid email";
+        } elseif ($fieldName === NUMBER_COOKIE && !InputValidate::hasOnlyNumbers($input)) {
+            $notValidResponseMessage[] = "Phone number '$input' does not have only numbers";
+        } else {
+            // If valid, save the input in the session
+            $_SESSION[$fieldName] = $input;
+        }
     }
-    if (empty($email)) {
-        $errors['E2'] = "Email is required.";
-    }
-    if (empty($phoneNumber)) {
-        $errors['E3'] = "Phone number is required.";
-    }
 
-    if ($errors) {
-        SharedHtmlRendererM4::generateResponse($errors, false);
+    if (!empty($errors) || !empty($notValidResponseMessage)) {
+        SharedHtmlRendererM4::generateResponse(array_merge($errors, $notValidResponseMessage), false);
+        renderPage($fields);
         return;
     }
 
-    // If name exists and is not valid
-    if (!InputValidate::hasNoSpecialCharacters($name)) {
-        $notValidResponseMessage[] = "Name can only contain letters. You typed in '$name'";
-    }
-    // If email exists and is not valid
-    if (!InputValidate::isEmail($email)) {
-        $notValidResponseMessage[] = "Email '$email' is not a valid valid email";
-    }
-    // If phone number exists and is not valid
-    if (!InputValidate::hasOnlyNumbers($phoneNumber)) {
-        $notValidResponseMessage[] = "Phone number '$phoneNumber' does not have only numbers";
-    }
+    $validMessage = [
+        "User was successfully registered with the following information:",
+        "Name: {$fields[NAME_COOKIE]}",
+        "Email: {$fields[EMAIL_COOKIE]}",
+        "Phone number: {$fields[NUMBER_COOKIE]}"
+    ];
 
-
-    // Print the notValid response message if it exists
-    if ($notValidResponseMessage) {
-        SharedHtmlRendererM4::generateResponse($notValidResponseMessage, false);
-        return; // Stop execution if any of the information is not valid
-    }
-
-    $validMessage[] = "User was successfully registered";
-    $validMessage[] = "Name is: $name";
-    $validMessage[] = "Email is: $email";
-    $validMessage[] = "Phone number is: $phoneNumber";
-
+    renderPage($fields);
     SharedHtmlRendererM4::generateResponse($validMessage, true);
-
 
     echo "<br><br>";
     foreach ($validMessage as $msg) {
@@ -70,8 +57,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+function renderPage($fields = []) {
+    require '../sharedViewTop.php';
+    SharedHtmlRendererM4::renderFormArrayBased(
+        [NAME_COOKIE, EMAIL_COOKIE, NUMBER_COOKIE],
+        ['Enter your name*', 'Enter your email*', 'Enter your number*'],
+        $fields
+    );
+}
 
-// Saved in array
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    processForm();
+} else {
+    renderPage([
+        NAME_COOKIE => $_SESSION[NAME_COOKIE] ?? '',
+        EMAIL_COOKIE => $_SESSION[EMAIL_COOKIE] ?? '',
+        NUMBER_COOKIE => $_SESSION[NUMBER_COOKIE] ?? ''
+    ]);
+}
+
+
 
 
 require '../sharedViewBottom.php';
