@@ -9,10 +9,8 @@ class InputValidate
 
     public static function hasOnlyNumbers(string $str): bool
     {
-        if (!preg_match('/^[0-9\s+]+$/', $str)) {
-            return false;
-        }
-        return true;
+        // If str only contains any numbers or "+" symbol, return true, else false
+        return (bool)preg_match('/^[0-9\s+]+$/', $str);
     }
 
 
@@ -23,14 +21,8 @@ class InputValidate
      */
     public static function hasNoSpecialCharacters(string $str): bool
     {
-        if (!$str) {
-            return false;
-        }
-        if (!preg_match('/[^A-ZÆØÅ ]/iu', $str)) {
-            return true;
-        }
-
-        return false;
+        // Type cast to bool is here redundant, as the not operator is used
+        return !preg_match('/[^A-ZÆØÅ ]/iu', $str);
     }
 
     public static function removeWhiteSpace(string $str): string
