@@ -1,5 +1,4 @@
 <?php
-include 'FormRenderM4.php';
 include 'InputValidation.php';
 // Shared
 include '../SharedHtmlRenderer.php';
@@ -13,7 +12,7 @@ const NUMBER_COOKIE = 'PhoneNumber_Cookie';
 $errors = [];
 $notValidResponseMessage = [];
 
-FormRenderM4::renderFormArrayBased(
+SharedHtmlRendererM4::renderFormArrayBased(
     [NAME_COOKIE, EMAIL_COOKIE, NUMBER_COOKIE],
     ['Enter your name*', 'Enter your email*', 'Enter your number*']);
 
