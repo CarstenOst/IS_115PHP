@@ -49,7 +49,13 @@ class SharedHtmlRendererM4
         EOT;
     }
 
-    public static function generateResponse($message, bool $status): void
+    /**
+     * Generate a response with a message and either green or red background.
+     * @param mixed $message The message to display. Can be string or array.
+     * @param bool $status True for green, false for red color
+     * @return void echos the response
+     */
+    public static function generateResponse(mixed $message, bool $status, int $timeInMilliSeconds = 1200): void
     {
         $color = $status ? 'green' : 'red';
         if (is_array($message)) {
@@ -70,8 +76,8 @@ class SharedHtmlRendererM4
                         element.parentNode.removeChild(element);
                         let scriptElement = document.getElementById('messageScript');
                         scriptElement.parentNode.removeChild(scriptElement);
-                    }, 1200);  
-                }, 1200);
+                    }, $timeInMilliSeconds)
+                }, $timeInMilliSeconds);
             </script>
         HTML;
     }
@@ -82,6 +88,7 @@ class SharedHtmlRendererM4
      * This means that you can render as many input fields you want as long as you have enough memory
      * @param array $cookieNames Fill in as many cookie names that you want
      * @param array $labelText Fill inn as many labels as the amount of cookie names
+     * @param array $values Fill in as many values as the amount of cookie names
      * @return void echos the form
      */
     public static function renderFormArrayBased(array $cookieNames, array $labelText, array $values = [] ): void
@@ -92,8 +99,12 @@ class SharedHtmlRendererM4
         }
         // Create the html form tag
         $form = '<form class="form-group" id="form" action="" method="POST">';
+
+        // Initiate a counter for the label text
         $i = 0;
+        // Loop through the cookie names and create the input fields with values if any
         foreach ($cookieNames as $cookie) {
+            // Set value to empty string if not set
             $value = $values[$cookie] ?? '';
             $form .= <<<EOT
                 <label for="$cookie">{$labelText[$i++]}</label><br>
@@ -105,7 +116,7 @@ class SharedHtmlRendererM4
                 <br>
                 <input id="pointer" type="submit" value="Submit">
             </form>
-            EOT;
+        EOT;
         // Finally we can just echo it, as returning would allocate more memory
         echo $form;
     }

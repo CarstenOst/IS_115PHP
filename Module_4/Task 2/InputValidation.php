@@ -7,10 +7,24 @@ class InputValidate
         return filter_var($email, FILTER_VALIDATE_EMAIL) ?? false;
     }
 
-    public static function hasOnlyNumbers(string $str): bool
+    private static function hasOnlyNumbers(string $str): bool
     {
         // If str only contains any numbers or "+" symbol, return true, else false
-        return (bool)preg_match('/^[0-9\s+]+$/', $str);
+        return (bool)preg_match('/^\+?[0-9]+$/', $str);
+    }
+
+    public static function validatePhoneNumber(string $str,  &$errorMessage): bool
+    {
+        if (!self::hasOnlyNumbers($str)) {
+            $errorMessage[] .= 'Phone number can only contain numbers and "+" symbol';
+            return false;
+        }
+        // Let's assume that company or special numbers are not allowed to be used as a phone number (110, 112, 113 etc.)
+        if (strlen($str) < 8 || strlen($str) > 14) {
+            $errorMessage[] .= 'Phone number must be between 8 and 14 characters long';
+            return false;
+        }
+        return true;
     }
 
 

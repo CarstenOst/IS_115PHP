@@ -3,6 +3,7 @@ include 'InputValidation.php';
 // Shared
 include '../SharedHtmlRenderer.php';
 include '../PostHandler.php';
+include '../SessionHandler.php';
 
 session_start();
 const NAME_COOKIE = 'Name';
@@ -11,44 +12,52 @@ const NUMBER_COOKIE = 'Number';
 
 function processForm(): void
 {
-    $fields = [
+    $dataInput = [
         NAME_COOKIE => strip_tags($_POST[NAME_COOKIE] ?? ''),
         EMAIL_COOKIE => strip_tags(InputValidate::removeWhiteSpace($_POST[EMAIL_COOKIE] ?? '')),
         NUMBER_COOKIE => strip_tags(InputValidate::removeWhiteSpace($_POST[NUMBER_COOKIE] ?? ''))
     ];
 
-    $errors = [];
     $notValidResponseMessage = [];
 
-    foreach ($fields as $fieldName => $input) {
+    foreach ($dataInput as $dataInputKey => $input) {
         if (empty($input)) {
-            $errors[$fieldName] = "$fieldName is required.";
-        } elseif ($fieldName === NAME_COOKIE && !InputValidate::hasNoSpecialCharacters($input)) {
+            $notValidResponseMessage[] = "$dataInputKey is required.";
+        } elseif ($dataInputKey === NAME_COOKIE && !InputValidate::hasNoSpecialCharacters($input)) {
             $notValidResponseMessage[] = "Name can only contain letters. You typed in '$input'";
-        } elseif ($fieldName === EMAIL_COOKIE && !InputValidate::isEmail($input)) {
+        } elseif ($dataInputKey === EMAIL_COOKIE && !InputValidate::isEmail($input)) {
             $notValidResponseMessage[] = "Email '$input' is not a valid email";
-        } elseif ($fieldName === NUMBER_COOKIE && !InputValidate::hasOnlyNumbers($input)) {
-            $notValidResponseMessage[] = "Phone number '$input' does not have only numbers";
-        } else {
-            // If valid, save the input in the session
-            $_SESSION[$fieldName] = $input;
         }
-    }
 
-    if (!empty($errors) || !empty($notValidResponseMessage)) {
-        SharedHtmlRendererM4::generateResponse(array_merge($errors, $notValidResponseMessage), false);
-        renderPage($fields);
+        // Now here I thought it would look very ugly if im not handling it with a pointer.
+        // So I use a pointer (well it's technically called a reference in php, as this is not C(++)
+        // so we can only simulate a pointer-like-behaviour by using "&") to add the error message
+        // to the array given in the parameter instead of initiating extra variables.
+        // This is also done to give more accurate error messages.
+        // I do think I should have done it with the others too, but this is just for learning purposes.
+        // And it works fine, so I will not change it.
+        elseif ($dataInputKey === NUMBER_COOKIE && !InputValidate::validatePhoneNumber($input, $notValidResponseMessage)) {
+            continue;
+        }
+        // Save the input in the session, even if it is not valid
+        $_SESSION[$dataInputKey] = $input;
+    }
+    // If errors or not valid response message is not empty, we want to display the errors and the form again
+    if (!empty($notValidResponseMessage)) {
+        SharedHtmlRendererM4::generateResponse($notValidResponseMessage, false);
+        renderPage($dataInput);
         return;
     }
 
+    // The task asked for array, and array is given
     $validMessage = [
         "User was successfully registered with the following information:",
-        "Name: {$fields[NAME_COOKIE]}",
-        "Email: {$fields[EMAIL_COOKIE]}",
-        "Phone number: {$fields[NUMBER_COOKIE]}"
+        "Name: {$dataInput[NAME_COOKIE]}",
+        "Email: {$dataInput[EMAIL_COOKIE]}",
+        "Phone number: {$dataInput[NUMBER_COOKIE]}"
     ];
 
-    renderPage($fields);
+    renderPage($dataInput);
     SharedHtmlRendererM4::generateResponse($validMessage, true);
 
     echo "<br><br>";
@@ -57,12 +66,13 @@ function processForm(): void
     }
 }
 
-function renderPage($fields = []) {
+function renderPage($userInput = []): void
+{
     require '../sharedViewTop.php';
     SharedHtmlRendererM4::renderFormArrayBased(
         [NAME_COOKIE, EMAIL_COOKIE, NUMBER_COOKIE],
         ['Enter your name*', 'Enter your email*', 'Enter your number*'],
-        $fields
+        $userInput
     );
 }
 
