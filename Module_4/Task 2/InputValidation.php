@@ -13,15 +13,21 @@ class InputValidate
         return (bool)preg_match('/^\+?[0-9]+$/', $str);
     }
 
-    public static function validatePhoneNumber(string $str,  &$errorMessage): bool
+    /**
+     * Warning reference is used here, so the error message is added to the array given in the parameter
+     * @param string $str The string to validate
+     * @param array $errorMessage Reference to the array where the error message should be added
+     * @return bool true if string is valid, false if not
+     */
+    public static function validatePhoneNumber(string $str, array &$errorMessage): bool
     {
         if (!self::hasOnlyNumbers($str)) {
-            $errorMessage[] .= 'Phone number can only contain numbers and "+" symbol';
+            $errorMessage[] = 'Phone number can only contain numbers and "+" symbol in the beginning';
             return false;
         }
         // Let's assume that company or special numbers are not allowed to be used as a phone number (110, 112, 113 etc.)
         if (strlen($str) < 8 || strlen($str) > 14) {
-            $errorMessage[] .= 'Phone number must be between 8 and 14 characters long';
+            $errorMessage[] = 'Phone number must be between 8 and 14 characters long';
             return false;
         }
         return true;
@@ -39,6 +45,11 @@ class InputValidate
         return !preg_match('/[^A-ZÆØÅ ]/iu', $str);
     }
 
+    /**
+     * Removes whitespace from string
+     * @param string $str
+     * @return string
+     */
     public static function removeWhiteSpace(string $str): string
     {
         return preg_replace('/\s+/', '', $str);

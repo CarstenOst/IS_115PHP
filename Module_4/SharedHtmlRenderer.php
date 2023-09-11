@@ -59,6 +59,7 @@ class SharedHtmlRendererM4
     {
         $color = $status ? 'green' : 'red';
         if (is_array($message)) {
+            // Much easier just imploding the array with <br> than looping through it
             $message = implode('<br>', $message);
         }
 
@@ -91,7 +92,7 @@ class SharedHtmlRendererM4
      * @param array $values Fill in as many values as the amount of cookie names
      * @return void echos the form
      */
-    public static function renderFormArrayBased(array $cookieNames, array $labelText, array $values = [] ): void
+    public static function renderFormArrayBased(array $cookieNames, array $labelText, array $values = [], array $isValid = null): void
     {
         // Return if programmer did not read the docs.
         if (!$cookieNames or count($cookieNames) !== count($labelText)) {
@@ -100,15 +101,18 @@ class SharedHtmlRendererM4
         // Create the html form tag
         $form = '<form class="form-group" id="form" action="" method="POST">';
 
-        // Initiate a counter for the label text
-        $i = 0;
+        $borderClass = '';
         // Loop through the cookie names and create the input fields with values if any
         foreach ($cookieNames as $cookie) {
+
+            if (isset($isValid[$cookie])){
+                $borderClass = $isValid[$cookie] ? 'border border-success' : 'border border-danger';
+            }
             // Set value to empty string if not set
             $value = $values[$cookie] ?? '';
             $form .= <<<EOT
-                <label for="$cookie">{$labelText[$i++]}</label><br>
-                <input type="text" name="$cookie" id="$cookie" value="$value"><br>
+                <label for="$cookie">{$labelText[$cookie]}</label>
+                <input type="text" class="form-control $borderClass" name="$cookie" id="$cookie" value="$value">
             EOT;
         }
         // Concat the rest of the form and input, so we actually can submit our info.
