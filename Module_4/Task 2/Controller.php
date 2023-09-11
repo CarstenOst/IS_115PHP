@@ -75,7 +75,7 @@ function processForm(): void
         "Phone number: {$dataInput[NUMBER_COOKIE]}"
     ];
 
-    renderPage($dataInput);
+    renderPage($dataInput, $isValid);
     SharedHtmlRendererM4::generateResponse($validMessage, true);
 
     echo "<br><br>";
