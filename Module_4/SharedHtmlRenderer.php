@@ -92,7 +92,7 @@ class SharedHtmlRendererM4
      * @param array $values Fill in as many values as the amount of cookie names
      * @return void echos the form
      */
-    public static function renderFormArrayBased(array $cookieNames, array $labelText, array $values = [], array $isValid = null): void
+    public static function renderFormArrayBased(array $cookieNames, array $labelText, array $values = []): void
     {
         // Return if programmer did not read the docs.
         if (!$cookieNames or count($cookieNames) !== count($labelText)) {
@@ -102,14 +102,14 @@ class SharedHtmlRendererM4
         $form = '<form class="form-group" id="form" action="" method="POST">';
 
         $borderClass = '';
+        $value = '';
         // Loop through the cookie names and create the input fields with values if any
         foreach ($cookieNames as $cookie) {
-
-            if (isset($isValid[$cookie])){
-                $borderClass = $isValid[$cookie] ? 'border border-success' : 'border border-danger';
+            if (!empty($values[$cookie]) && is_array($values[$cookie]) && count($values[$cookie]) >= 2) {
+                $borderClass = $values[$cookie][1] ? 'border border-success' : 'border border-danger';
+                // Set value to empty string if not set
+                $value = $values[$cookie][0] ?? '';
             }
-            // Set value to empty string if not set
-            $value = $values[$cookie] ?? '';
             $form .= <<<EOT
                 <label for="$cookie">{$labelText[$cookie]}</label>
                 <input type="text" class="form-control $borderClass" name="$cookie" id="$cookie" value="$value">
