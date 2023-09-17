@@ -43,15 +43,12 @@ function processForm(): void
             $dataInput[$dataInputKey][1] = false;
         }
 
-        // Now here I would have to add a lot of code if im not handling the next code with a pointer.
-        // So I use a pointer (well it's technically called a reference in php, as this is not C(++)
-        // so we can only simulate a pointer-like-behaviour by using "&") to add the error message
-        // to the array given in the parameter instead of initiating extra variables.
-        // This is also done to give more accurate error messages.
-        // I do think I should have done it with the others too, but this is just for learning purposes.
-        // And it works fine, so I will not change it.
-        elseif ($dataInputKey === NUMBER_COOKIE && !InputValidate::validatePhoneNumber($input[0], $notValidResponseMessage)) {
-            $dataInput[$dataInputKey][1] = false;
+                case NUMBER_COOKIE:
+                    if (!InputValidate::validatePhoneNumber($input[0], $notValidResponseMessage)) {
+                        $dataInput[$dataInputKey][1] = false;
+                    }
+                    break;
+            }
         }
         // Save the input in the session, even if it is not valid
         $_SESSION[$dataInputKey] = $input;
