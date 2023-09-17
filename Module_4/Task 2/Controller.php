@@ -35,13 +35,24 @@ function processForm(): void
         if (empty($input[0])) {
             $notValidResponseMessage[] = "$dataInputKey is required.";
             $dataInput[$dataInputKey][1] = false;
-        } elseif ($dataInputKey === NAME_COOKIE && !InputValidate::hasNoSpecialCharacters($input[0])) {
-            $notValidResponseMessage[] = "Name can only contain letters. You typed in '$input[0]'";
-            $dataInput[$dataInputKey][1] = false;
-        } elseif ($dataInputKey === EMAIL_COOKIE && !InputValidate::isEmail($input[0])) {
-            $notValidResponseMessage[] = "Email '$input[0]' is not a valid email";
-            $dataInput[$dataInputKey][1] = false;
-        }
+        } else {
+            switch ($dataInputKey) {
+                // Now here I would have to add a lot of code if im not handling the next code with a pointer.
+                // So I use a pointer (well it's technically called a reference in php, as this is not C(++)
+                // so we can only simulate a pointer-like-behaviour by using "&") to add the error message
+                // to the array given in the parameter instead of initiating extra variables.
+                // This is also done to give more accurate error messages.
+                case NAME_COOKIE:
+                    if (!InputValidate::validateName($input[0], $notValidResponseMessage)) {
+                        $dataInput[$dataInputKey][1] = false;
+                    }
+                    break;
+
+                case EMAIL_COOKIE:
+                    if (!InputValidate::validateEmail($input[0], $notValidResponseMessage)) {
+                        $dataInput[$dataInputKey][1] = false;
+                    }
+                    break;
 
                 case NUMBER_COOKIE:
                     if (!InputValidate::validatePhoneNumber($input[0], $notValidResponseMessage)) {
@@ -88,7 +99,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         EMAIL_COOKIE => $_SESSION[EMAIL_COOKIE] ?? '',
         NUMBER_COOKIE => $_SESSION[NUMBER_COOKIE] ?? ''
     ]);
-
 }
 
 
