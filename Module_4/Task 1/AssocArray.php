@@ -17,6 +17,7 @@ class AssocArray
         }
 
         foreach ($arrayKey as $key) {
+            // Task didn't specify a value, so I just set it to 1
             $arr[$key] = 1;
         }
     }
