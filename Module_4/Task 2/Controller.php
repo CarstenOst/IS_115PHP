@@ -41,7 +41,8 @@ function processForm(): void
                 // So I use a pointer (well it's technically called a reference in php, as this is not C(++)
                 // so we can only simulate a pointer-like-behaviour by using "&") to add the error message
                 // to the array given in the parameter instead of initiating extra variables.
-                // This is also done to give more accurate error messages.
+                // This is also done to give more accurate error messages, and to decouple the validation from this
+                // controller. InputValidate can thus be reused very easily
                 case NAME_COOKIE:
                     if (!InputValidate::validateName($input[0], $notValidResponseMessage)) {
                         $dataInput[$dataInputKey][1] = false;
