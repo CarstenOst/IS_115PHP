@@ -69,11 +69,11 @@ class InputValidate
      */
     public static function validateEmail(string $email, array &$errorMessage): bool
     {
-        if (!self::isEmail($email)) {
-            $errorMessage[] = "Email: '$email' is not valid";
-            return false;
+        if (self::isEmail($email)) {
+            return true;
         }
-        return true;
+        $errorMessage[] = "Email: '$email' is not valid";
+        return false;
     }
 
 

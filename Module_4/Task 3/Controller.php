@@ -1,10 +1,12 @@
 <?php
+include '../Constants.php';
 include '../SharedHtmlRenderer.php';
 include '../Task 2/InputHandler.php';
 include '../Task 2/InputValidation.php';
-include '../Constants.php';
 
 // So since the previous task was total overkill, I'll step down a little bit here.....
+// Now normally session_start() is called before includes, as if they echo anything the code will fuck up.
+// However, I wrote those codes, so I know they won't do that.
 session_start();
 
 $user = [
@@ -44,6 +46,7 @@ function processFormT3(): void
 
     // To see if anything was changed or not
     $changes = detectChanges($dataInput, $oldInput);
+
     // If errors or not valid response message is not empty, we want to display the errors and the form again.
     if (!empty($notValidResponseMessage)) {
         SharedHtmlRendererM4::generateResponse($notValidResponseMessage, false);
@@ -59,16 +62,27 @@ function processFormT3(): void
         "Number: {$dataInput[NUMBER_COOKIE][0]}"
     ];
 
+    // Render the page with our new dataInput
     renderPageT3($dataInput);
+
+    // Echo if there has been any changes or not
     echo changeMsg($changes);
+
+    // Generate a popup response. This will always be true,
+    // as we return before this code if there are errors in the input.
     SharedHtmlRendererM4::generateResponse($validMessage, true);
 
     echo "<br><br>";
-    foreach ($validMessage as $msg) {
-        echo $msg . "<br>";
-    }
+    echo implode("<br>", $validMessage);
 }
 
+/**
+ * Detect if there are any changes based on two arrays
+ *
+ * @param array $processedData
+ * @param array $originalData
+ * @return array
+ */
 function detectChanges(array $processedData, array $originalData): array
 {
     $changes = [];
