@@ -1,7 +1,10 @@
 <?php
 include 'InputValidation.php';
+include 'InputHandler.php';
+
 // Shared
 include '../SharedHtmlRenderer.php';
+
 
 session_start();
 // I make some constant cookie-variables here, even though they should be used in EventUser.php and included here
@@ -24,48 +27,20 @@ function renderPage($userInput = []): void
 
 function processForm(): void
 {
-    $dataInput = [
-        NAME_COOKIE => [strip_tags($_POST[NAME_COOKIE]), true],
-        EMAIL_COOKIE => [strip_tags(InputValidate::removeWhiteSpace($_POST[EMAIL_COOKIE])), true],
-        NUMBER_COOKIE => [strip_tags(InputValidate::removeWhiteSpace($_POST[NUMBER_COOKIE])), true]
-    ];
+    // Instantiate the InputHandler class
+    $handler = new InputHandler();
 
-    $notValidResponseMessage = [];
-    foreach ($dataInput as $dataInputKey => $input) {
-        if (empty($input[0])) {
-            $notValidResponseMessage[] = "$dataInputKey is required.";
-            $dataInput[$dataInputKey][1] = false;
-        } else {
-            switch ($dataInputKey) {
-                // Now here I would have to add a lot of code if im not handling the next code with a pointer.
-                // So I use a pointer (well it's technically called a reference in php, as this is not C(++)
-                // so we can only simulate a pointer-like-behaviour by using "&") to add the error message
-                // to the array given in the parameter instead of initiating extra variables.
-                // This is also done to give more accurate error messages, and to decouple the validation from this
-                // controller. InputValidate can thus be reused very easily
-                case NAME_COOKIE:
-                    if (!InputValidate::validateName($input[0], $notValidResponseMessage)) {
-                        $dataInput[$dataInputKey][1] = false;
-                    }
-                    break;
+    // Dynamically configure input processing rules.
+    // This so I can reuse the InputHandler, rather than hard coding it here.
+    $handler->addConfig(NAME_COOKIE, 'strip_tags', [InputValidate::class, 'validateName']);
+    $handler->addConfig(EMAIL_COOKIE, [InputValidate::class, 'removeWhiteSpace'], [InputValidate::class, 'validateEmail']);
+    $handler->addConfig(NUMBER_COOKIE, [InputValidate::class, 'removeWhiteSpace'], [InputValidate::class, 'validatePhoneNumber']);
 
-                case EMAIL_COOKIE:
-                    if (!InputValidate::validateEmail($input[0], $notValidResponseMessage)) {
-                        $dataInput[$dataInputKey][1] = false;
-                    }
-                    break;
 
-                case NUMBER_COOKIE:
-                    if (!InputValidate::validatePhoneNumber($input[0], $notValidResponseMessage)) {
-                        $dataInput[$dataInputKey][1] = false;
-                    }
-                    break;
-            }
-        }
-        // Save the input in the session, even if it is not valid
-        $_SESSION[$dataInputKey] = $input;
-    }
-    // If errors or not valid response message is not empty, we want to display the errors and the form again
+    // Process inputs based on configured rules.
+    list($dataInput, $notValidResponseMessage) = $handler->processInputs($_POST);
+
+    // If errors or not valid response message is not empty, we want to display the errors and the form again.
     if (!empty($notValidResponseMessage)) {
         SharedHtmlRendererM4::generateResponse($notValidResponseMessage, false);
         renderPage($dataInput);
@@ -90,7 +65,6 @@ function processForm(): void
 }
 
 
-
 // If the request method is POST, we want to process the form, else we want to render the page with session data if any
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     processForm();
@@ -101,7 +75,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         NUMBER_COOKIE => $_SESSION[NUMBER_COOKIE] ?? ''
     ]);
 }
-
 
 
 // Not really needed as html will close the tags itself, but I like to do it anyway
