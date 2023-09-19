@@ -4,15 +4,14 @@ include '../Task 2/InputHandler.php';
 include '../Task 2/InputValidation.php';
 include '../Constants.php';
 
-// So since the previous task was total overkill, I'll step down a little bit here
-
+// So since the previous task was total overkill, I'll step down a little bit here.....
+session_start();
 
 $user = [
     NAME_COOKIE => ['Kurt Nilsen', true],
     EMAIL_COOKIE => ['kurt@nilsen.com', true],
     NUMBER_COOKIE => ['47283748', true]
 ];
-
 
 function renderPageT3($userInput = []): void
 {
@@ -27,6 +26,9 @@ function renderPageT3($userInput = []): void
 
 function processFormT3(): void
 {
+    global $user;
+    $oldInput = $_SESSION ?? $user;
+
     // Instantiate the InputHandler class
     $handler = new InputHandler();
 
@@ -40,22 +42,25 @@ function processFormT3(): void
     // Process inputs based on configured rules.
     list($dataInput, $notValidResponseMessage) = $handler->processInputs($_POST);
 
+    // To see if anything was changed or not
+    $changes = detectChanges($dataInput, $oldInput);
     // If errors or not valid response message is not empty, we want to display the errors and the form again.
     if (!empty($notValidResponseMessage)) {
         SharedHtmlRendererM4::generateResponse($notValidResponseMessage, false);
         renderPageT3($dataInput);
+        echo changeMsg($changes);
         return;
     }
-
     // The task asked for array, and array is given
     $validMessage = [
         "User was successfully registered:",
         "Name: {$dataInput[NAME_COOKIE][0]}",
         "Email: {$dataInput[EMAIL_COOKIE][0]}",
-        "Phone number: {$dataInput[NUMBER_COOKIE][0]}"
+        "Number: {$dataInput[NUMBER_COOKIE][0]}"
     ];
 
     renderPageT3($dataInput);
+    echo changeMsg($changes);
     SharedHtmlRendererM4::generateResponse($validMessage, true);
 
     echo "<br><br>";
@@ -64,30 +69,47 @@ function processFormT3(): void
     }
 }
 
+function detectChanges(array $processedData, array $originalData): array
+{
+    $changes = [];
+
+    foreach ($processedData as $field => $data) {
+        if (isset($originalData[$field]) && $originalData[$field][0] !== $data[0]) {
+            $changes[$field] = [
+                'old' => $originalData[$field][0],
+                'new' => $data[0]
+            ];
+        }
+    }
+
+    return $changes;
+}
+
+function changeMsg(array $changes): string
+{
+    if (empty($changes)) return '<p>No changes were made.</p>';
+
+    $messages = array_map(function ($field, $data) {
+        return "$field: {$data['old']} -> {$data['new']}";
+    }, array_keys($changes), $changes);
+
+    return '<br><p>Changed: <br>' . implode("<br>", $messages) . '.</p>';
+}
 
 
 // Check if submit is pressed
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $changedFields = [];
-
-    // Check if data is changed
-    foreach ($user as $key => $value) {
-        if (isset($_POST[$key]) && $_POST[$key] !== $value[0]) {
-            $user[$key][0] = $_POST[$key];
-            $changedFields[] = $key;
-        }
-    }
     processFormT3();
-    if (!empty($changedFields)) {
-        // Inform the user
-        echo '<br><p>Changes made in the following inputs: <br>' . implode("<br> ", $changedFields) . '.</p>';
-    } else {
-        echo '<p>No changes were made</p>';
-    }
+} else if (isset($_SESSION)) {
+    renderPageT3([
+        NAME_COOKIE => $_SESSION[NAME_COOKIE] ?? '',
+        EMAIL_COOKIE => $_SESSION[EMAIL_COOKIE] ?? '',
+        NUMBER_COOKIE => $_SESSION[NUMBER_COOKIE] ?? ''
+    ]);
+    return;
 } else {
     renderPageT3($user);
 }
-
 
 
 require '../sharedViewBottom.php';
