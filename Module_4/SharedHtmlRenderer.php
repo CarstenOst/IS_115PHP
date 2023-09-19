@@ -102,17 +102,18 @@ class SharedHtmlRendererM4
         $form = '<form class="form-group" id="form" action="" method="POST">';
 
         $borderClass = '';
+        $borderStyle = 'border-width: 3px !important; ';
         $value = '';
         // Loop through the cookie names and create the input fields with values if any
         foreach ($cookieNames as $cookie) {
             if (!empty($values[$cookie]) && is_array($values[$cookie]) && count($values[$cookie]) >= 2) {
-                $borderClass = $values[$cookie][1] ? 'border border-success' : 'border border-danger';
+                $borderClass .= $values[$cookie][1] ? 'border border-success' : 'border border-danger';
                 // Set value to empty string if not set
                 $value = $values[$cookie][0] ?? '';
             }
             $form .= <<<EOT
                 <label for="$cookie">{$labelText[$cookie]}</label>
-                <input type="text" class="form-control $borderClass" name="$cookie" id="$cookie" value="$value">
+                <input type="text" style="$borderStyle" class="form-control $borderClass" name="$cookie" id="$cookie" value="$value">
             EOT;
         }
         // Concat the rest of the form and input, so we actually can submit our info.

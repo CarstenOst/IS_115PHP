@@ -4,16 +4,9 @@ include 'InputHandler.php';
 
 // Shared
 include '../SharedHtmlRenderer.php';
-
+include '../Constants.php';
 
 session_start();
-// I make some constant cookie-variables here, even though they should be used in EventUser.php and included here
-// But then I would have to write EventUser::XXXXX_COOKIE, and I don't want to do that, as it makes the code longer, yet
-// arguably more reusable
-const NAME_COOKIE = 'Name';
-const EMAIL_COOKIE = 'Email';
-const NUMBER_COOKIE = 'Number';
-
 
 function renderPage($userInput = []): void
 {
