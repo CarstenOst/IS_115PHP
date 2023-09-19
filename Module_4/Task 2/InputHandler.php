@@ -14,6 +14,7 @@ class InputHandler
 {
     private array $inputConfig = [];  // Configuration storage for input processing
 
+
     /**
      * Constructor: Initializes configuration storage with the given array or an empty array.
      *
@@ -23,6 +24,7 @@ class InputHandler
     {
         $this->inputConfig = $config;
     }
+
 
     /**
      * Adds a new configuration for input processing.
@@ -41,6 +43,7 @@ class InputHandler
             'validate' => $validationMethod
         ];
     }
+
 
     /**
      * Processes and validates the provided inputs based on the existing configuration.
@@ -83,6 +86,7 @@ class InputHandler
 
         return [$processedData, $notValidResponseMessage];
     }
+
 
     /**
      * Sanitizes a given value with the strip_tags function, and then with an additional method if provided.

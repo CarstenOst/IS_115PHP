@@ -25,6 +25,7 @@ function renderPage($userInput = []): void
     );
 }
 
+// So this might have been over-engineered a little bit
 function processForm(): void
 {
     // Instantiate the InputHandler class
