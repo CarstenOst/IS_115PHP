@@ -33,10 +33,10 @@ class InputHandler
      * configuration separate from actual data processing.
      *
      * @param string $key Key identifier for the input
-     * @param callable $sanitizeMethod Method/function to sanitize the input
      * @param callable $validationMethod Method/function to validate the input
+     * @param callable|null $sanitizeMethod Method/function to sanitize the input
      */
-    public function addConfig(string $key, callable $sanitizeMethod, callable $validationMethod): void
+    public function addConfig(string $key, callable $validationMethod, callable $sanitizeMethod = null): void
     {
         $this->inputConfig[$key] = [
             'sanitize' => $sanitizeMethod,

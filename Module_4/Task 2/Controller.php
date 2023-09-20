@@ -26,9 +26,9 @@ function processForm(): void
 
     // Dynamically configure input processing rules.
     // This so I can reuse the InputHandler, rather than hard coding it here.
-    $handler->addConfig(NAME_COOKIE, 'strip_tags', [InputValidate::class, 'validateName']);
-    $handler->addConfig(EMAIL_COOKIE, [InputValidate::class, 'removeWhiteSpace'], [InputValidate::class, 'validateEmail']);
-    $handler->addConfig(NUMBER_COOKIE, [InputValidate::class, 'removeWhiteSpace'], [InputValidate::class, 'validatePhoneNumber']);
+    $handler->addConfig(NAME_COOKIE, [InputValidate::class, 'validateName'], null,);
+    $handler->addConfig(EMAIL_COOKIE, [InputValidate::class, 'validateEmail'], [InputValidate::class, 'removeWhiteSpace']);
+    $handler->addConfig(NUMBER_COOKIE, [InputValidate::class, 'validatePhoneNumber'], [InputValidate::class, 'removeWhiteSpace']);
 
 
     // Process inputs based on configured rules.

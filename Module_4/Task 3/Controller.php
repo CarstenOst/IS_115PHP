@@ -41,9 +41,9 @@ function processFormT3(): void
     $handler = new InputHandler();
 
     // Dynamically configure input processing rules.
-    $handler->addConfig(NAME_COOKIE, 'strip_tags', [InputValidate::class, 'validateName']);
-    $handler->addConfig(EMAIL_COOKIE, [InputValidate::class, 'removeWhiteSpace'], [InputValidate::class, 'validateEmail']);
-    $handler->addConfig(NUMBER_COOKIE, [InputValidate::class, 'removeWhiteSpace'], [InputValidate::class, 'validatePhoneNumber']);
+    $handler->addConfig(NAME_COOKIE, [InputValidate::class, 'validateName']);
+    $handler->addConfig(EMAIL_COOKIE, [InputValidate::class, 'validateEmail'], [InputValidate::class, 'removeWhiteSpace']);
+    $handler->addConfig(NUMBER_COOKIE, [InputValidate::class, 'validatePhoneNumber'], [InputValidate::class, 'removeWhiteSpace']);
 
 
     // Process inputs based on configured rules.
