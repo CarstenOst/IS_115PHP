@@ -9,8 +9,8 @@
     <title> <?php require_once 'sharedFunctions.php'; echo sharedFunctionsM4::getCurrentModuleFolderName()?></title>
 </head>
 <body>
-<div class="container d-flex justify-content-center align-items-center">
-    <div class="flex-column justify-content-center">
+<div class="container d-flex justify-content-center">
+    <div class="flex-column">
         <div class="d-flex justify-content-center fixed-top">
             <nav id="navbar" class="d-flex navbar navbar-expand-lg">
                 <?php sharedFunctionsM4::generateNavigationButtons(); ?>

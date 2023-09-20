@@ -104,12 +104,15 @@ class SharedHtmlRendererM4
         $borderClass = '';
         $borderStyle = 'border-width: 3px !important; ';
         $value = '';
+        $i = 0;
         // Loop through the cookie names and create the input fields with values if any
         foreach ($cookieNames as $cookie) {
             if (!empty($values[$cookie]) && is_array($values[$cookie]) && count($values[$cookie]) >= 2) {
                 $borderClass .= $values[$cookie][1] ? 'border border-success' : 'border border-danger';
                 // Set value to empty string if not set
                 $value = $values[$cookie][0] ?? '';
+            } else if (!empty($values[$i])) { // This is for task 5, so
+                $value = $values[$i++];
             }
             $form .= <<<EOT
                 <label for="$cookie">{$labelText[$cookie]}</label>
