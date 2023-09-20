@@ -1,14 +1,17 @@
 <?php
+include 'ChangeHandler.php';
 include '../Constants.php';
 include '../SharedHtmlRenderer.php';
+// Reuse code from task 2.
 include '../Task 2/InputHandler.php';
 include '../Task 2/InputValidation.php';
 
-// So since the previous task was total overkill, I'll step down a little bit here.....
-// Now normally session_start() is called before includes, as if they echo anything the code will fuck up.
+// This code is very similar to task 2. I moved the new logic used to 'ChangeHandler.php'
+// Now normally session_start() is called before includes, as if they echo anything the code will possibly halt
 // However, I wrote those codes, so I know they won't do that.
 session_start();
 
+// Hardcode a global user in an associative array
 $user = [
     NAME_COOKIE => ['Kurt Nilsen', true],
     EMAIL_COOKIE => ['kurt@nilsen.com', true],
@@ -18,7 +21,6 @@ $user = [
 function renderPageT3($userInput = []): void
 {
     include_once '../sharedViewTop.php';
-    $userKeys = array_keys($userInput);
     SharedHtmlRendererM4::renderFormArrayBased(
         array_keys(INPUT_FIELDS),
         INPUT_FIELDS,
@@ -35,7 +37,6 @@ function processFormT3(): void
     $handler = new InputHandler();
 
     // Dynamically configure input processing rules.
-    // This so I can reuse the InputHandler, rather than hard coding it here.
     $handler->addConfig(NAME_COOKIE, 'strip_tags', [InputValidate::class, 'validateName']);
     $handler->addConfig(EMAIL_COOKIE, [InputValidate::class, 'removeWhiteSpace'], [InputValidate::class, 'validateEmail']);
     $handler->addConfig(NUMBER_COOKIE, [InputValidate::class, 'removeWhiteSpace'], [InputValidate::class, 'validatePhoneNumber']);
@@ -45,13 +46,13 @@ function processFormT3(): void
     list($dataInput, $notValidResponseMessage) = $handler->processInputs($_POST);
 
     // To see if anything was changed or not
-    $changes = detectChanges($dataInput, $oldInput);
+    $changes = ChangeHandler::detectChanges($dataInput, $oldInput);
 
     // If errors or not valid response message is not empty, we want to display the errors and the form again.
     if (!empty($notValidResponseMessage)) {
         SharedHtmlRendererM4::generateResponse($notValidResponseMessage, false);
         renderPageT3($dataInput);
-        echo changeMsg($changes);
+        echo ChangeHandler::changeMsg($changes);
         return;
     }
     // The task asked for array, and array is given
@@ -66,7 +67,7 @@ function processFormT3(): void
     renderPageT3($dataInput);
 
     // Echo if there has been any changes or not
-    echo changeMsg($changes);
+    echo ChangeHandler::changeMsg($changes);
 
     // Generate a popup response. This will always be true,
     // as we return before this code if there are errors in the input.
@@ -74,40 +75,6 @@ function processFormT3(): void
 
     echo "<br><br>";
     echo implode("<br>", $validMessage);
-}
-
-/**
- * Detect if there are any changes based on two arrays
- *
- * @param array $processedData
- * @param array $originalData
- * @return array
- */
-function detectChanges(array $processedData, array $originalData): array
-{
-    $changes = [];
-
-    foreach ($processedData as $field => $data) {
-        if (isset($originalData[$field]) && $originalData[$field][0] !== $data[0]) {
-            $changes[$field] = [
-                'old' => $originalData[$field][0],
-                'new' => $data[0]
-            ];
-        }
-    }
-
-    return $changes;
-}
-
-function changeMsg(array $changes): string
-{
-    if (empty($changes)) return '<p>No changes were made.</p>';
-
-    $messages = array_map(function ($field, $data) {
-        return "$field: {$data['old']} -> {$data['new']}";
-    }, array_keys($changes), $changes);
-
-    return '<br><p>Changed: <br>' . implode("<br>", $messages) . '.</p>';
 }
 
 

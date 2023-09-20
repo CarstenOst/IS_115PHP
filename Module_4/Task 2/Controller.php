@@ -53,9 +53,7 @@ function processForm(): void
     SharedHtmlRendererM4::generateResponse($validMessage, true);
 
     echo "<br><br>";
-    foreach ($validMessage as $msg) {
-        echo $msg . "<br>";
-    }
+    echo implode("<br>", $validMessage);
 }
 
 
