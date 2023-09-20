@@ -31,6 +31,10 @@ function renderPageT3($userInput = []): void
 function processFormT3(): void
 {
     global $user;
+    // If session is empty, we set the oldInput as the hardcoded user (as specified in the task).
+    // Else we use the previous sent user stored in session.
+    // If the form in task 2 is being used, then session is already set.
+    // (Just for fun, and not to recommend unless needed ofc.).
     $oldInput = $_SESSION ?? $user;
 
     // Instantiate the InputHandler class
@@ -52,6 +56,7 @@ function processFormT3(): void
     if (!empty($notValidResponseMessage)) {
         SharedHtmlRendererM4::generateResponse($notValidResponseMessage, false);
         renderPageT3($dataInput);
+        // Echo if any changes has been made.
         echo ChangeHandler::changeMsg($changes);
         return;
     }
@@ -78,7 +83,8 @@ function processFormT3(): void
 }
 
 
-// Check if submit is pressed
+// Check if submit is pressed, and process the form if it is. Else check if session is set,
+// and render the page with the session. Lastly if either is true, just render the page with the hardcoded user.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     processFormT3();
 } else if (isset($_SESSION)) {
