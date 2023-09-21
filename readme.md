@@ -28,10 +28,10 @@
 - [x] Task 3.5
 ### Submission 4
 - [x] Task 4.1
-- [ ] Task 4.2
-- [ ] Task 4.3
-- [ ] Task 4.4
-- [ ] Task 4.5
+- [x] Task 4.2
+- [x] Task 4.3
+- [x] Task 4.4
+- [x] Task 4.5
 ### Submission 5
 - [ ] Task 5.1
 ### Submission 6

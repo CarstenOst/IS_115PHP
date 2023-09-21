@@ -7,10 +7,10 @@ include 'AssocArray.php';
 
 
 
-// Create an associative array with the following keys (value will be 1, as the task did not specify a value);
+// Create an associative array with the following keys (value will be 1, as the task did not specify a value).
 AssocArray::create($assocArr,0, 3, 5, 7, 8, 15);
 
-// You can uncomment the following line to see the array become modified
+// You can uncomment the following line to see the array become modified (but this is really just for fun, and not needed for the task)
 // I've called the function 'modify' because if the key is set to the same as is in $assocArr, then it will overwrite or modify
 //AssocArray::modify($assocArr, 3, 452, 545, 5, 242, 125);
 

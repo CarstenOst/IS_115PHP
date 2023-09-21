@@ -66,7 +66,7 @@ class InputHandler
             // Default validity assumption
             $isValid = true;
 
-            // Check for required input
+            // Check for the required input
             if (empty($value)) {
                 $notValidResponseMessage[] = "$inputKey is required.";
                 $isValid = false;

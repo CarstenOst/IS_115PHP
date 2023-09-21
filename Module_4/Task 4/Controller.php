@@ -38,6 +38,7 @@ echo '<div class="w-100">
       </thead>
       <tbody>';
 
+// Session not to be confused with PHP sessions
 foreach ($tutoringSessions as $session) {
     echo '<tr class="text-left">
           <td>' . $session['title'] . '</td>
