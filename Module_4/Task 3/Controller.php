@@ -94,16 +94,15 @@ function processFormT3($userInput): void
 // Check if submit is pressed, and process the form if it is. Else check if session is set,
 // and render the page with the session. Lastly if either is true, just render the page with the hardcoded user.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // If reset is pressed, then destroy the session and insert the standard hard coded user "Kurt Nilsen"
     if (isset($_POST['deleteSession'])) {
-        // Clear the session data
-        session_unset();
-        // Destroy the session
-        session_destroy();
+        session_unset();     // Clear the session data
+        session_destroy();   // Destroy the session
 
-        renderPageT3($user);
+        renderPageT3($user); // Render the page with hard coded user
         return;
     }
-    processFormT3($_POST);
+    processFormT3($_POST); // If reset is not pressed, then process the form with the input from the user
 } else if (isset($_SESSION)) {
     renderPageT3([
         NAME_COOKIE => $_SESSION[NAME_COOKIE] ?? '',
