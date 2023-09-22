@@ -1,28 +1,20 @@
 <?php
-// Draw the navbar
-require '../sharedViewTop.php';
-// Include the class for this task (1)
-include 'AssocArray.php';
-
+include '../sharedViewTop.php'; // Draw the navbar
+include 'AssocArray.php'; // Include the class for this task (1)
 
 
 
 // Create an associative array with the following keys (value will be 1, as the task did not specify a value).
+// I'm using reference to simulate pointer-like behaviour. This will also be more efficient as we don't need to copy the array.
 AssocArray::create($assocArr,0, 3, 5, 7, 8, 15);
 
-// You can uncomment the following line to see the array become modified (but this is really just for fun, and not needed for the task)
-// I've called the function 'modify' because if the key is set to the same as is in $assocArr, then it will overwrite or modify
-//AssocArray::modify($assocArr, 3, 452, 545, 5, 242, 125);
 
-// Print the array with the following function:
-AssocArray::print($assocArr);
+AssocArray::print($assocArr); // Print the array with the following function:
 
 
 echo '<br> Running print_r() <br>';
-// Print the array with keys and values by using print_r();
-print_r($assocArr);
+print_r($assocArr); // Print the array with keys and values by using print_r();
 
 
 
-// Finish the html page (not actually needed)
-require '../sharedViewBottom.php';
+require '../sharedViewBottom.php'; // Finish the html page (not actually needed).
