@@ -56,15 +56,15 @@ class InputHandler
      */
     public function processInputs(array $postData): array
     {
-        $processedData = [];
-        $notValidResponseMessage = [];
+        $processedData = []; // Storage for processed data
+        $notValidResponseMessage = []; // Storage for validation messages
 
         foreach ($this->inputConfig as $inputKey => $config) {
             // Sanitize using the stored method from configuration
             $value = $this->sanitizeInput($postData[$inputKey], $config['sanitize']);
 
-            // Default validity assumption
-            $isValid = true;
+
+            $isValid = true; // Default validity assumption
 
             // Check for the required input
             if (empty($value)) {
@@ -75,16 +75,17 @@ class InputHandler
                 $isValid = false;
             }
 
-            // Store results
-            $processedData[$inputKey] = [$value, $isValid];
+
+            $processedData[$inputKey] = [$value, $isValid]; // Store results
 
             // Warning: Storing data directly in the $_SESSION can be unexpected.
             // It is generally better to avoid direct global state manipulation inside this utility class.
-            // But I keep my tongue straight in my mouth (until I forget about this)
+            // But I keep my tongue straight in my mouth (until I forget about this).
+            // I should move this to the controller.
             $_SESSION[$inputKey] = [$value, $isValid];
         }
 
-        return [$processedData, $notValidResponseMessage];
+        return [$processedData, $notValidResponseMessage]; // Return processed data and validation messages
     }
 
 
@@ -100,6 +101,7 @@ class InputHandler
      */
     private function sanitizeInput(string $value, callable $additionalSanitization = null): string
     {
+        // Strip tags to remove HTML and PHP tags
         $sanitized = strip_tags($value);  // Base level of sanitization
 
         // Apply the additional sanitization, if provided

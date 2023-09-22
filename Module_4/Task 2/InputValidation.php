@@ -3,18 +3,20 @@
 class InputValidate
 {
     /**
-     * Checks if string is a valid email
-     * @param string $email The email to check
-     * @return mixed $email if valid, false if not
+     * Checks if string is a valid email.
+     *
+     * @param string $email The email to check.
+     * @return mixed $email if valid, false if not.
      */
     public static function isEmail(string $email): mixed
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
-    /** Check if str only contains any numbers or "+" symbol
-     * @param string $str The string to check for only numbers
-     * @return bool true if string only contains numbers or "+" symbol (at first index), false if not
+    /** Check if str only contains any numbers or "+" symbol.
+     *
+     * @param string $str The string to check for only numbers.
+     * @return bool true if string only contains numbers or "+" symbol (at first index), false if not.
      */
     private static function hasOnlyNumbers(string $str): bool
     {
@@ -23,21 +25,23 @@ class InputValidate
 
 
     /**
-     * Checks if string has no special characters and only letters (numbers are discarded too)
-     * @param string $str
-     * @return bool true if string is only letters, false if not
+     * Checks if string has no special characters and only letters (numbers are discarded too).
+     *
+     * @param string $str The string to check for special characters.
+     * @return bool true if string is only letters, false if not.
      */
     public static function hasNoSpecialCharacters(string $str): bool
     {
-        // Type cast to bool is here redundant, as the not operator is used
+        // Type cast to bool is here redundant, as the not operator is used, forcing the return value to be bool.
         return !preg_match('/[^A-ZÆØÅ ]/iu', $str);
     }
 
 
     /**
-     * Removes whitespace from string
-     * @param string $str The string to remove whitespace from
-     * @return string The string without whitespace
+     * Removes whitespace from string.
+     *
+     * @param string $str The string to remove whitespace from.
+     * @return string The string without whitespace.
      */
     public static function removeWhiteSpace(string $str): string
     {
@@ -46,10 +50,11 @@ class InputValidate
 
 
     /**
-     * Warning reference is used here, so the error message is added to the array given in the parameter
-     * @param string $name The name to validate
-     * @param array $errorMessage Reference to the array where the error message should be added
-     * @return bool true if name is valid, false if not
+     * Warning reference is used here, so the error message is added to the array given in the parameter.
+     *
+     * @param string $name The name to validate.
+     * @param array $errorMessage Reference to the array where the error message should be added.
+     * @return bool true if name is valid, false if not.
      */
     public static function validateName(string $name, array &$errorMessage): bool
     {
@@ -62,10 +67,11 @@ class InputValidate
 
 
     /**
-     * Warning reference is used here, so the error message is added to the array given in the parameter
-     * @param string $email The email to validate
-     * @param array $errorMessage Reference to the array where the error message should be added
-     * @return bool true if email is valid, false if not
+     * Warning reference is used here, so the error message is added to the array given in the parameter.
+     *
+     * @param string $email The email to validate.
+     * @param array $errorMessage Reference to the array where the error message should be added.
+     * @return bool true if email is valid, false if not.
      */
     public static function validateEmail(string $email, array &$errorMessage): bool
     {
@@ -78,10 +84,11 @@ class InputValidate
 
 
     /**
-     * Warning reference is used here, so the error message is added to the array given in the parameter
-     * @param string $str The string to validate
-     * @param array $errorMessage Reference to the array where the error message should be added
-     * @return bool true if string is valid, false if not
+     * Warning reference is used here, so the error message is added to the array given in the parameter.
+     *
+     * @param string $str The string to validate.
+     * @param array $errorMessage Reference to the array where the error message should be added.
+     * @return bool true if string is valid, false if not.
      */
     public static function validatePhoneNumber(string $str, array &$errorMessage): bool
     {
