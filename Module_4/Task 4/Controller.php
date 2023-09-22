@@ -3,7 +3,8 @@ require '../sharedViewTop.php';
 
 
 // So here everything is hardcoded, because I spent way to long time on task 2/3
-// Not even using datetime. ¯\_(ツ)_/¯
+// Not even using datetime, because it is not specified by the task. ¯\_(ツ)_/¯
+// Simple 2D array
 $tutoringSessions = [
     [
         'title' => 'Mathematics Tutoring',
