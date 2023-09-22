@@ -9,7 +9,7 @@ class ChangeHandler
      *
      * @param array $newData Input new data array
      * @param array $oldData Input old data array
-     * @return array associative with 'old' and 'new' data.
+     * @return array associative with 'old' and 'new' data, or empty if there are no changes
      */
     public static function detectChanges(array $newData, array $oldData): array
     {

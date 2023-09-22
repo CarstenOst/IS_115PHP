@@ -71,7 +71,9 @@ class InputHandler
                 $notValidResponseMessage[] = "$inputKey is required.";
                 $isValid = false;
             } // Validate using the stored method from configuration, if provided
-            elseif (isset($config['validate']) && !call_user_func_array($config['validate'], [&$value, &$notValidResponseMessage])) {
+            elseif (isset($config['validate']) && !call_user_func_array(
+                    $config['validate'],
+                    [&$value, &$notValidResponseMessage])) {
                 $isValid = false;
             }
 
