@@ -90,13 +90,23 @@ class sharedFunctionsM4
     }
 
     /**
-     * WARNING: IF GRAND PARENT FOLDER IS NAMED 'html', this will return an empty string
+     * WARNING: IF GRAND PARENT FOLDER IS NOT NAMED 'module', this will return an empty string
      * @return string The module folder name (if any), else an empty string
      */
     public static function getCurrentModuleFolderName(): string
     {
         $folderName = basename(dirname($_SERVER['SCRIPT_FILENAME'], 2));
-        return ($folderName == 'html') ? '' : $folderName;
+        return (self::containsString($folderName)) ? $folderName : '';
+    }
+
+    /**
+     * Checks a string to see if it contains the word 'module'
+     * @param string $stringToSearch The string to search
+     * @return bool true if string contains 'module', else false
+     */
+    private static function containsString(string $stringToSearch): bool
+    {
+        return (bool)stripos($stringToSearch, 'module');
     }
 
 }
