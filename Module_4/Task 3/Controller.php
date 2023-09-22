@@ -1,7 +1,7 @@
 <?php
 include 'ChangeHandler.php';
 include '../Constants.php';
-include '../SharedHtmlRenderer.php';
+include '../SharedHtmlRendererM4.php';
 // Reuse code from task 2.
 include '../Task 2/InputHandler.php';
 include '../Task 2/InputValidation.php';
@@ -26,16 +26,24 @@ function renderPageT3($userInput = []): void
         INPUT_FIELDS,
         $userInput,
     );
+    echo <<<HTML
+            <form method="post" action="">
+                <button type="submit" name="deleteSession">Kurt Nilsen</button>
+            </form>
+        HTML;
 }
-
-function processFormT3(): void
+function processFormT3($userInput): void
 {
+    // We want to use the global user.
     global $user;
     // If session is empty, we set the oldInput as the hardcoded user (as specified in the task).
     // Else we use the previous sent user stored in session.
     // If the form in task 2 is being used, then session is already set.
     // (Just for fun, and not to recommend unless needed ofc.).
-    $oldInput = $_SESSION ?? $user;
+    if (empty($_SESSION)) {
+        $_SESSION = $user;
+    }
+    $oldInput = $_SESSION;
 
     // Instantiate the InputHandler class
     $handler = new InputHandler();
@@ -47,7 +55,7 @@ function processFormT3(): void
 
 
     // Process inputs based on configured rules.
-    list($dataInput, $notValidResponseMessage) = $handler->processInputs($_POST);
+    list($dataInput, $notValidResponseMessage) = $handler->processInputs($userInput);
 
     // To see if anything was changed or not
     $changes = ChangeHandler::detectChanges($dataInput, $oldInput);
@@ -86,7 +94,16 @@ function processFormT3(): void
 // Check if submit is pressed, and process the form if it is. Else check if session is set,
 // and render the page with the session. Lastly if either is true, just render the page with the hardcoded user.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    processFormT3();
+    if (isset($_POST['deleteSession'])) {
+        // Clear the session data
+        session_unset();
+        // Destroy the session
+        session_destroy();
+
+        renderPageT3($user);
+        return;
+    }
+    processFormT3($_POST);
 } else if (isset($_SESSION)) {
     renderPageT3([
         NAME_COOKIE => $_SESSION[NAME_COOKIE] ?? '',

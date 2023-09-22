@@ -42,6 +42,6 @@ class ChangeHandler
             return "$field: {$data['old']} -> {$data['new']}";
         }, array_keys($changes), $changes);
 
-        return '<p>Changes where made to: <br>' . implode("<br>", $messages) . '.</p>';
+        return '<p>Changes where made to: <br>' . implode("<br>", $messages) . '</p>';
     }
 }
