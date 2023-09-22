@@ -51,18 +51,22 @@ class SharedHtmlRendererM4
 
     /**
      * Generate a response with a message and either green or red background.
+     *
      * @param mixed $message The message to display. Can be string or array.
      * @param bool $status True for green, false for red color
+     * @param int $timeAliveInMilliSeconds The time in milliseconds before the response disappears (will be doubled)
+     *
      * @return void echos the response
      */
-    public static function generateResponse(mixed $message, bool $status, int $timeInMilliSeconds = 1200): void
+    public static function generateResponse(mixed $message, bool $status, int $timeAliveInMilliSeconds = 1200): void
     {
         $color = $status ? 'green' : 'red';
         if (is_array($message)) {
-            // Much easier just imploding the array with <br> than looping through it
-            $message = implode('<br>', $message);
+            $message = implode('<br>', $message); // Implode the array with <br> as "glue".
         }
-
+        // Simple html with javascript to display the message for a short time. Script deletes itself after it has run.
+        // Ajax would be better used on the frontend here. And the code could just stay uploaded for the user at all
+        // time instead of doing this. This would save some bandwidth.
         echo <<<HTML
             <div id="messageBox" style="background-color: $color; z-index: 9999">
                 $message
@@ -77,8 +81,8 @@ class SharedHtmlRendererM4
                         element.parentNode.removeChild(element);
                         let scriptElement = document.getElementById('messageScript');
                         scriptElement.parentNode.removeChild(scriptElement);
-                    }, $timeInMilliSeconds)
-                }, $timeInMilliSeconds);
+                    }, $timeAliveInMilliSeconds)
+                }, $timeAliveInMilliSeconds);
             </script>
         HTML;
     }
@@ -95,7 +99,7 @@ class SharedHtmlRendererM4
     public static function renderFormArrayBased(array $cookieNames, array $labelText, array $values = []): void
     {
         // Return if programmer did not read the docs.
-        if (!$cookieNames or count($cookieNames) !== count($labelText)) {
+        if (!$cookieNames || count($cookieNames) !== count($labelText)) {
             return;
         }
         // Create the html form tag
@@ -104,14 +108,13 @@ class SharedHtmlRendererM4
         $borderClass = '';
         $borderStyle = 'border-width: 3px !important; ';
         $value = '';
-        $i = 0;
+        $i = 0; // This is for task 5, so we can loop through an array with int indexes.
         // Loop through the cookie names and create the input fields with values if any
         foreach ($cookieNames as $cookie) {
             if (!empty($values[$cookie]) && is_array($values[$cookie]) && count($values[$cookie]) >= 2) {
                 $borderClass .= $values[$cookie][1] ? 'border border-success' : 'border border-danger';
-                // Set value to empty string if not set
-                $value = $values[$cookie][0] ?? '';
-            } else if (!empty($values[$i])) { // This is for task 5, so
+                $value = $values[$cookie][0] ?? ''; // Set value to empty string if not set
+            } else if (!empty($values[$i])) { // If array doesn't have int indexes, we want to use the values as normal
                 $value = $values[$i++];
             }
             $form .= <<<EOT
@@ -119,13 +122,13 @@ class SharedHtmlRendererM4
                 <input type="text" style="$borderStyle" class="form-control $borderClass" name="$cookie" id="$cookie" value="$value">
             EOT;
         }
-        // Concat the rest of the form and input, so we actually can submit our info.
+        // Concat the rest of the form and input, so we can submit our info.
         $form .= <<<EOT
                 <br>
                 <input id="pointer" type="submit" value="Submit">
             </form>
         EOT;
-        // Finally we can just echo it, as returning would allocate more memory
-        echo $form;
+
+        echo $form; // Finally we can just echo it, as returning would allocate more memory, and it will be used right away.
     }
 }

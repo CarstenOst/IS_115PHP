@@ -2,7 +2,8 @@
 require '../sharedViewTop.php';
 
 
-// So here everything is hardcoded, because I spent way to long time on task 2
+// So here everything is hardcoded, because I spent way to long time on task 2/3
+// Not even using datetime. ¯\_(ツ)_/¯
 $tutoringSessions = [
     [
         'title' => 'Mathematics Tutoring',
@@ -25,7 +26,7 @@ $tutoringSessions = [
 ];
 
 
-
+// Table with some bootstrap styling.
 echo '<div class="w-100">
       <table class="table mx-auto">
       <thead class="thead-dark">
@@ -47,7 +48,7 @@ foreach ($tutoringSessions as $session) {
           <td>' . $session['location'] . '</td>
           </tr>';
 }
-
+// Close the table
 echo '</tbody>
       </table>
       </div>';

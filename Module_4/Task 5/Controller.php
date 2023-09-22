@@ -1,6 +1,6 @@
 <?php
 include '../Constants.php';
-include '../SharedHtmlRenderer.php';
+include '../SharedHtmlRendererM4.php';
 require '../sharedViewTop.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
