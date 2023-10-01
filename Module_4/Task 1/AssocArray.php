@@ -10,7 +10,7 @@ class AssocArray
      * @param int ...$arrayKey - keys for the array
      * Value will always be 1
      */
-    public static function create(&$arr ,int ...$arrayKey): void
+    public static function create(&$arr, int ...$arrayKey): void
     {
         $arr = [];
         if (!$arrayKey) {
