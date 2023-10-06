@@ -8,7 +8,7 @@
 #
 #
 #
-### Submission 1
+### task 1
 - [x] Task 1.1
 - [x] Task 1.2
 - [x] Task 1.3
