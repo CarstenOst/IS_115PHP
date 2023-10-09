@@ -21,7 +21,7 @@ function renderPage(array $userInput = []): void
     SharedHtmlRendererM4::renderFormArrayBased(  // In Constants.php you can see im using plenty of arrays. ¯\_(ツ)_/¯
         array_keys(INPUT_FIELDS),          // Get the keys from the input fields array
         INPUT_FIELDS,                   // Get the labels for the form
-        $userInput,                             // Get the user inputs
+        $userInput                               // Get the user inputs
     );
 }
 

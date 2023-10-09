@@ -66,20 +66,21 @@ class SharedHtmlRendererM4
 
         $borderClass = '';
         $borderStyle = 'border-width: 3px !important; ';
-        $value = '';
         $i = 0; // This is for task 5, so we can loop through an array with int indexes.
         // Loop through the cookie names and create the input fields with values if any
         foreach ($cookieNames as $cookie) {
+            $value = '';
             if (!empty($values[$cookie]) && is_array($values[$cookie]) && count($values[$cookie]) >= 2) {
                 $borderClass .= $values[$cookie][1] ? 'border border-success' : 'border border-danger';
                 $value = $values[$cookie][0] ?? ''; // Set value to empty string if not set
             } else if (!empty($values[$i])) { // If array doesn't have int indexes, we want to use the values as normal
-                $value = $values[$i++];
+                $value = $values[$i];
             }
             $form .= <<<EOT
                 <label for="$cookie">{$labelText[$cookie]}</label>
                 <input type="text" style="$borderStyle" class="form-control $borderClass" name="$cookie" id="$cookie" value="$value">
             EOT;
+            $i++;
         }
         // Concat the rest of the form and input, so we can submit our info.
         $form .= <<<EOT
