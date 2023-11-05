@@ -30,15 +30,16 @@ class Encryption
      * The whole point is security through obscurity, so you can try to figure out some parts yourself :)
      * It's called carCipher because it's the three first letters of my name.
      *
+     * @param float|int $asciiNumber
+     * @param int $encryptWith positive for encryption, negative for decryption
+     * @param int $i index number of the character in the string.
+     * @return int|float The encrypted or decrypted ascii number.
+     *
      * STRING MUST BE ENCRYPTED WITH POSITIVE INTEGER
      * TO DECRYPT USE A NEGATIVE NUMBER CORRESPONDING TO THE POSITIVE INTEGER
      * EXAMPLE: encodedString = carCipher(num, 3, index);
      * EXAMPLE: decodedString = carCipher(num, -3, index);
      *
-     * @param float|int $asciiNumber
-     * @param int $encryptWith positive for encryption, negative for decryption
-     * @param int $i
-     * @return int|float
      */
     private static function carCipher(float|int $asciiNumber, int $encryptWith, int $i): int|float
     {
@@ -86,6 +87,7 @@ class Encryption
 
     /**
      * Method to encrypt a string.
+     *
      * @param string $message The message to encrypt.
      * @return string encrypted message
      */

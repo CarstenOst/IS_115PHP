@@ -1,21 +1,20 @@
 <?php
 
-/*
- * Lag et skjema hvor man kan konvertere mellom grader oppgitt i celsius og fahrenheit. Det må gå an å
- * konvertere til og fra begge skalaene.
+/**
+ * Class TempConverter.
+ * Contains static functions to convert temperature from Celsius to Fahrenheit and vice versa.
  */
-
 class TempConverter
 {
     /**
      * Converts Celsius temperature to Fahrenheit
      *
-     * @param float $celsius
+     * @param float|int $celsius
      * @return float temperature in fahrenheit
      */
-    public static function celsiusToFahrenheit(float $celsius): float
+    public static function celsiusToFahrenheit(float|int $celsius): float
     {
-        return ($celsius * 9.0 / 5.0) + 32.0; // Stolen from Grepper (chrome extension)
+        return ($celsius * 9.0 / 5.0) + 32.0; // Stolen from Grepper (chrome extension).
     }
 
     /**
@@ -26,6 +25,6 @@ class TempConverter
      */
     public static function fahrenheitToCelsius(float $fahrenheit): float
     {
-        return ($fahrenheit - 32.0) * 5.0 / 9.0; // Stolen from Grepper (chrome extension)
+        return ($fahrenheit - 32.0) * 5.0 / 9.0; // Stolen from Grepper (chrome extension).
     }
 }
