@@ -17,7 +17,7 @@ function processFormM5(): void
         ]);
 
         // The task specifies to remove the input form for encryption for some reason.
-        // JavaScript for the rescue. Remove this, to see how it really should look like, if the task was made properly.
+        // JavaScript for the rescue. Remove the next echo, to see how it really should look like, if the task was made properly.
         echo <<<JS
             <script> 
             // Get the elements to remove.

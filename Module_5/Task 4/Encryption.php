@@ -1,13 +1,13 @@
 <?php
-// The following code is a code from a previous project in GO lang
+// The following code is a code from a previous project of mine in GO lang.
 // See https://github.com/CarstenOst/carCipher/blob/main/carcipher.go for more info.
 class Encryption
 {
     /**
-     * Returns 3 if input is dividable by 2, and so on.
+     * Returns a hard coded number if input is dividable by 2, 3, 5, 7.
      *
      * @param int $i
-     * @return int "3" if dividable by 2 and "0" if not.
+     * @return int x if dividable by 2, 3, 5, 7 and "0" if not.
      */
     private static function extraSecurity(int $i): int
     {
@@ -28,7 +28,7 @@ class Encryption
 
     /**
      * The whole point is security through obscurity, so you can try to figure out some parts yourself :)
-     * It's called carCipher because it's the three first letters of my name
+     * It's called carCipher because it's the three first letters of my name.
      *
      * STRING MUST BE ENCRYPTED WITH POSITIVE INTEGER
      * TO DECRYPT USE A NEGATIVE NUMBER CORRESPONDING TO THE POSITIVE INTEGER
@@ -42,22 +42,22 @@ class Encryption
      */
     private static function carCipher(float|int $asciiNumber, int $encryptWith, int $i): int|float
     {
-        // this makes it so that certain numbers is not changed at all, to add to the confusion
+        // this makes it so that certain numbers is not changed at all - to add to the confusion.
         if ($encryptWith > 0) {
             if ($asciiNumber % 2 == 0) {
                 $asciiNumber *= $encryptWith;
             }
             // The extraSecurity function will sometimes add a value, and sometimes not,
-            // depending on the length of the string
+            // depending on the length of the string.
             return $asciiNumber + self::extraSecurity($i);
         }
 
-        // Same as above, but in reverse
+        // Same as above, but in reverse.
         if ($encryptWith < 0) {
             $asciiNumber -= self::extraSecurity($i);
             if ($asciiNumber % 2 == 0) {
                 $asciiNumber = abs(intdiv($asciiNumber, $encryptWith)); // abs() to counter negativity :)
-            }
+            } // The abs() will only trigger if the decrypt method was called on a non-encrypted string.
             return $asciiNumber;
         }
         return $asciiNumber;
