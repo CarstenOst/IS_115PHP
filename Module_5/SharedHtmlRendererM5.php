@@ -68,7 +68,7 @@ class SharedHtmlRendererM5
         $form = '<form class="form-group" id="form" action="" method="POST">';
         $borderClass = '';
         $borderStyle = 'border-width: 3px !important; ';
-        $i = 0; // This is for task 5, so we can loop through an array with int indexes.
+        $i = 0; // This is so it can loop through an array with int indexes.
         // Loop through the cookie names and create the input fields with values if any
         foreach ($cookieNames as $cookie) {
             $value = '';
@@ -80,8 +80,8 @@ class SharedHtmlRendererM5
             }
 
             $form .= <<<EOT
-                <label for="$cookie">{$labelText[$cookie]}</label>
-                <input type="text" style="$borderStyle" class="form-control $borderClass" name="$cookie" id="$cookie" value="$value">
+                <label id="$cookie.Label" for="$cookie">{$labelText[$cookie]}</label>
+                <input id="$cookie" type="text" style="$borderStyle" class="form-control $borderClass" name="$cookie" id="$cookie" value="$value">
             EOT;
             $i++;
         }

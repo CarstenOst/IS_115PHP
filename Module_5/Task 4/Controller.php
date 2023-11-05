@@ -13,12 +13,26 @@ function processFormM5(): void
     if (!empty($_POST[ENCRYPTING])) {
         renderPageM5([
             '',
-            Encryption::carstenCipher($_POST[ENCRYPTING], 3)
+            Encryption::carstenCipherEncrypt($_POST[ENCRYPTING])
         ]);
+
+        // The task specifies to remove the input form for encryption for some reason.
+        // JavaScript for the rescue. Remove this, to see how it really should look like, if the task was made properly.
+        echo <<<JS
+            <script> 
+            // Get the elements to remove.
+            var encryptForm = document.getElementById("Encrypt");
+            var encryptFormLabel = document.getElementById("Encrypt.Label");
+            // Remove the first input form and it's label.
+            encryptForm.parentNode.removeChild(encryptForm)
+            encryptFormLabel.parentNode.removeChild(encryptFormLabel)
+            </script>
+            JS;
+
         return;
     } elseif (!empty($_POST[DECRYPTING])) {
         renderPageM5([
-            Encryption::carstenCipher($_POST[DECRYPTING], -3),
+            Encryption::carstenCipherDecrypt($_POST[DECRYPTING]),
             ''
         ]);
         return;
