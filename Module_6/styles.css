@@ -1,0 +1,53 @@
+:root {
+    --php-dark-grey: #333;
+    --php-dark-blue: #4F5B93;
+    --php-medium-blue: #8892BF;
+    --php-light-blue: #E2E4EF;
+    --php-accent-purple: #793862;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--php-dark-grey);
+    color: var(--php-light-blue);
+    padding-top: 70px;
+}
+
+#navbar button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#navbar button:hover {
+    background-color: #45a049;
+}
+
+#pointer {
+    cursor: pointer;
+}
+
+#messageBox {
+    top: 55px;
+    left: 50%;
+    opacity: 1;
+    color: white;
+    text-align: center;
+    position: absolute;
+    border-radius: 5px;
+    white-space: nowrap;
+    padding: 9px 20% 9px 20%;
+    transform: translate(-50%, -50%);
+    transition: opacity 1s ease-in-out;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}
