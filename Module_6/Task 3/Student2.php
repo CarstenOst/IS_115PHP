@@ -17,11 +17,6 @@ class Student2 extends User2
         $this->studyProgram = $studyProgram;
     }
 
-    public function getFullName(): string
-    {
-        return parent::getFullName();
-    }
-
     public function getStudyProgram(): string
     {
         return $this->studyProgram;

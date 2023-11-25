@@ -4,7 +4,7 @@ include 'Student.php';
 
 $student = new Student('Harry', 'Potter', 'HarryPot', new DateTime('2000-01-01'), 'Wizardry');
 
-echo $student->getFullName();
+echo $student->getFullName() . ' is studying ' . $student->getStudyProgram();
 echo '<br>';
 echo '<br>';
 

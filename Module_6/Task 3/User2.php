@@ -15,7 +15,9 @@ class User2
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->birthDate = $birthDate;
-        $this->userName = substr(md5(uniqid(rand(), true)), 0, 8); // Random username
+        $this->userName = substr(
+            md5(uniqid(rand(), true)
+            ), 0, 8); // Random username
         $this->createdAt = new DateTime(); // Set current date and time as registration date
     }
 
@@ -34,14 +36,14 @@ class User2
         return $this->userName;
     }
 
+    public static function showDeletedUsernames(): array
+    {
+        return self::$deletedUsernames;
+    }
+
     public function __destruct()
     {
         self::$deletedUsernames[] = $this->userName;
-    }
-
-    public static function showDeletedUsernames()
-    {
-        return self::$deletedUsernames;
     }
 
 }
