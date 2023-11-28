@@ -33,9 +33,17 @@
 - [x] Task 4.4
 - [x] Task 4.5
 ### Submission 5
-- [ ] Task 5.1
+- [x] Task 5.1
+- [x] Task 5.2
+- [x] Task 5.3
+- [x] Task 5.4
+- [x] Task 5.5
 ### Submission 6
-- [ ] Task 6.1
+- [x] Task 6.1
+- [x] Task 6.2
+- [x] Task 6.3
+- [x] Task 6.4
+- [x] Task 6.5
 ### Submission 7
 - [ ] Task 7.1
 ### Submission 8

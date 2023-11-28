@@ -36,9 +36,9 @@ class Validator
     {
         return strlen($password) >= 9 &&                         // Longer than, or 9 characters.
             preg_match('/(?:.*[0-9]){2}/', $password) && // Has two or more numbers.
-            preg_match('/[A-Z]/', $password) &&          // Has one or more upper case letters.
-            preg_match('/[a-z]/', $password) &&          // Has one or more lower case letters.
-            preg_match('/[^a-zA-Z0-9]/', $password);     // Has one or more special characters.
+            preg_match('/[A-ZÆØÅ]/', $password) &&          // Has one or more upper case letters.
+            preg_match('/[a-zøæå]/', $password) &&          // Has one or more lower case letters.
+            preg_match('/[^a-zøæåA-ZØÆÅ0-9]/', $password);     // Has one or more special characters.
     }
 
 }
