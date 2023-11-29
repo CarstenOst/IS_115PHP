@@ -78,6 +78,7 @@ class SharedHtmlRendererM7
             } else if (isset($values[$i])) { // If array doesn't have int indexes, we want to use the values as normal
                 $value = $values[$i];
             }
+            $value = htmlspecialchars($value); // Prevent XSS
 
             $form .= <<<EOT
                 <label id="$cookie.Label" for="$cookie">{$labelText[$cookie]}</label>
