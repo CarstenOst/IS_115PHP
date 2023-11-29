@@ -45,7 +45,11 @@
 - [x] Task 6.4
 - [x] Task 6.5
 ### Submission 7
-- [ ] Task 7.1
+- [x] Task 7.1
+- [x] Task 7.2
+- [x] Task 7.3
+- [x] Task 7.4
+- [x] Task 7.5
 ### Submission 8
 - [ ] Task 8.1
 ### Submission 9
