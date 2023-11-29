@@ -62,7 +62,8 @@ class Auth
             $_SESSION[SessionConst::FIRST_NAME] = $user->getFirstName();
             $_SESSION[SessionConst::CREATED_AT] = $user->getCreatedAt();
             $_SESSION[SessionConst::UPDATED_AT] = $user->getUpdatedAt();
-            $_SESSION[SessionConst::FAVORITE_TUTOR] = $user->getFavoriteTutor() ?? null;
+            $_SESSION[SessionConst::FAVORITE_TUTOR_1] = $user->getFavoriteTutor1() ?? null;
+            $_SESSION[SessionConst::FAVORITE_TUTOR_2] = $user->getFavoriteTutor2() ?? null;
 
             $_SESSION[SessionConst::LOGGED_IN] = true;
 

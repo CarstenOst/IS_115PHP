@@ -5,16 +5,18 @@ include '../autoloader.php';
 use Repositories\BookingRepository;
 use Repositories\UserRepository;
 
+// Since there is no login functionality yet, we set the user id to a fixed value
 session_start();
 $_SESSION[SessionConst::USER_ID] = 2;
+
 $user = UserRepository::read($_SESSION[SessionConst::USER_ID]);
-$_SESSION[SessionConst::FAVORITE_TUTOR_1] = 1;
-$_SESSION[SessionConst::FAVORITE_TUTOR_2] = 2;
+
+$_SESSION[SessionConst::FAVORITE_TUTOR_1] = $user->getFavoriteTutor1();
+$_SESSION[SessionConst::FAVORITE_TUTOR_2] = $user->getFavoriteTutor2();
 ?>
 
-    <body>
+<body>
     <div class="main-view">
-
         <div style="color: #000000" class="booking-view">
             <div>
                 <h2>All of your bookings</h2>
@@ -71,19 +73,13 @@ $_SESSION[SessionConst::FAVORITE_TUTOR_2] = 2;
                             </tr>
                         ";
                         }
-
                     }
-
                     ?>
-
                 </table>
             </form>
         </div>
-
-
     </div>
-
-    </body>
+</body>
 
 <?php
 include '../sharedViewBottom.php';

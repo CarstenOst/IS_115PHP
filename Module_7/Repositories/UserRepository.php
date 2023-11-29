@@ -243,10 +243,10 @@ class UserRepository
         $user->setPassword($row['password']);
         $user->setLastName($row['lastName']);
         $user->setFirstName($row['firstName']);
-        $user->setFavoriteTutor($row['favoriteTutor'] ?? null);
+        $user->setFavoriteTutor1($row['favoriteTutorId'] ?? null);
+        $user->setFavoriteTutor2($row['favoriteTutorId2'] ?? null);
         $user->setCreatedAt(new DateTime($row['createdAt']) ?? null);
         $user->setUpdatedAt(new DateTime($row['updatedAt']) ?? null);
-
         return $user;
     }
 }

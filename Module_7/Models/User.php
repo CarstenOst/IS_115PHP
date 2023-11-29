@@ -14,7 +14,9 @@ class User
     private string $email;
     private string $password;
     private ?string $about;
-    private ?string $favoriteTutor;
+    private ?string $favoriteTutor1;
+    private ?string $favoriteTutor2;
+
     private DateTime $createdAt;
     private DateTime $updatedAt;
 
@@ -95,14 +97,25 @@ class User
         return $this;
     }
 
-    public function getFavoriteTutor(): ?string
+    public function getFavoriteTutor1(): ?string
     {
-        return $this->favoriteTutor;
+        return $this->favoriteTutor1;
     }
 
-    public function setFavoriteTutor($favoriteTutor): self
+    public function setFavoriteTutor1($favoriteTutor1): self
     {
-        $this->favoriteTutor = $favoriteTutor;
+        $this->favoriteTutor1 = $favoriteTutor1;
+        return $this;
+    }
+
+    public function getFavoriteTutor2(): ?string
+    {
+        return $this->favoriteTutor2;
+    }
+
+    public function setFavoriteTutor2($favoriteTutor2): self
+    {
+        $this->favoriteTutor2 = $favoriteTutor2;
         return $this;
     }
 
