@@ -1,31 +1,31 @@
 create table User
 (
-    userId           int unsigned auto_increment primary key,
-    userType         varchar(255)                       not null,
-    firstName        varchar(255)                       not null,
-    lastName         varchar(255)                       not null,
-    email            varchar(255) unique                not null,
-    password         varchar(255)                       not null, -- hashed using bcrypt
-    favouriteTutorId int unsigned                       null,
-    createdAt        datetime default CURRENT_TIMESTAMP not null,
-    updatedAt        datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
-    about            text                               null,
-    constraint email
+    userId           int unsigned auto_increment
+        primary key,
+    userType         varchar(255)                         not null,
+    firstName        varchar(255)                         not null,
+    lastName         varchar(255)                         not null,
+    email            varchar(255)                         not null,
+    password         varchar(255)                         not null,
+    favoriteTutorId  int unsigned                         null,
+    createdAt        datetime default current_timestamp() not null,
+    updatedAt        datetime default current_timestamp() not null on update current_timestamp(),
+    about            text                                 null,
+    favoriteTutorId2 int unsigned                         null,
+    constraint uniqueEmail
         unique (email)
 );
 
-create index email
-    on User (email);
-
 create table Booking
 (
-    bookingId   int unsigned auto_increment primary key,
-    studentId   int unsigned                       null,
-    tutorId     int unsigned                       null,
-    bookingTime datetime                           not null,
-    status      varchar(255)                       not null,
-    createdAt   datetime default CURRENT_TIMESTAMP not null,
-    updatedAt   datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
+    bookingId   int unsigned auto_increment
+        primary key,
+    studentId   int unsigned                         null,
+    tutorId     int unsigned                         null,
+    bookingTime datetime                             not null,
+    status      varchar(255)                         not null,
+    createdAt   datetime default current_timestamp() not null,
+    updatedAt   datetime default current_timestamp() not null on update current_timestamp(),
     constraint Booking_ibfk_1
         foreign key (studentId) references User (userId)
             on delete cascade,
@@ -42,12 +42,13 @@ create index tutorId
 
 create table Message
 (
-    messageId   int unsigned auto_increment primary key,
-    senderId    int unsigned                       not null,
-    receiverId  int unsigned                       not null,
-    sentAt      datetime default CURRENT_TIMESTAMP not null, -- renamed from 'timestamp'
-    messageText text                               not null,
-    isRead      boolean  default false             not null, -- added 'isRead'
+    messageId   int unsigned auto_increment
+        primary key,
+    senderId    int unsigned                           not null,
+    receiverId  int unsigned                           not null,
+    sentAt      datetime   default current_timestamp() not null,
+    messageText text                                   not null,
+    isRead      tinyint(1) default 0                   not null,
     constraint Message_ibfk_1
         foreign key (senderId) references User (userId)
             on delete cascade,
@@ -64,11 +65,12 @@ create index senderId
 
 create table Notification
 (
-    notificationId   int unsigned auto_increment primary key,
-    receiverId       int unsigned                       not null,
-    sentAt           datetime default CURRENT_TIMESTAMP not null, -- renamed from 'timestamp'
-    notificationText text                               not null,
-    isRead           boolean  default false             not null, -- added 'isRead'
+    notificationId   int unsigned auto_increment
+        primary key,
+    receiverId       int unsigned                           not null,
+    sentAt           datetime   default current_timestamp() not null,
+    notificationText text                                   not null,
+    isRead           tinyint(1) default 0                   not null,
     constraint Notification_ibfk_1
         foreign key (receiverId) references User (userId)
             on delete cascade
@@ -76,3 +78,7 @@ create table Notification
 
 create index receiverId
     on Notification (receiverId);
+
+create index email
+    on User (email);
+
