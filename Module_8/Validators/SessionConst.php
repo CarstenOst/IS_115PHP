@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Validators;
 class SessionConst
 {
@@ -11,8 +10,6 @@ class SessionConst
     const USER_TYPE = 'userType';
     const LAST_NAME = 'lastName';
     const FIRST_NAME = 'firstName';
-    const FAVORITE_TUTOR_1 = 'favoriteTutor1';
-    const FAVORITE_TUTOR_2 = 'favoriteTutor2';
     const CREATED_AT = 'createdAt';
     const UPDATED_AT = 'updatedAt';
 

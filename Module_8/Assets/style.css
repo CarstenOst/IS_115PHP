@@ -1,0 +1,247 @@
+.submit-button {
+    margin: 20px;
+    padding: 10px;
+    border-radius: 12px;
+    background-color: #008CBA;
+    border: none #007bff;
+    color: white;
+    font-size: 16px;
+}
+
+
+.user-profile {
+    margin: 5px;
+    padding: 10px;
+    border: solid 2px black;
+    border-radius: 10px;
+}
+
+
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Side menu */
+.side-menu {
+    background-color: #333;
+    color: #fff;
+    width: 20%;
+    height: 100vh;
+    position: fixed;
+}
+
+.side-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+#messageBox {
+    transition: opacity 1s ease-in-out;
+}
+
+/* The menu logo "MentorMate" */
+.logo-title {
+    font-size: 32px;
+}
+
+.side-menu a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #555;
+}
+
+/* Make the first element twice as tall */
+.side-menu-profile-link {
+    height: 120px;
+}
+.profile {
+    padding-top: 10px;
+}
+.profile-icon {
+    font-size: 52px;
+}
+
+.side-menu a:hover {
+    color: black;
+    background-color: #dcdbdb;
+}
+
+
+
+/* Main view */
+.main-view {
+    margin-left: 20%;
+    padding: 20px;
+}
+
+/* Booking view */
+.booking-view {
+    background-color: #fff;
+    border: 1px solid #cbcbcb;
+    padding: 20px;
+    max-height: 550px;
+    overflow: auto;
+    border-radius: 12px;
+}
+
+.booking-date {
+    padding: 5px;
+    margin: auto;
+    border-bottom: 1px solid #cbcbcb;
+    display: flex;
+    align-items: center;
+}
+
+/* Calendar date input and submit */
+.booking-date-form {
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+
+.input-calendar,
+.calendar-submit {
+    padding: 8px;
+    font-size: 16px;
+    border: 3px solid #008CBA;
+}
+
+.input-calendar:focus,
+.calendar-submit:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.calendar-submit {
+    padding: 10px;
+    border-radius: 0 12px 12px 0;
+    background-color: #008CBA;
+    color: white;
+}
+
+.input-calendar {
+    border-color: #008CBA;
+    border-radius: 12px 0 0 12px;
+}
+
+/* Calendar */
+.calendar {
+    width: 100%;
+    min-height: 100px;
+    border-collapse: collapse;
+}
+
+.calendar th {
+    position: sticky;
+    background-color: blue;
+    color: white;
+    top: 0;
+    z-index: 2;
+    text-align: left;
+    padding: 5px;
+    margin: 0;
+}
+
+/*
+Needs some work to avoid "book" table only having one corner rounded
+.calendar th:first-child {
+    border-radius: 8px 0 0 0;
+}
+.calendar th:last-child {
+    border-radius: 0 8px 0 0;
+}
+*/
+
+
+.calendar td {
+    padding: 5px;
+}
+
+/* Calendar column */
+.calendar-column {
+    flex: 1;
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 10px;
+}
+
+/* Time slots column */
+.time-slots-columns {
+    display: flex;
+}
+
+/* TA column */
+.TA-column {
+    border: 1px solid #ddd;
+    margin: 1px;
+    padding: 10px;
+}
+
+/* The leftmost column with timestamps in calendar */
+.booking-time {
+    white-space: nowrap;
+    display: inline-block;
+}
+
+/* Class for styling of checkbox for the timeslots */
+.book-checkbox {
+    margin: 5px;
+}
+
+/* Class for styling of TAs unbooked timeslots that they can book */
+.unbooked-timeslot {
+    background-color: #ffffff; /* Green background color */
+    color: #000000;
+    padding: 5px 20px;
+    margin-bottom: 10px;
+}
+
+/* Available time slot */
+.available-timeSlot {
+    background-color: #5cb85c; /* Green background color */
+    color: #fff;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.unavailable-timeslot {
+    background-color: #f8f8f8; /* Grey background color */
+    color: #000000;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+/* For adding row styling */
+tr {
+    border-bottom: 1px solid #ddd;
+}
+
+
+
+
+
+/* Bookings icons */
+.table-button {
+    display: none;
+}
+.tutor-icon {
+
+}
+
+.cancel-icon {
+    color: red;
+}
+
+.message-icon {
+
+}
+
+.add-to-calendar-icon {
+
+}

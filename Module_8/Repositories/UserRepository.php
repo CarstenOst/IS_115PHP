@@ -1,14 +1,21 @@
 <?php
 
+namespace Repositories;
 
+use PDO;
+use DateTime;
+use Exception;
 use Models\User;
+use PDOException;
+use PDOStatement;
+use Database\DBConnector;
 
 class UserRepository
 {
 
     /**
      * @param User $user
-     * @return int
+     * @return int the id of the inserted user, or a negative number if the email already exists
      * @throws Exception
      */
     public static function create(User $user): int
@@ -47,13 +54,13 @@ class UserRepository
 
         } catch (PDOException $e) {
             // Check if the error is due to a duplicate key on 'email'
-            if ($e->getCode() == 23000 &&
+            if ($e->getCode() == ErrorCode::DUPLICATE_EMAIL &&
                 str_contains($e->getMessage(), 'Duplicate entry') &&
                 str_contains($e->getMessage(), 'for key \'email\''))
             {
                 // Handle duplicate email error
                 echo "Error: The provided email already exists in the database!";
-                return ErrorCode::DUPLICATE_EMAIL;
+                return -ErrorCode::DUPLICATE_EMAIL; // Negative number to indicate error
             } else {
                 // Handle other errors or rethrow the exception
                 throw $e;
@@ -66,7 +73,7 @@ class UserRepository
      * @return User|string
      * @throws Exception
      */
-    public static function read($id): User|string
+    public static function read(int $id): User|string
     {
         $query = "SELECT * FROM User WHERE userId = :id LIMIT 0,1";
         $connection = DBConnector::getConnection();
@@ -109,7 +116,7 @@ class UserRepository
             return self::createUserFromRow($row);
         }
 
-        return 'Not valid';
+        return 'Not valid email or password';
     }
 
     public static function getUserPassword(int $userId): string {
@@ -236,8 +243,6 @@ class UserRepository
         $user->setPassword($row['password']);
         $user->setLastName($row['lastName']);
         $user->setFirstName($row['firstName']);
-        $user->setFavoriteTutor1($row['favoriteTutorId'] ?? null);
-        $user->setFavoriteTutor2($row['favoriteTutorId2'] ?? null);
         $user->setCreatedAt(new DateTime($row['createdAt']) ?? null);
         $user->setUpdatedAt(new DateTime($row['updatedAt']) ?? null);
         return $user;

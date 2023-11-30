@@ -4,11 +4,11 @@ namespace Views;
 
 require("../autoloader.php");
 
-use Application\Validators\Auth;
-use Application\Views\Shared\Layout;
-use Application\Views\Shared\HtmlRenderer;
-use Validators\Validator;
 use Exception;
+use Validators\Auth;
+use Views\Shared\Layout;
+use Validators\Validator;
+use Views\Shared\HtmlRenderer;
 
 class Login
 {
@@ -51,10 +51,13 @@ class Login
             $formData);
 
         echo "<p><small>Don't already have a user?</small></p>
-        <a href='./Register.php'>Register</a>";
+        <a href='./Login.php'>Register</a>"; // Not needed for this task
     }
-
 }
+
+
+
+
 
 $formData = $_POST;
 // Checks if form was submitted
@@ -62,21 +65,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST[Login::EMAIL];
     if (Validator::isValid('email', $email)) {
         // Logs inn the user
-        $loginSuccess = Auth::authenticate($_POST[Login::PASSWORD], $email);
+        $loginSuccess = Auth::authenticate(strip_tags($_POST[Login::PASSWORD]), strip_tags($email));
         if ($loginSuccess) {
             header("Location: Profile.php");
             exit();
         } else {
-            echo "Wrong password, or email!";
+            HtmlRenderer::generateResponse("Wrong password, or email!", false);
             Auth::logOut(); // Logout the user TODO remove this
             Login::viewLogin($formData);
         }
     } else {
         // Submitted form was invalid
-        echo "Your email is invalid!";
+        HtmlRenderer::generateResponse("Your email or password is invalid!", false);
         Login::viewLogin($formData);
     }
 } else {
     // Displays the login form
     Login::viewLogin($formData);
+    // Check if 'error' parameter is set in the GET request
+    if (isset($_GET['response'])) {
+        // If 'response' is set, generate the response message
+        HtmlRenderer::generateResponse($_GET['response'][0], $_GET['response'][1], 3000);
+    }
 }

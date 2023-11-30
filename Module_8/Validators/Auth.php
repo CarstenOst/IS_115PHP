@@ -1,8 +1,10 @@
 <?php
 
 namespace Validators;
-use SessionConst;
+
+use Enums\UserTypes;
 use Exception;
+use Validators\SessionConst;
 use Repositories\UserRepository;
 
 class Auth
@@ -22,11 +24,22 @@ class Auth
      * Check if the user is logged in
      * @return bool True if auth checks out, false if not
      */
-    public static function checkAuth(): bool
+    public static function isLoggedIn(): bool
     {
         self::startSession();
         // If session 'loggedIn' is set and is true, return true. Else false
         return isset($_SESSION[SessionConst::LOGGED_IN]) && $_SESSION[SessionConst::LOGGED_IN] === true;
+    }
+
+    /**
+     * Check if the user is logged in
+     * @return bool True if auth checks out, false if not
+     */
+    public static function isRole(UserTypes $role): bool
+    {
+        self::startSession();
+        self::isLoggedIn();
+        return isset($_SESSION[SessionConst::USER_TYPE]) && strtolower($_SESSION[SessionConst::USER_TYPE]) == $role->value;
     }
 
     /**
@@ -36,7 +49,6 @@ class Auth
      * @param string $inputPassword must be hashed same way as in the database.
      * @param string $email
      * @return bool True if user is authentic, false if not.
-     * @throws Exception
      */
     public static function authenticate(string $inputPassword, string $email): bool
     {
@@ -44,7 +56,6 @@ class Auth
 
         $user = UserRepository::getUserByEmail($email);
         if (is_string($user)) {
-            echo $user;
             return false;
         }
         $storedPassword = $user->getPassword();
@@ -57,8 +68,8 @@ class Auth
             $_SESSION[SessionConst::ABOUT] = $user->getAbout();
             $_SESSION[SessionConst::USER_ID] = $user->getUserId();
             $_SESSION[SessionConst::USER_TYPE] = $user->getUserType();
-            $_SESSION[SessionConst::FIRST_NAME] = $user->getFirstName();
             $_SESSION[SessionConst::LAST_NAME] = $user->getLastName();
+            $_SESSION[SessionConst::FIRST_NAME] = $user->getFirstName();
             $_SESSION[SessionConst::CREATED_AT] = $user->getCreatedAt();
             $_SESSION[SessionConst::UPDATED_AT] = $user->getUpdatedAt();
 
@@ -70,7 +81,7 @@ class Auth
     }
 
     /**
-     * Function to log out (destroys session).
+     * Function to log out user (destroys session).
      * @return void
      */
     public static function logOut(): void
@@ -81,7 +92,7 @@ class Auth
         $_SESSION = array();
 
         // If it's desired to kill the session, also delete the session cookie.
-        // Note: This will destroy the session, and not just the session data!
+        // This will destroy the session, and not just the session data!
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
             setcookie(session_name(), '', time() - 42000,

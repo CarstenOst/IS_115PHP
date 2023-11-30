@@ -1,5 +1,6 @@
 <?php
 
+namespace Database;
 class DBConfig
 {
     const DB_HOST_NAME = '127.0.0.1';

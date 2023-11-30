@@ -2,7 +2,7 @@
 
 namespace Validators;
 
-use Exception;
+use Enums\UserTypes;
 
 class Validator
 {
@@ -11,7 +11,8 @@ class Validator
     public const PASSWORD = 'password';
     public const USER_TYPE = 'userType';
     public const PHONE_NUMBER = 'phoneNumber';
-    public const VALID_USER_TYPES = ['student', 'tutor'];
+    public const VALID_USER_TYPES = [UserTypes::Student, UserTypes::Tutor];
+
 
     /**
      * This function is made for Module 6, task 5 to validate

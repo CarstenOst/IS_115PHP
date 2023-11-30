@@ -1,7 +1,11 @@
 <?php
 
+
+namespace Database;
 // with DB_HOST_NAME, DB_NAME and DB_PASSWORD constants
 // Note: you might have to add another constant for the username, as our db has same name and username for simplicity
+use PDO;
+use PDOException;
 
 class DBConnector
 {

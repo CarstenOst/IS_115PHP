@@ -7,8 +7,8 @@ require("../autoloader.php");
 use Validators\Auth;
 use Validators\SessionConst;
 
-if (!Auth::checkAuth()) {// Starts session, and checks if user is logged in. If not, redirects to login page
-    header('Location: ./Login.php');
+if (!Auth::isLoggedIn()) {// Starts session, and checks if user is logged in. If not, redirects to login page
+    header("Location: ./Login.php?response[]=You are not logged in!&response[]=0");
     exit();
 }
 
@@ -29,9 +29,9 @@ class Profile
         $about = $_SESSION[SessionConst::ABOUT];
         echo "
             <div class='user-profile'>
-                <h5>$firstName $lastName</h5>
-                <p><small>$userType</small></p>
+                <p>$firstName $lastName</p>
                 <p>Email: $email</p>
+                <p>Role: $userType</p>
                 <p>Bio: $about</p>
             </div>
         ";
@@ -40,12 +40,12 @@ class Profile
 
 
 // TODO remove this
-SessionConst::sessionDebugger();
+//SessionConst::sessionDebugger();
 ?>
 
 <head lang="en">
-    <link rel="stylesheet" href="/Assets/style.css">
     <script src="https://kit.fontawesome.com/5928831ae4.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../Assets/style.css">
     <title>Profile</title>
 </head>
 
@@ -58,17 +58,17 @@ SessionConst::sessionDebugger();
             </a>
         </li>
         <li>
-            <a href="../../Views/User/Profile.php" class="side-menu-profile-link">
+            <a href="Profile.php" class="side-menu-profile-link">
                 <div class="profile">
                     <i class="profile-icon fa-solid fa-user"></i>
                     <p>Profile</p>
                 </div>
             </a>
         </li>
-        <li><a href="../Book/index.php">Book</a></li>
-        <li><a href="../Bookings/index.php">Bookings</a></li>
-        <li><a href="#">Messages</a></li>
-        <li><a href="index.php?logout=1">Log Out</a></li>
+        <li><a href="SecureFile.php">Secure Page</a></li>
+        <li><a href="StudentsOnly.php">Students Only!</a></li>
+        <li><a href="TutorsOnly.php">Tutors Only!</a></li>
+        <li><a href="../inc/Logout.php">Log Out</a></li>
     </ul>
 </div>
 
