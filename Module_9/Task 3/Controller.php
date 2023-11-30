@@ -1,5 +1,6 @@
 <?php
 include '../sharedViewTop.php';
+echo '<h4> You can try to upload the 123.png in this folder </h4>';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profileImage'])) {
     $file = $_FILES['profileImage'];
@@ -11,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profileImage'])) {
     if (!in_array($file['type'], $allowedTypes)) {
         echo "Only JPG and PNG files are allowed.";
     } elseif ($file['size'] > $maxSize) {
-        echo "It's too big!";
+        echo "It's too big!"; // That's not what she said
     } else {
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $targetFile = $uploadDir . $userId . '.' . $extension;
