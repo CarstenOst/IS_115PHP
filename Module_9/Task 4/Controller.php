@@ -33,14 +33,23 @@ function downloadFile(string $filePath, string $fileName): void
 
 // Check if the download request is set
 if (isset($_GET['download'])) {
-    $filePath = './Hidden/mod10.pdf'; // Absolute path to the file
-    $fileName = 'mod10.pdf'; // Name to send to the client
 
-    downloadFile($filePath, $fileName);
+    $fileName = $_GET['download']; // Name to send to the client
+    $filePath = "./Hidden/$fileName.pdf"; // Absolute path to the file
+
+    if ($fileName === 'mod10' || $fileName === 'mod9') {
+        downloadFile($filePath, "$fileName.pdf");
+    } else {
+        echo "File not found.";
+    }
+
 }
 
 ?>
 
-<a href="Controller.php?download=true">Download pdf
+<a href="?download=mod10">Download module 10 pdf</a>
+<br>
+<br>
+<a href="?download=mod9">Download module 9 pdf</a>
 
 

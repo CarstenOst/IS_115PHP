@@ -21,7 +21,7 @@ $pdf->useTemplate($fs);
 $pdf->setFont("Arial", "", 10);
 
 // Logo
-$pdf->Image('Logo.png', 11, 100, 20);
+$pdf->Image('Logo.png', 101, 39, 20);
 
 // Set initial X and Y
 $pdf->setY(45);
@@ -37,7 +37,8 @@ $pdf->cell(100, 5, "Odderoeyveien 31, 4610 Kristiansand S", 0, 1, "L");
 
 // Move down to Y position 125 for a section under the logo
 // Invoice sender (1)
-$pdf->setY(125);
+$pdf->setY(60);
+$pdf->setX(101);
 $pdf->cell(100, 5, "Mystes AS", 0, 1, "L");
 
 // Position for ticket information
