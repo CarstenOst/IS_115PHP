@@ -48,7 +48,7 @@ function sendMail(array $formData): void
     } else {
         $headers = [
             "Content-Type: application/json",
-            "Authorization: Bearer re_5cE4VGtu_BqoJshHEYe8ThdMb1u4t9FFR",
+            "Authorization: Bearer re_5cE4VGtu_BqoJshHEYe8ThdMb1u4t9FFR", // This Bearer is revoked :)
         ];
 
 
