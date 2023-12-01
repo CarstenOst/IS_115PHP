@@ -6,7 +6,7 @@
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../styles.css">
-    <title> <?php require_once 'sharedFunctionsM9.php'; echo sharedFunctionsM10::getCurrentModuleFolderName() ?> </title>
+    <title> <?php require_once 'sharedFunctionsM10.php'; echo sharedFunctionsM10::getCurrentModuleFolderName() ?> </title>
 </head>
 <body>
 <div class="container d-flex justify-content-center">
