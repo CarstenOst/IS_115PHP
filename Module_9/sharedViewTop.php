@@ -6,19 +6,19 @@
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../styles.css">
-    <title> <?php require_once 'sharedFunctionsM9.php'; echo sharedFunctionsM9::getCurrentModuleFolderName() ?> </title>
+    <title> <?php require_once 'sharedFunctionsM9.php'; echo sharedFunctionsM10::getCurrentModuleFolderName() ?> </title>
 </head>
 <body>
 <div class="container d-flex justify-content-center">
     <div class="flex-column">
         <div class="d-flex justify-content-center fixed-top">
             <nav id="navbar" class="d-flex navbar navbar-expand-lg">
-                <?php sharedFunctionsM9::generateNavigationButtons(); ?>
+                <?php sharedFunctionsM10::generateNavigationButtons(); ?>
             </nav>
         </div>
         <div id="messageContainer" class="d-flex flex-column align-items-center">
         </div>
         <div id="" class="flex-column justify-content-center text-center container">
             <h2>
-                <?php echo sharedFunctionsM9::generateParentFolderName(); ?>
+                <?php echo sharedFunctionsM10::generateParentFolderName(); ?>
             </h2>

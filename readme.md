@@ -51,8 +51,8 @@
 - [x] Task 7.4
 - [x] Task 7.5
 ### Submission 8
-- [ ] Task 8.1
+- [x] Task 8
 ### Submission 9
-- [ ] Task 9.1
+- [x] Task 9
 ### Submission 10
-- [ ] Task 10.1
+- [x] Task 10
